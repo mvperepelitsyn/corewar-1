@@ -1,4 +1,4 @@
-# Push_swap
+# corewar
 
 This project is about ...
 
