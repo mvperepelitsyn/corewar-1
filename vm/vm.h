@@ -41,13 +41,13 @@ typedef struct	s_process
 ** Command params: cmd
 */
 
-typedef struct	s_cmd
+typedef struct	s_cmd_prms
 {
 	unsigned char		cmd_code;
 	unsigned char		dir_size;
 	unsigned char		descript;
 	unsigned short		cycles;
-}				t_cmd;
+}				t_cmd_prms;
 
 /*
 ** Virtual Maschine params: vm
@@ -58,6 +58,7 @@ struct			s_vm
 	//
 	unsigned char		*area;
 	t_command			command[16];
+	t_cmd_prms			cmd_prms[16];
 };
 
 /*
