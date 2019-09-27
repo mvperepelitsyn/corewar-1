@@ -14,12 +14,17 @@ typedef	void		(*t_command)(t_vm *vm);
 
 typedef struct	s_carry
 {
-	unsigned int		car_nbr;
-	unsigned char		carry;
-	unsigned char		cmd_code;
-	unsigned int		reg[16];
+	unsigned int		car_nbr;//carry number
+	unsigned char		alive;// are you still alive?
+	unsigned char		carry;//flag "carry"
+	unsigned char		cmd_code;//current operation code
+	unsigned char		jump_len;//bytes to second instruction
+	unsigned int		last_live;//cycles from last live call
+	unsigned int		cycles_before;//cycles before current operation
+	unsigned int		position;//carry position in game memory area
+	unsigned int		color;//carry color (champ color)
+	unsigned int		reg[16];//registr
 	struct s_carry		*next;
-	struct s_carry		*prev;
 }				t_carry;
 
 /*
@@ -57,6 +62,13 @@ struct			s_vm
 {
 	//
 	unsigned char		*area;
+	unsigned int		cycles_from_start;
+	int					cycles_to_die;
+	int					ctd_counter;//cycles to die counter
+	int					cycle_delta;
+	unsigned int		live_counter;//summary cycles_to_die alive counter
+	t_carry				*carriages;
+	t_process			*processes;
 	t_command			command[16];
 	t_cmd_prms			cmd_prms[16];
 };
