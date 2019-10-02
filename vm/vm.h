@@ -3,6 +3,7 @@
 
 # include "./libft/libft.h"
 # include "op.h"
+# include "fcntl.h"
 
 typedef struct s_vm		t_vm;
 typedef struct s_carry	t_carry;
@@ -123,6 +124,7 @@ void	aff(t_vm *vm, t_carry *cr);
 int		display_usage();
 void	parsing(int argc, char **argv, t_vm	*vm);
 void	vm_init(t_vm *vm);
+void	ft_error(char *str);
 void	game(t_vm *vm);
 
 #endif
