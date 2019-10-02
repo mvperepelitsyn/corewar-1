@@ -40,8 +40,6 @@ typedef struct	s_process
 	char				*cmp_cmnt;
 	size_t				code_size;
 	unsigned char		*code;
-	struct s_process	*next;
-	struct s_process	*prev;
 }				t_process;
 
 /*
@@ -72,7 +70,7 @@ struct			s_vm
 	int					check_counter;
 	unsigned int		live_counter;//summary cycles_to_die alive counter
 	t_carry				*carriages;
-	t_process			*processes;
+	t_process			processes[MAX_PLAYERS];
 	t_command			command[16];
 	t_cmd_prms			cmd_prms[16];
 };
@@ -106,5 +104,6 @@ int		display_usage();
 void	parsing(int argc, char **argv, t_vm	*vm);
 void	vm_init(t_vm *vm);
 void	ft_error(char *str);
+void	game(t_vm *vm);
 
 #endif
