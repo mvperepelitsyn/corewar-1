@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: dfrost-a <marvin@42.fr>                    +#+  +:+       +#+         #
+#    By: uhand <uhand@student.42.fr>                +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/12/18 18:04:25 by uhand             #+#    #+#              #
-#    Updated: 2019/09/18 14:23:22 by dfrost-a         ###   ########.fr        #
+#    Updated: 2019/10/03 19:34:29 by uhand            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -29,7 +29,8 @@ ft_lstcpy.c ft_lstswap.c ft_dllnew.c ft_dlldelone.c ft_dlldeltoright.c \
 ft_dlldeltoleft.c ft_dlladdtoleft.c ft_dlladdtoright.c ft_dllrcount.c \
 ft_dlllcount.c ft_dllccount.c ft_dllswap.c ft_dlldel.c ft_dlladdnextr.c \
 ft_dlladdnextl.c ft_dllcpyr.c ft_dllcpyl.c ft_dllcpy.c ft_nstrjoin.c \
-ft_hm_wrd.c ft_latoi.c ft_lstnew_addr.c
+ft_hm_wrd.c ft_latoi.c ft_lstnew_addr.c ft_islitendian.c ft_reverseshort.c \
+ft_reverseint.c
 
 SRC_PF = ft_printf.c lib_printf.c add_fnctns.c set_format.c apply_flags.c \
 formats_c_s.c format_float.c formats_int.c pft_itoa.c pft_unsigned_itoa.c \

@@ -48,13 +48,23 @@ typedef struct	s_process
 
 typedef struct	s_cmd_prms
 {
-	unsigned char		cmd_code;
-	unsigned char		dir_size;
-	unsigned char		descript;
-	unsigned char		prms_count;
-	unsigned short		cycles_before;
-	unsigned char		prm_types[3];
+	unsigned char		cmd_code;//1
+	unsigned char		dir_size;//2
+	unsigned char		descript;//3
+	unsigned char		prms_count;//4
+	unsigned short		cycles_before;//5
+	unsigned char		prm_types[3];//6
 }				t_cmd_prms;
+
+/*
+** Current cycle params: cycle
+*/
+
+typedef struct	s_cycle
+{
+	unsigned char		descript[3];//1
+}				t_cycle;
+
 
 /*
 ** Virtual Maschine params: vm
@@ -126,5 +136,8 @@ void	parsing(int argc, char **argv, t_vm	*vm);
 void	vm_init(t_vm *vm);
 void	ft_error(char *str);
 void	game(t_vm *vm);
+int		check_operation(t_vm *vm, t_carry *cr, t_cycle *cycle);
+void	calc_shift();
+
 
 #endif
