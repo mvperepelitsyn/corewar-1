@@ -1,5 +1,110 @@
 #include "vm.h"
+/*
+void		ft_open_tetr(char *argv, t_atetr *mtetr)
+{
+	int		fd;
 
+	if ((fd = open(argv, O_RDONLY)) < 0)
+		ft_exit();
+	ft_read_tetr(fd, mtetr);
+}
+
+void		ft_read_tetr(int fd, t_atetr *mtetr)
+{
+	char	*buf;
+	int		i;
+	int		n;
+	int		l;
+
+	i = 0;
+	l = 0;
+	buf = ft_strnew(21);
+	while ((n = read(fd, buf, 21)))
+	{
+		l = n;
+		ft_create_tetr(buf, i, mtetr);
+		if (((*mtetr).count = i + 1) > 26)
+			ft_exit();
+		i++;
+	}
+	ft_strdel(&buf);
+	if (n != 0 || l != 20)
+		ft_exit();
+}
+
+static void	parce_ant_farm(t_intldta **indta)
+{
+	char	*things;
+	char	**rms;
+	int		fd;
+
+	if ((fd = open(NAME, O_RDONLY)) < 0)
+		fd = 0;
+	get_next_line(fd, &things);
+	(things == NULL) ? ft_error() : ft_println(things);
+	while (things && (things[0] == '#' && things[1] != '#'))
+	{
+		ft_strdel(&things);
+		get_next_line(fd, &things);
+		if (things)
+			ft_println(things);
+	}
+	(*indta)->num_ants = ft_latoi(things);
+	if (ft_hm_wrd(things, ' ') != 1 || ((*indta)->num_ants <= 0 || (*indta)->
+			num_ants != (int)ft_latoi(things)))
+		ft_error();
+	ft_strdel(&things);
+	rms = NULL;
+	graph_parser(indta, &things, rms, fd);
+	if ((*indta)->li == -1)
+		ft_error();
+	links_assignment(indta);
+}
+*/
+
+unsigned int    reverse(unsigned int x, int cnt)
+{
+	x = (x & 0x00FF00FF) << 8 | (x & 0xFF00FF00) >> 8;
+	if (cnt == 4)
+		x = (x & 0x0000FFFF) << 16 | (x & 0xFFFF0000) >> 16;
+	return (x);
+}
+
+static void	check_magic_header(unsigned char *rd_mag)
+{
+	unsigned char	*cnst_mag;
+	unsigned int	cnst_int_mag;
+	int 			i;
+	int 			j;
+
+	i = 0;
+	j = 3;
+	cnst_mag = (unsigned char *)ft_memalloc(sizeof(unsigned char) * 4);
+	cnst_int_mag = COREWAR_EXEC_MAGIC;
+	cnst_mag = (unsigned char *)&cnst_int_mag;
+	while (i <= 3)
+	{
+		if (rd_mag[j] != cnst_mag[i])
+			ft_error("Wrong magic header!\n");
+		i++;
+		j--;
+	}
+}
+
+static void fill_the_champ(t_process *chmp, char *file_name)
+{
+	unsigned char	*insight;
+	char 			*clion_file_name;
+	int				fd;
+
+	clion_file_name = ft_strjoin("../", file_name);
+	if ((fd = open(clion_file_name, O_RDONLY)) < 0)
+		ft_error("There is nothing to open from champ file!\n");
+	insight = (unsigned char *)ft_memalloc(sizeof(unsigned char) * 4);
+	if ((read(fd, insight, 4)) < 0)
+		ft_error("There is nothing to read from champ file!\n");
+	check_magic_header(insight);
+}
 
 
 static void	check_num(t_process *champs, int num)
@@ -36,6 +141,7 @@ static void check_file_name(char *file_name, t_process *chmp, int num)
 		while (i < MAX_PLAYERS)
 		{
 			if (chmp[i].cmp_nbr == 0)
+
 			i++;
 		}
 	}
