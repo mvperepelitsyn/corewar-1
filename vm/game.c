@@ -21,6 +21,7 @@ static int	check_operation(t_vm *vm, t_carry *cr)
 static void	cycle(t_vm *vm)
 {
 	t_carry	*cr;
+	t_cycle	cycle;
 
 	cr = vm->carriages;
 	while (cr)
@@ -34,7 +35,7 @@ static void	cycle(t_vm *vm)
 		if (cr->cycles_before)
 			cr->cycles_before--;
 		cr->jump_len = 1;
-		if (!cr->cycles_before && check_operation(vm, cr))
+		if (!cr->cycles_before && check_operation(vm, cr, &cycle))
 			vm->command[cr->reg[0] - 1](vm, cr);
 		cr->position += cr->jump_len;
 		if (cr->position >= MEM_SIZE)

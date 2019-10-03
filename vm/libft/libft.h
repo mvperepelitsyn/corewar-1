@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   libft.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dfrost-a <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: dfrost-a <dfrost-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/18 17:20:19 by dfrost-a          #+#    #+#             */
-/*   Updated: 2019/09/18 17:20:22 by dfrost-a         ###   ########.fr       */
+/*   Updated: 2019/10/03 19:35:25 by uhand            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -144,4 +144,7 @@ char			*ft_nstrjoin(int n, ...);
 int				ft_hm_wrd(char const *s, char c);
 long long int	ft_latoi(const char *str);
 t_list			*ft_lstnew_addr(void *content, size_t content_size);
+int				ft_islitendian(void);
+unsigned short	ft_reverseshort(unsigned int i);
+unsigned int	ft_reverseint(unsigned int i);
 #endif
