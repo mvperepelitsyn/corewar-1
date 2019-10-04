@@ -86,6 +86,7 @@ static void	check_magic_header(const unsigned char *rd_mag)
 static void fill_the_name_champ(t_process *chmp, int fd)
 {
 	unsigned char	*champ_name;
+	char 			*name_null;
 
 	if (!(champ_name = (unsigned char *)ft_memalloc(sizeof(unsigned char) *
 			128)))
@@ -99,9 +100,33 @@ static void fill_the_name_champ(t_process *chmp, int fd)
 	if (read(fd, champ_name, 4) < 0)
 		ft_error("There is no NULL after champ name in one of the champ "
 		   "files!\n");
-	if (champ_name != NULL)
+	name_null = ft_strsub(champ_name, 0, 4);
+	if (name_null != NULL)
 		ft_error("There is no NULL after champ name in one of the champ "
 		   "files!\n");
+	ft_strdel(&name_null);
+	ft_strdel(&champ_name);
+}
+
+static void fill_the_code_size(t_process *chmp, int fd)
+{
+	unsigned char	*rd_code_size;
+	unsigned int	rd_int_code_size;
+	int 			i;
+
+	i = 0;
+	if (!(rd_code_size = (unsigned char *)ft_memalloc(sizeof(unsigned char) * 4)))
+		ft_error("Malloc couldn't allocate the memory!\n");
+	if (read(fd, rd_code_size, 4) < 0)
+		ft_error("There is nothing instead of the size of executable code!\n");
+	rd_int_code_size = ((unsigned int *)rd_code_size)[0];
+	if (ft_islitendian())
+		rd_int_code_size = ft_reverseint(rd_int_code_size);
+	while (rd_code_size[i])
+	{
+		ft_printf("rd_code_size[%d] = %x\n", i, rd_code_size[i]);
+		i++;
+	}
 
 
 }
@@ -122,6 +147,7 @@ static void fill_the_champ(t_process *chmp, char *file_name)
 	check_magic_header(insight);
 	ft_strdel(&insight);
 	fill_the_name_champ(chmp, fd);
+	fill_the_code_size(chmp, fd);
 }
 
 
