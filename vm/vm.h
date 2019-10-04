@@ -21,7 +21,7 @@ struct	s_carry
 	unsigned char		carry;//flag "carry"
 	unsigned char		cmd_code;//current operation code
 	unsigned char		jump_len;//bytes to second instruction
-	unsigned int		last_live;//cycles from last live call
+	int					last_live;//cycles from last live call
 	unsigned int		cycles_before;//cycles before current operation
 	int					position;//carry position in game memory area
 	unsigned int		color;//carry color (champ color)
