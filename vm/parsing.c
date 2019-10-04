@@ -111,24 +111,58 @@ static void fill_the_name_champ(t_process *chmp, int fd)
 static void fill_the_code_size(t_process *chmp, int fd)
 {
 	unsigned char	*rd_code_size;
-	unsigned int	rd_int_code_size;
-	int 			i;
 
-	i = 0;
 	if (!(rd_code_size = (unsigned char *)ft_memalloc(sizeof(unsigned char) * 4)))
 		ft_error("Malloc couldn't allocate the memory!\n");
 	if (read(fd, rd_code_size, 4) < 0)
 		ft_error("There is nothing instead of the size of executable code!\n");
-	rd_int_code_size = ((unsigned int *)rd_code_size)[0];
+	chmp->code_size = ((size_t *)rd_code_size)[0];
 	if (ft_islitendian())
-		rd_int_code_size = ft_reverseint(rd_int_code_size);
-	while (rd_code_size[i])
-	{
-		ft_printf("rd_code_size[%d] = %x\n", i, rd_code_size[i]);
-		i++;
-	}
+		chmp->code_size = ft_reverseint(chmp->code_size);
+	ft_strdel(&rd_code_size);
+}
 
+static void fill_the_comment(t_process *chmp, int fd)
+{
+	unsigned char	*champ_comment;
+	char 			*comment_null;
 
+	if (!(champ_comment = (unsigned char *)ft_memalloc(sizeof(unsigned char) *
+													COMMENT_LENGTH)))
+		ft_error("Malloc couldn't allocate the memory!\n");
+	if (read(fd, champ_comment, COMMENT_LENGTH) < 0)
+		ft_error("There is no comment in one of the champ files!\n");
+	chmp->cmp_cmnt = ft_strsub(champ_comment, 0, ft_strlen(champ_comment));
+	ft_strdel(&champ_comment);
+	if (!(champ_comment = (unsigned char *)ft_memalloc(sizeof(unsigned char) *
+			4)))
+		ft_error("Malloc couldn't allocate the memory!\n");
+	if (read(fd, champ_comment, 4) < 0)
+		ft_error("There is no NULL after champ comment in one of the champ "
+				 "files!\n");
+	comment_null = ft_strsub(champ_comment, 0, 4);
+	if (comment_null != NULL)
+		ft_error("There is no NULL after champ comment in one of the champ "
+				 "files!\n");
+	ft_strdel(&comment_null);
+	ft_strdel(&champ_comment);
+}
+
+static void	fill_the_code(t_process *chmp, int fd)
+{
+	char 	*test;
+
+	if (!(chmp->code = (unsigned char *)ft_memalloc(sizeof(unsigned char) *
+			chmp->code_size)))
+		ft_error("Malloc couldn't allocate the memory!\n");
+	if (read(fd, chmp->code, chmp->code_size) < 0)
+		ft_error("There is no executable code to read for one of the "
+		   "champs!\n");
+	test = ft_strnew(1);
+	if (read(fd, test, 1) > 0)
+		ft_error("There is something else, after executable code! "
+		   "Please, get rid of this!\n");
+	ft_strdel(&test);
 }
 
 static void fill_the_champ(t_process *chmp, char *file_name)
@@ -148,6 +182,9 @@ static void fill_the_champ(t_process *chmp, char *file_name)
 	ft_strdel(&insight);
 	fill_the_name_champ(chmp, fd);
 	fill_the_code_size(chmp, fd);
+	fill_the_comment(chmp, fd);
+	fill_the_code(chmp, fd);
+
 }
 
 
