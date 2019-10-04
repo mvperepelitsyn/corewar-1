@@ -62,25 +62,48 @@ static void	parce_ant_farm(t_intldta **indta)
 }
 */
 
-static void	check_magic_header(unsigned char *rd_mag)
+static void	check_magic_header(const unsigned char *rd_mag)
 {
 	unsigned char	*cnst_mag;
 	unsigned int	cnst_int_mag;
 	int 			i;
-	int 			j;
 
 	i = 0;
-	j = 3;
 	cnst_mag = (unsigned char *)ft_memalloc(sizeof(unsigned char) * 4);
 	cnst_int_mag = COREWAR_EXEC_MAGIC;
+	if (ft_islitendian())
+		cnst_int_mag = ft_reverseint(cnst_int_mag);
 	cnst_mag = (unsigned char *)&cnst_int_mag;
 	while (i <= 3)
 	{
-		if (rd_mag[j] != cnst_mag[i])
+//		ft_printf("rd_mag[%d] = %x\ncnst_mag[%d] = %x\n", i, rd_mag[i], i, cnst_mag[i]);
+		if (rd_mag[i] != cnst_mag[i])
 			ft_error("Wrong magic header!\n");
 		i++;
-		j--;
 	}
+}
+
+static void fill_the_name_champ(t_process *chmp, int fd)
+{
+	unsigned char	*champ_name;
+
+	if (!(champ_name = (unsigned char *)ft_memalloc(sizeof(unsigned char) *
+			128)))
+		ft_error("Malloc couldn't allocate the memory!\n");
+	if (read(fd, champ_name, 128) < 0)
+		ft_error("There is no name in one of the champ files!\n");
+	chmp->cmp_name = ft_strsub(champ_name, 0, ft_strlen(champ_name));
+	ft_strdel(&champ_name);
+	if (!(champ_name = (unsigned char *)ft_memalloc(sizeof(unsigned char) * 4)))
+		ft_error("Malloc couldn't allocate the memory!\n");
+	if (read(fd, champ_name, 4) < 0)
+		ft_error("There is no NULL after champ name in one of the champ "
+		   "files!\n");
+	if (champ_name != NULL)
+		ft_error("There is no NULL after champ name in one of the champ "
+		   "files!\n");
+
+
 }
 
 static void fill_the_champ(t_process *chmp, char *file_name)
@@ -92,24 +115,39 @@ static void fill_the_champ(t_process *chmp, char *file_name)
 	clion_file_name = ft_strjoin("../", file_name);
 	if ((fd = open(clion_file_name, O_RDONLY)) < 0)
 		ft_error("There is nothing to open from champ file!\n");
-	insight = (unsigned char *)ft_memalloc(sizeof(unsigned char) * 4);
+	if (!(insight = (unsigned char *)ft_memalloc(sizeof(unsigned char) * 4)))
+		ft_error("Malloc couldn't allocate the memory!\n");
 	if ((read(fd, insight, 4)) < 0)
 		ft_error("There is nothing to read from champ file!\n");
 	check_magic_header(insight);
+	ft_strdel(&insight);
+	fill_the_name_champ(chmp, fd);
 }
 
 
-static void	check_num(t_process *champs, int num)
+static void	check_num(t_process *champs, int num, char *champ_name)
 {
 	int i;
 
 	i = 0;
-	if (num < 1 || num > MAX_PLAYERS)
-		ft_error("Wrong number of champion file!\n");
+	if (num > MAX_PLAYERS)
+	{
+		ft_printf("Wrong number for the champion %s! ", champ_name);
+		ft_error("The number is too big!\n");
+	}
+	if (num < 1)
+	{
+		ft_printf("Wrong number for the champion %s! ", champ_name);
+		ft_error("The number is too small!\n");
+	}
 	while (i < MAX_PLAYERS)
 	{
 		if (champs[i].cmp_nbr == num)
-			ft_error("Wrong number of champion file!\n");
+		{
+			ft_printf("Wrong number for the champion %s! ", champ_name);
+			ft_error("The number is a duplicate! "
+			"Be more creative next time!\n");
+		}
 		i++;
 	}
 }
@@ -119,7 +157,6 @@ static void check_file_name(char *file_name, t_process *chmp, int num)
 	int		i;
 	char 	*tmp;
 
-	tmp = NULL;
 	i = ft_strlen(file_name);
 	tmp = ft_strsub(file_name, i - 4, 4);
 	if (!ft_strequ(tmp, ".cor"))
@@ -127,18 +164,23 @@ static void check_file_name(char *file_name, t_process *chmp, int num)
 	ft_strdel(&tmp);
 	i = 0;
 	if (num != 0)
-		chmp->cmp_nbr = num;
+	{
+		chmp[num - 1].cmp_nbr = num;
+		fill_the_champ(&chmp[num - 1], file_name);
+	}
 	else
 	{
 		while (i < MAX_PLAYERS)
 		{
 			if (chmp[i].cmp_nbr == 0)
-
+			{
+				chmp[i].cmp_nbr = i + 1;
+				fill_the_champ(&chmp[i], file_name);
+				break ;
+			}
 			i++;
 		}
 	}
-
-	fill_the_champ(chmp, file_name);
 }
 
 static void	parse_champ(int argc, char **argv, t_vm *vm)
@@ -152,7 +194,7 @@ static void	parse_champ(int argc, char **argv, t_vm *vm)
 		if (ft_strequ(argv[l], "-n"))
 		{
 			l++;
-			check_num(vm->processes, num = ft_atoi(argv[l]));
+			check_num(vm->processes, num = ft_atoi(argv[l]), argv[l + 1]);
 			l++;
 			check_file_name(argv[l], vm->processes, num);
 		}
@@ -169,10 +211,29 @@ static void	parse_champ(int argc, char **argv, t_vm *vm)
 	}
 }
 
+static void	ft_set_champs_to_null(t_process *champs)
+{
+	int i;
+
+	i = 0;
+	while (i < MAX_PLAYERS)
+	{
+		champs[i].cmp_nbr = 0;
+		champs[i].cmp_name = NULL;
+		champs[i].cmp_cmnt = NULL;
+		champs[i].code_size = 0;
+		champs[i].code = NULL;
+		i++;
+	}
+}
+
 void		parsing(int argc, char **argv, t_vm	*vm)
 {
 	if (argc > 15)
 		ft_error("Too many arguments");
 	else
+	{
+		ft_set_champs_to_null(vm->processes);
 		parse_champ(argc, argv, vm);
+	}
 }
