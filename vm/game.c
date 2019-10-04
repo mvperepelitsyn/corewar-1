@@ -1,8 +1,24 @@
 # include "vm.h"
 
-static void	print_game_area()
+static void	print_game_area(t_vm *vm)
 {
-	//
+	unsigned int	byte;
+
+	byte = 0;
+	while (byte < MEM_SIZE)
+	{
+		if (byte)
+			ft_printf("%#06x : ", byte);
+		else
+			ft_printf("0x0000 : ");
+		while (byte % 32 < 31)
+		{
+			ft_printf("%02x ", (unsigned int)vm->area[byte]);
+			byte++;
+		}
+		ft_printf("%02x\n", (unsigned int)vm->area[byte]);
+		byte++;
+	}
 }
 
 static void	carriage_remover(t_vm *vm, t_carry *prev, t_carry *cur)
@@ -89,7 +105,7 @@ void		game(t_vm *vm)
 		}
 	}
 	if (vm->dump && vm->carriages)
-		print_game_area();
+		print_game_area(vm);
 	else
 		ft_printf("Contestant %uhh, \"%s\", has won !\n", vm->last_alive, \
 			vm->processes[vm->last_alive - 1].cmp_name);
