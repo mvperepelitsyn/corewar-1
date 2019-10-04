@@ -62,14 +62,6 @@ static void	parce_ant_farm(t_intldta **indta)
 }
 */
 
-unsigned int    reverse(unsigned int x, int cnt)
-{
-	x = (x & 0x00FF00FF) << 8 | (x & 0xFF00FF00) >> 8;
-	if (cnt == 4)
-		x = (x & 0x0000FFFF) << 16 | (x & 0xFFFF0000) >> 16;
-	return (x);
-}
-
 static void	check_magic_header(unsigned char *rd_mag)
 {
 	unsigned char	*cnst_mag;

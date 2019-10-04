@@ -10,13 +10,13 @@ static void	check_game(t_vm *vm)
 	//
 }
 
-static int	check_operation(t_vm *vm, t_carry *cr)
-{
-	if (!(cr->cmd_code >= 1 && cr->cmd_code <= 16))
-		return (0);
-
-	return(1);
-}
+//static int	check_operation(t_vm *vm, t_carry *cr)
+//{
+//	if (!(cr->cmd_code >= 1 && cr->cmd_code <= 16))
+//		return (0);
+//
+//	return(1);
+//}
 
 static void	cycle(t_vm *vm)
 {
