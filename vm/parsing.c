@@ -93,9 +93,9 @@ static void fill_the_name_champ(t_process *chmp, int fd)
 	char 			*name_null;
 
 	if (!(champ_name = (unsigned char *)ft_memalloc(sizeof(unsigned char) *
-			128)))
+			PROG_NAME_LENGTH)))
 		ft_error("Malloc couldn't allocate the memory!\n");
-	if (read(fd, champ_name, 128) < 0)
+	if (read(fd, champ_name, PROG_NAME_LENGTH) < 0)
 		ft_error("There is no name in one of the champ files!\n");
 	chmp->cmp_name = ft_strsub(champ_name, 0, ft_strlen(champ_name));
 	ft_strdel(&champ_name);
