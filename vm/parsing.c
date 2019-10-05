@@ -242,6 +242,8 @@ static void check_file_and_fill(char *file_name, t_process *chmp, int num)
 			}
 			i++;
 		}
+		if (i == MAX_PLAYERS)
+			ft_error("Too many champs!\n");
 	}
 }
 
