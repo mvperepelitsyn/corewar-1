@@ -62,25 +62,29 @@ static void	parce_ant_farm(t_intldta **indta)
 }
 */
 
-static void	check_magic_header(const unsigned char *rd_mag)
+static void	check_magic_header(int fd)
 {
+	unsigned char	*rd_mag;
 	unsigned char	*cnst_mag;
 	unsigned int	cnst_int_mag;
 	int 			i;
 
 	i = 0;
-	cnst_mag = (unsigned char *)ft_memalloc(sizeof(unsigned char) * 4);
+	if (!(rd_mag = (unsigned char *)ft_memalloc(sizeof(unsigned char) * 4)))
+		ft_error("Malloc couldn't allocate the memory!\n");
+	if ((read(fd, rd_mag, 4)) < 0)
+		ft_error("There is nothing to read from champ file!\n");
 	cnst_int_mag = COREWAR_EXEC_MAGIC;
 	if (ft_islitendian())
 		cnst_int_mag = ft_reverseint(cnst_int_mag);
 	cnst_mag = (unsigned char *)&cnst_int_mag;
 	while (i <= 3)
 	{
-//		ft_printf("rd_mag[%d] = %x\ncnst_mag[%d] = %x\n", i, rd_mag[i], i, cnst_mag[i]);
 		if (rd_mag[i] != cnst_mag[i])
 			ft_error("Wrong magic header!\n");
 		i++;
 	}
+	free(rd_mag);
 }
 
 static void fill_the_name_champ(t_process *chmp, int fd)
@@ -167,19 +171,14 @@ static void	fill_the_code(t_process *chmp, int fd)
 
 static void fill_the_champ(t_process *chmp, char *file_name)
 {
-	unsigned char	*insight;
 	char 			*clion_file_name;
 	int				fd;
 
-	clion_file_name = ft_strjoin("../", file_name);
-	if ((fd = open(clion_file_name, O_RDONLY)) < 0)
+	clion_file_name = ft_strjoin("../", file_name); //only for clion
+	if ((fd = open(clion_file_name, O_RDONLY)) < 0) //only fo clion
+//	if ((fd = open(file_name, O_RDONLY)) < 0)	//for something real
 		ft_error("There is nothing to open from champ file!\n");
-	if (!(insight = (unsigned char *)ft_memalloc(sizeof(unsigned char) * 4)))
-		ft_error("Malloc couldn't allocate the memory!\n");
-	if ((read(fd, insight, 4)) < 0)
-		ft_error("There is nothing to read from champ file!\n");
-	check_magic_header(insight);
-	ft_strdel(&insight);
+	check_magic_header(fd);
 	fill_the_name_champ(chmp, fd);
 	fill_the_code_size(chmp, fd);
 	fill_the_comment(chmp, fd);
@@ -215,7 +214,7 @@ static void	check_num(t_process *champs, int num, char *champ_name)
 	}
 }
 
-static void check_file_name(char *file_name, t_process *chmp, int num)
+static void check_file_and_fill(char *file_name, t_process *chmp, int num)
 {
 	int		i;
 	char 	*tmp;
@@ -246,20 +245,36 @@ static void check_file_name(char *file_name, t_process *chmp, int num)
 	}
 }
 
+static void how_many_champs(t_vm *vm)
+{
+	int i;
+	int j;
+
+	i = 0;
+	j = 0;
+	while (i < MAX_PLAYERS)
+	{
+		if (vm->processes[i].cmp_nbr > 0)
+			j++;
+		i++;
+	}
+	vm->champs_count = j;
+}
+
 static void	parse_champ(int argc, char **argv, t_vm *vm)
 {
 	int			l;
 	long int 	num;
 
 	l = 1;
-	while (l <= argc)
+	while (l < argc)
 	{
 		if (ft_strequ(argv[l], "-n"))
 		{
 			l++;
 			check_num(vm->processes, num = ft_atoi(argv[l]), argv[l + 1]);
 			l++;
-			check_file_name(argv[l], vm->processes, num);
+			check_file_and_fill(argv[l], vm->processes, num);
 		}
 		else if (ft_strequ(argv[l], "-dump"))
 		{
@@ -269,9 +284,10 @@ static void	parse_champ(int argc, char **argv, t_vm *vm)
 				ft_error("Invalid number after after flag -dump.\n");
 		}
 		else
-			check_file_name(argv[l], vm->processes, 0);
+			check_file_and_fill(argv[l], vm->processes, 0);
 		l++;
 	}
+	how_many_champs(vm);
 }
 
 static void	ft_set_champs_to_null(t_process *champs)
