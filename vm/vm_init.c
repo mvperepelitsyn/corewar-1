@@ -1,27 +1,29 @@
 # include "vm.h"
 
-/*static void	op_init(t_vm *vm)
+static void	area_init(t_vm *vm)
 {
-	vm->cmd_prms =
+	int		champ_area;
+	int		champ_nbr;
+	int		i;
+	int		j;
+
+	champ_area = MEM_SIZE / vm->champs_count;
+	champ_nbr = 0;
+	if (!(vm->area = ft_memalloc(MEM_SIZE)))
+		ft_error("Malloc couldn't allocate the memory!\n");
+	while (champ_nbr < vm->champs_count)
 	{
-		{1, 4, 0, 10, {T_DIR}},
-		{2, 4, 1, 5, {T_DIR | T_IND, T_REG}},
-		{3, 4, 1, 5, {T_REG, T_IND | T_REG}},
-		{4, 4, 1, 10, {T_REG, T_REG, T_REG}},
-		{5, 4, 1, 10, {T_REG, T_REG, T_REG}},
-		{6, 4, 1, 6, {T_REG | T_DIR | T_IND, T_REG | T_IND | T_DIR, T_REG}},
-		{7, 4, 1, 6, {T_REG | T_IND | T_DIR, T_REG | T_IND | T_DIR, T_REG}},
-		{8, 4, 1, 6, {T_REG | T_IND | T_DIR, T_REG | T_IND | T_DIR, T_REG}},
-		{9, 2, 0, 20, {T_DIR}},
-		{10, 2, 1, 25, {T_REG | T_DIR | T_IND, T_DIR | T_REG, T_REG}},
-		{11, 2, 1, 25, {T_REG, T_REG | T_DIR | T_IND, T_DIR | T_REG}},
-		{12, 2, 0, 800, {T_DIR}},
-		{13, 4, 1, 10, {T_DIR | T_IND, T_REG}},
-		{14, 2, 1, 50, {T_REG | T_DIR | T_IND, T_DIR | T_REG, T_REG}},
-		{15, 2, 0, 1000, {T_DIR}},
-		{16, 4, 1, 2, {T_REG}}
+		i = champ_area * champ_nbr;
+		j = 0;
+		while (j < vm->processes[champ_nbr].code_size)
+		{
+			vm->area[i] = vm->processes[champ_nbr].code[j];
+			i++;
+			j++;
+		}
+		champ_nbr++;
 	}
-}*/
+}
 
 void		vm_init(t_vm *vm)
 {
@@ -41,5 +43,5 @@ void		vm_init(t_vm *vm)
 	vm->command[13] = &lldi;
 	vm->command[14] = &lfrk;
 	vm->command[15] = &aff;
-	// op_init(vm);
+	area_init(vm);
 }

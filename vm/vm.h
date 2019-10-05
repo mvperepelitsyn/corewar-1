@@ -38,7 +38,7 @@ typedef struct	s_process
 	int					cmp_nbr;
 	char				*cmp_name;
 	char				*cmp_cmnt;
-	size_t				code_size;
+	int					code_size;
 	unsigned char		*code;
 }				t_process;
 
