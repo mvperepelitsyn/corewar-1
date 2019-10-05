@@ -3,12 +3,13 @@
 NAME = ../corewar
 
 HEAD = ./
-SRC = vm.c vm_init.c auxiliary.c parsing.c
+SRC = vm.c vm_init.c auxiliary.c parsing.c game.c check_operation.c commands.c \
+
 
 OBJ = $(addprefix $(OBJPATH)/,$(SRC:.c=.o))
 OBJPATH = ./objects
 
-FLAGS = -g -Wall -Wextra -Werror #-m64 -Ofast -flto -march=native -funroll-loops
+FLAGS = -g #-Wall -Wextra -Werror -m64 -Ofast -flto -march=native -funroll-loops
 LIB = -L ./libft -lft
 LIBPATH = ./libft
 
