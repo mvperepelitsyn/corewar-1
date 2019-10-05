@@ -1,66 +1,4 @@
 #include "vm.h"
-/*
-void		ft_open_tetr(char *argv, t_atetr *mtetr)
-{
-	int		fd;
-
-	if ((fd = open(argv, O_RDONLY)) < 0)
-		ft_exit();
-	ft_read_tetr(fd, mtetr);
-}
-
-void		ft_read_tetr(int fd, t_atetr *mtetr)
-{
-	char	*buf;
-	int		i;
-	int		n;
-	int		l;
-
-	i = 0;
-	l = 0;
-	buf = ft_strnew(21);
-	while ((n = read(fd, buf, 21)))
-	{
-		l = n;
-		ft_create_tetr(buf, i, mtetr);
-		if (((*mtetr).count = i + 1) > 26)
-			ft_exit();
-		i++;
-	}
-	ft_strdel(&buf);
-	if (n != 0 || l != 20)
-		ft_exit();
-}
-
-static void	parce_ant_farm(t_intldta **indta)
-{
-	char	*things;
-	char	**rms;
-	int		fd;
-
-	if ((fd = open(NAME, O_RDONLY)) < 0)
-		fd = 0;
-	get_next_line(fd, &things);
-	(things == NULL) ? ft_error() : ft_println(things);
-	while (things && (things[0] == '#' && things[1] != '#'))
-	{
-		ft_strdel(&things);
-		get_next_line(fd, &things);
-		if (things)
-			ft_println(things);
-	}
-	(*indta)->num_ants = ft_latoi(things);
-	if (ft_hm_wrd(things, ' ') != 1 || ((*indta)->num_ants <= 0 || (*indta)->
-			num_ants != (int)ft_latoi(things)))
-		ft_error();
-	ft_strdel(&things);
-	rms = NULL;
-	graph_parser(indta, &things, rms, fd);
-	if ((*indta)->li == -1)
-		ft_error();
-	links_assignment(indta);
-}
-*/
 
 static void	check_magic_header(int fd)
 {
@@ -97,33 +35,35 @@ static void fill_the_name_champ(t_process *chmp, int fd)
 		ft_error("Malloc couldn't allocate the memory!\n");
 	if (read(fd, champ_name, PROG_NAME_LENGTH) < 0)
 		ft_error("There is no name in one of the champ files!\n");
-	chmp->cmp_name = ft_strsub(champ_name, 0, ft_strlen(champ_name));
-	ft_strdel(&champ_name);
+	chmp->cmp_name = ft_strsub((char *)champ_name, 0,
+			ft_strlen((char *)champ_name));
+	ft_strdel((char **)&champ_name);
 	if (!(champ_name = (unsigned char *)ft_memalloc(sizeof(unsigned char) * 4)))
 		ft_error("Malloc couldn't allocate the memory!\n");
 	if (read(fd, champ_name, 4) < 0)
 		ft_error("There is no NULL after champ name in one of the champ "
 		   "files!\n");
-	name_null = ft_strsub(champ_name, 0, 4);
+	name_null = ft_strsub((char *)champ_name, 0, 4);
 	if (name_null != NULL)
 		ft_error("There is no NULL after champ name in one of the champ "
 		   "files!\n");
 	ft_strdel(&name_null);
-	ft_strdel(&champ_name);
+	ft_strdel((char **)&champ_name);
 }
 
 static void fill_the_code_size(t_process *chmp, int fd)
 {
 	unsigned char	*rd_code_size;
 
-	if (!(rd_code_size = (unsigned char *)ft_memalloc(sizeof(unsigned char) * 4)))
+	if (!(rd_code_size = (unsigned char *)ft_memalloc(sizeof(unsigned char) *
+			4)))
 		ft_error("Malloc couldn't allocate the memory!\n");
 	if (read(fd, rd_code_size, 4) < 0)
 		ft_error("There is nothing instead of the size of executable code!\n");
 	chmp->code_size = ((size_t *)rd_code_size)[0];
 	if (ft_islitendian())
 		chmp->code_size = ft_reverseint(chmp->code_size);
-	ft_strdel(&rd_code_size);
+	ft_strdel((char **)(&rd_code_size));
 }
 
 static void fill_the_comment(t_process *chmp, int fd)
@@ -136,20 +76,21 @@ static void fill_the_comment(t_process *chmp, int fd)
 		ft_error("Malloc couldn't allocate the memory!\n");
 	if (read(fd, champ_comment, COMMENT_LENGTH) < 0)
 		ft_error("There is no comment in one of the champ files!\n");
-	chmp->cmp_cmnt = ft_strsub(champ_comment, 0, ft_strlen(champ_comment));
-	ft_strdel(&champ_comment);
+	chmp->cmp_cmnt = ft_strsub((char *)champ_comment, 0,
+			ft_strlen((char *)champ_comment));
+	ft_strdel((char **)&champ_comment);
 	if (!(champ_comment = (unsigned char *)ft_memalloc(sizeof(unsigned char) *
 			4)))
 		ft_error("Malloc couldn't allocate the memory!\n");
 	if (read(fd, champ_comment, 4) < 0)
 		ft_error("There is no NULL after champ comment in one of the champ "
 				 "files!\n");
-	comment_null = ft_strsub(champ_comment, 0, 4);
+	comment_null = ft_strsub((char *)champ_comment, 0, 4);
 	if (comment_null != NULL)
 		ft_error("There is no NULL after champ comment in one of the champ "
 				 "files!\n");
 	ft_strdel(&comment_null);
-	ft_strdel(&champ_comment);
+	ft_strdel((char **)&champ_comment);
 }
 
 static void	fill_the_code(t_process *chmp, int fd)
