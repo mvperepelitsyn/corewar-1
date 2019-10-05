@@ -19,6 +19,7 @@ int			main(int argc, char **argv)
 
 	if (argc < 2)
 		return(display_usage());
+	ft_bzero((void*)&vm, sizeof(vm));
 	parsing(argc, argv, &vm);
 	declare_champs(&vm.processes[0]);
 	vm_init(&vm);

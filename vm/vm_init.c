@@ -1,5 +1,16 @@
 # include "vm.h"
 
+static void	carriages_init(t_vm *vm, int champ_nbr)
+{
+	t_carry	*cr;
+
+	if (!(cr = ft_memalloc(sizeof(cr))))
+		ft_error("Malloc couldn't allocate the memory!\n");
+	cr->reg[0] = (unsigned int)(-champ_nbr);
+	cr->next = vm->carriages;
+	vm->carriages = cr;
+}
+
 static void	area_init(t_vm *vm)
 {
 	int		champ_area;
@@ -20,6 +31,7 @@ static void	area_init(t_vm *vm)
 			vm->area[i] = vm->processes[champ_nbr].code[j];
 			i++;
 			j++;
+			carriages_init(vm, champ_nbr + 1);
 		}
 		champ_nbr++;
 	}
@@ -43,5 +55,7 @@ void		vm_init(t_vm *vm)
 	vm->command[13] = &lldi;
 	vm->command[14] = &lfrk;
 	vm->command[15] = &aff;
+	vm->last_alive = vm->champs_count;
+	vm->cycles_to_die = CYCLE_TO_DIE;
 	area_init(vm);
 }
