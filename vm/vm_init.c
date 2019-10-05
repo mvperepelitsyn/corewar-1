@@ -39,22 +39,22 @@ static void	area_init(t_vm *vm)
 
 void		vm_init(t_vm *vm)
 {
-	vm->command[0] = &live;
-	vm->command[1] = &ld;
-	vm->command[2] = &st;
-	vm->command[3] = &add;
-	vm->command[4] = &sub;
-	vm->command[5] = &and;
-	vm->command[6] = &or;
-	vm->command[7] = &xor;
-	vm->command[8] = &zjmp;
-	vm->command[9] = &ldi;
-	vm->command[10] = &sti;
-	vm->command[11] = &frk;
-	vm->command[12] = &lld;
-	vm->command[13] = &lldi;
-	vm->command[14] = &lfrk;
-	vm->command[15] = &aff;
+	vm->command[0] = (t_command) & live;
+	vm->command[1] = (t_command) & ld;
+	vm->command[2] = (t_command) & st;
+	vm->command[3] = (t_command) & add;
+	vm->command[4] = (t_command) & sub;
+	vm->command[5] = (t_command) & and;
+	vm->command[6] = (t_command) & or;
+	vm->command[7] = (t_command) & xor;
+	vm->command[8] = (t_command) & zjmp;
+	vm->command[9] = (t_command) & ldi;
+	vm->command[10] = (t_command) & sti;
+	vm->command[11] = (t_command) & frk;
+	vm->command[12] = (t_command) & lld;
+	vm->command[13] = (t_command) & lldi;
+	vm->command[14] = (t_command) & lfrk;
+	vm->command[15] = (t_command) & aff;
 	vm->last_alive = vm->champs_count;
 	vm->cycles_to_die = CYCLE_TO_DIE;
 	area_init(vm);

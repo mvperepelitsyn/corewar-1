@@ -3,8 +3,7 @@
 NAME = ../corewar
 
 HEAD = ./
-SRC = vm.c vm_init.c auxiliary.c parsing.c game.c check_operation.c commands.c \
-
+SRC = vm.c vm_init.c auxiliary.c parsing.c game.c check_operation.c commands.c
 
 OBJ = $(addprefix $(OBJPATH)/,$(SRC:.c=.o))
 OBJPATH = ./objects
@@ -17,7 +16,7 @@ all: $(NAME)
 
 $(NAME):  $(OBJPATH) $(OBJ)
 	@make -C $(LIBPATH)
-	gcc $(FLAGS) $(OBJ) -o $(NAME) $(LIB)
+	gcc $(FLAGS) $(OBJ) -o $(NAME) -I $(HEAD) $(LIB)
 
 $(OBJPATH):
 	mkdir -p $(OBJPATH)

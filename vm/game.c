@@ -76,7 +76,7 @@ static void	cycle(t_vm *vm)
 		{
 			cr->cmd_code = vm->area[cr->position];
 			if (cr->cmd_code >= 1 && cr->cmd_code <= 16)
-				cr->cycles_before = g_cmd_prms[cr->cmd_code - 1].cycles_before;
+				cr->cycles_before = cmd_prms[cr->cmd_code - 1].cycles_before;
 		}
 		if (cr->cycles_before)
 			cr->cycles_before--;
