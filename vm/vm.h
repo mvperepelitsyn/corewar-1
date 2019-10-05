@@ -73,7 +73,7 @@ typedef struct	s_cycle
 struct			s_vm
 {
 	unsigned char		champs_count;
-	unsigned char		last_alive;//number of last alive champion
+	unsigned int		last_alive;//number of last alive champion
 	unsigned char		*area;
 	unsigned int		cycles_from_start;
 	unsigned int		dump;
@@ -138,6 +138,6 @@ void	ft_error(char *str);
 void	game(t_vm *vm);
 int		check_operation(t_vm *vm, t_carry *cr, t_cycle *cycle);
 void	calc_shift();
-
+void		carriages_init(t_vm *vm, int champ_nbr);
 
 #endif

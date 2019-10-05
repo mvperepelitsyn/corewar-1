@@ -1,6 +1,6 @@
 # include "vm.h"
 
-static void	carriages_init(t_vm *vm, int champ_nbr)
+void		carriages_init(t_vm *vm, int champ_nbr)
 {
 	t_carry	*cr;
 

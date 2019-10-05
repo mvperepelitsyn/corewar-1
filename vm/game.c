@@ -59,7 +59,9 @@ static void	check_game(t_vm *vm)
 		prev = cur;
 		cur = cur->next;
 	}
-	vm->cycles_to_die -= CYCLE_DELTA;
+	if (vm->live_counter >= NBR_LIVE)
+		vm->cycles_to_die -= CYCLE_DELTA;
+	vm->live_counter = 0;
 }
 
 static void	cycle(t_vm *vm)
@@ -74,7 +76,7 @@ static void	cycle(t_vm *vm)
 		{
 			cr->cmd_code = vm->area[cr->position];
 			if (cr->cmd_code >= 1 && cr->cmd_code <= 16)
-				cr->cycles_before = g_cmd_prms[cr->cmd_code].cycles_before;
+				cr->cycles_before = g_cmd_prms[cr->cmd_code - 1].cycles_before;
 		}
 		if (cr->cycles_before)
 			cr->cycles_before--;
