@@ -82,7 +82,7 @@ static void	cycle(t_vm *vm)
 			cr->cycles_before--;
 		cr->jump_len = 1;
 		if (!cr->cycles_before && check_operation(vm, cr, &cycle))
-			vm->command[cr->reg[0] - 1](vm, cr);
+			vm->command[cr->cmd_code - 1](vm, cr);
 		cr->last_live++;
 		cr->position += cr->jump_len;
 		if (cr->position >= MEM_SIZE)
@@ -95,7 +95,10 @@ static void	cycle(t_vm *vm)
 
 void		game(t_vm *vm)
 {
-	while (vm->carriages || (vm->dump && vm->cycles_from_start < vm->dump))
+	// print_game_area(vm);
+	// exit(0);
+	// ft_printf("%u\n", vm->dump);
+	while (vm->carriages)
 	{
 		cycle(vm);
 		vm->cycles_from_start++;
@@ -105,10 +108,14 @@ void		game(t_vm *vm)
 			check_game(vm);
 			vm->ctd_counter = 0;
 		}
+		if (vm->dump && vm->cycles_from_start >= vm->dump)
+			break ;
+		// ft_printf("%u ", vm->cycles_from_start);
 	}
+	ft_printf("\n");
 	if (vm->dump && vm->carriages)
 		print_game_area(vm);
 	else
-		ft_printf("Contestant %uhh, \"%s\", has won !\n", vm->last_alive, \
+		ft_printf("Contestant %hhu, \"%s\", has won !\n", vm->last_alive, \
 			vm->processes[vm->last_alive - 1].cmp_name);
 }
