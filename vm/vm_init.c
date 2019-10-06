@@ -4,7 +4,7 @@ void		carriages_init(t_vm *vm, int champ_nbr)
 {
 	t_carry	*cr;
 
-	if (!(cr = ft_memalloc(sizeof(cr))))
+	if (!(cr = ft_memalloc(sizeof(t_carry))))
 		ft_error("Malloc couldn't allocate the memory!\n");
 	cr->reg[0] = (unsigned int)(-champ_nbr);
 	cr->next = vm->carriages;
@@ -31,8 +31,8 @@ static void	area_init(t_vm *vm)
 			vm->area[i] = vm->processes[champ_nbr].code[j];
 			i++;
 			j++;
-			carriages_init(vm, champ_nbr + 1);
 		}
+		carriages_init(vm, champ_nbr + 1);
 		champ_nbr++;
 	}
 }

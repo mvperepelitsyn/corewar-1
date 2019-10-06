@@ -7,7 +7,7 @@ static void	declare_champs(t_process *p)
 	i = 0;
 	while(p[i].cmp_nbr)
 	{
-		ft_printf("* Player %uhh, weighing %ull bytes, \"%s\" (\"%s\") !\n", \
+		ft_printf("* Player %hhu, weighing %llu bytes, \"%s\" (\"%s\") !\n", \
 			p[i].cmp_nbr, p[i].code_size, p[i].cmp_name, p[i].cmp_cmnt);
 		i++;
 	}
