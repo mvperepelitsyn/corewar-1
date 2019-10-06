@@ -227,8 +227,8 @@ static void	parse_champ(int argc, char **argv, t_vm *vm)
 		else if (ft_strequ(argv[l], "-dump"))
 		{
 			l++;
-			if (/*(vm->dump = ft_atoi(argv[l])) < 0 || */vm->dump != (long long int)
-			ft_latoi(argv[l]))
+			vm->dump = ft_atoi(argv[l]);
+			if (vm->dump != (long long int)ft_latoi(argv[l]))
 				ft_error("Invalid number after after flag -dump.\n");
 		}
 		else
