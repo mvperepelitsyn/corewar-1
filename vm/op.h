@@ -1,22 +1,11 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   op.h                                               :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: zaz <zaz@student.42.fr>                    +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2013/10/04 11:33:27 by zaz               #+#    #+#             */
-/*   Updated: 2019/10/05 19:47:45 by uhand            ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
-
-#ifndef OP_H
-# define OP_H
 
 /*
 ** Toutes les tailles sont en octets.
 ** On part du principe qu'un int fait 32 bits. Est-ce vrai chez vous ?
 */
+
+#ifndef OP_H
+# define OP_H
 
 #define IND_SIZE				2
 #define REG_SIZE				4
@@ -70,6 +59,8 @@
 # define COMMENT_LENGTH			(2048)
 # define COREWAR_EXEC_MAGIC		0xea83f3
 
+#endif
+
 // typedef struct		header_s
 // {
 //   unsigned int		magic;
@@ -77,5 +68,3 @@
 //   unsigned int		prog_size;
 //   char				comment[COMMENT_LENGTH + 1];
 // }					header_t;
-
-#endif

@@ -27,27 +27,27 @@ static void	check_magic_header(int fd)
 
 static void fill_the_name_champ(t_process *chmp, int fd)
 {
-	unsigned char	*champ_name;
+	unsigned char	*cmp_name;
 	char 			*name_null;
 
-	if (!(champ_name = (unsigned char *)ft_memalloc(sizeof(unsigned char) *
+	if (!(cmp_name = (unsigned char *)ft_memalloc(sizeof(unsigned char) *
 			PROG_NAME_LENGTH)))
 		ft_error("Malloc couldn't allocate the memory!\n");
-	if (read(fd, champ_name, PROG_NAME_LENGTH) < 0)
+	if (read(fd, cmp_name, PROG_NAME_LENGTH) < 0)
 		ft_error("There is no name in one of the champ files!\n");
-	chmp->cmp_name = ft_strsub(champ_name, 0, ft_strlen(champ_name));
-	ft_strdel(&champ_name);
-	if (!(champ_name = (unsigned char *)ft_memalloc(sizeof(unsigned char) * 4)))
+	chmp->cmp_name = ft_strsub((char*)cmp_name, 0, ft_strlen((char*)cmp_name));
+	ft_strdel((char**)&cmp_name);
+	if (!(cmp_name = (unsigned char *)ft_memalloc(sizeof(unsigned char) * 4)))
 		ft_error("Malloc couldn't allocate the memory!\n");
-	if (read(fd, champ_name, 4) < 0)
+	if (read(fd, cmp_name, 4) < 0)
 		ft_error("There is no NULL after champ name in one of the champ "
 		   "files!\n");
-	name_null = ft_strsub(champ_name, 0, 4);
+	name_null = ft_strsub((const char*)cmp_name, 0, 4);
 	if (name_null != NULL)
 		ft_error("There is no NULL after champ name in one of the champ "
 		   "files!\n");
 	ft_strdel(&name_null);
-	ft_strdel(&champ_name);
+	ft_strdel((char**)&cmp_name);
 }
 
 static void fill_the_code_size(t_process *chmp, int fd)
@@ -61,33 +61,34 @@ static void fill_the_code_size(t_process *chmp, int fd)
 	chmp->code_size = ((size_t *)rd_code_size)[0];
 	if (ft_islitendian())
 		chmp->code_size = ft_reverseint(chmp->code_size);
-	ft_strdel(&rd_code_size);
+	ft_strdel((char**)&rd_code_size);
 }
 
 static void fill_the_comment(t_process *chmp, int fd)
 {
-	unsigned char	*champ_comment;
+	unsigned char	*cmp_comment;
 	char 			*comment_null;
 
-	if (!(champ_comment = (unsigned char *)ft_memalloc(sizeof(unsigned char) *
+	if (!(cmp_comment = (unsigned char *)ft_memalloc(sizeof(unsigned char) *
 													COMMENT_LENGTH)))
 		ft_error("Malloc couldn't allocate the memory!\n");
-	if (read(fd, champ_comment, COMMENT_LENGTH) < 0)
+	if (read(fd, cmp_comment, COMMENT_LENGTH) < 0)
 		ft_error("There is no comment in one of the champ files!\n");
-	chmp->cmp_cmnt = ft_strsub(champ_comment, 0, ft_strlen(champ_comment));
-	ft_strdel((char**)&champ_comment);
-	if (!(champ_comment = (unsigned char *)ft_memalloc(sizeof(unsigned char) *
+	chmp->cmp_cmnt = ft_strsub((const char*)cmp_comment, 0, \
+		ft_strlen((const char*)cmp_comment));
+	ft_strdel((char**)&cmp_comment);
+	if (!(cmp_comment = (unsigned char *)ft_memalloc(sizeof(unsigned char) *
 			4)))
 		ft_error("Malloc couldn't allocate the memory!\n");
-	if (read(fd, champ_comment, 4) < 0)
+	if (read(fd, cmp_comment, 4) < 0)
 		ft_error("There is no NULL after champ comment in one of the champ "
 				 "files!\n");
-	comment_null = ft_strsub((char*)champ_comment, 0, 4);
+	comment_null = ft_strsub((char*)cmp_comment, 0, 4);
 	if (comment_null != NULL)
 		ft_error("There is no NULL after champ comment in one of the champ "
 				 "files!\n");
 	ft_strdel(&comment_null);
-	ft_strdel((char**)&champ_comment);
+	ft_strdel((char**)&cmp_comment);
 }
 
 static void	fill_the_code(t_process *chmp, int fd)

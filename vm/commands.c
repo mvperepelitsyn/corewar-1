@@ -10,7 +10,7 @@ void	live(t_vm *vm, t_carry *cr)
 	vm->live_counter++;
 	ptr = (unsigned char*)&dir;
 	i = 0;
-	while (i < cmd_prms[cr->cmd_code - 1].dir_size)
+	while (i < g_cmd_prms[cr->cmd_code - 1].dir_size)
 	{
 		ptr[i] = vm->area[cr->position + 1 + i];
 		i++;
