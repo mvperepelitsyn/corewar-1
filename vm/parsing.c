@@ -5,7 +5,7 @@ static void	check_magic_header(int fd)
 	unsigned char	*rd_mag;
 	unsigned char	*cnst_mag;
 	unsigned int	cnst_int_mag;
-	int 			i;
+	int				i;
 
 	i = 0;
 	if (!(rd_mag = (unsigned char *)ft_memalloc(sizeof(unsigned char) * 4)))
@@ -25,106 +25,106 @@ static void	check_magic_header(int fd)
 	free(rd_mag);
 }
 
-static void fill_the_name_champ(t_process *chmp, int fd)
+static void	fill_the_name_champ(t_process *chmp, int fd)
 {
-	unsigned char	*cmp_name;
-	char 			*name_null;
+	unsigned char	*champ_name;
+	char			*name_null;
 
-	if (!(cmp_name = (unsigned char *)ft_memalloc(sizeof(unsigned char) *
+	if (!(champ_name = (unsigned char *)ft_memalloc(sizeof(unsigned char) *
 			PROG_NAME_LENGTH)))
 		ft_error("Malloc couldn't allocate the memory!\n");
-	if (read(fd, cmp_name, PROG_NAME_LENGTH) < 0)
+	if (read(fd, champ_name, PROG_NAME_LENGTH) < 0)
 		ft_error("There is no name in one of the champ files!\n");
-	chmp->cmp_name = ft_strsub((char*)cmp_name, 0, ft_strlen((char*)cmp_name));
-	ft_strdel((char**)&cmp_name);
-	if (!(cmp_name = (unsigned char *)ft_memalloc(sizeof(unsigned char) * 4)))
+	chmp->cmp_name = ft_strsub((char *)champ_name, 0,
+			ft_strlen((char *)champ_name));
+	ft_strdel((char **)&champ_name);
+	if (!(champ_name = (unsigned char *)ft_memalloc(sizeof(unsigned char) * 4)))
 		ft_error("Malloc couldn't allocate the memory!\n");
-	if (read(fd, cmp_name, 4) < 0)
+	if (read(fd, champ_name, 4) < 0)
 		ft_error("There is no NULL after champ name in one of the champ "
-		   "files!\n");
-	name_null = ft_strsub((const char*)cmp_name, 0, 4);
+"files!\n");
+	name_null = ft_strsub((char *)champ_name, 0, 4);
 	if (name_null != NULL)
 		ft_error("There is no NULL after champ name in one of the champ "
-		   "files!\n");
+"files!\n");
 	ft_strdel(&name_null);
-	ft_strdel((char**)&cmp_name);
+	ft_strdel((char **)&champ_name);
 }
 
-static void fill_the_code_size(t_process *chmp, int fd)
+static void	fill_the_code_size(t_process *chmp, int fd)
 {
 	unsigned char	*rd_code_size;
 
-	if (!(rd_code_size = (unsigned char *)ft_memalloc(sizeof(unsigned char) * 4)))
+	if (!(rd_code_size = (unsigned char *)ft_memalloc(sizeof(unsigned char) *
+			4)))
 		ft_error("Malloc couldn't allocate the memory!\n");
 	if (read(fd, rd_code_size, 4) < 0)
 		ft_error("There is nothing instead of the size of executable code!\n");
 	chmp->code_size = ((size_t *)rd_code_size)[0];
 	if (ft_islitendian())
 		chmp->code_size = ft_reverseint(chmp->code_size);
-	ft_strdel((char**)&rd_code_size);
+	ft_strdel((char **)(&rd_code_size));
 }
 
-static void fill_the_comment(t_process *chmp, int fd)
+static void	fill_the_comment(t_process *chmp, int fd)
 {
-	unsigned char	*cmp_comment;
-	char 			*comment_null;
+	unsigned char	*champ_comment;
+	char			*comment_null;
 
-	if (!(cmp_comment = (unsigned char *)ft_memalloc(sizeof(unsigned char) *
+	if (!(champ_comment = (unsigned char *)ft_memalloc(sizeof(unsigned char) *
 													COMMENT_LENGTH)))
 		ft_error("Malloc couldn't allocate the memory!\n");
-	if (read(fd, cmp_comment, COMMENT_LENGTH) < 0)
+	if (read(fd, champ_comment, COMMENT_LENGTH) < 0)
 		ft_error("There is no comment in one of the champ files!\n");
-	chmp->cmp_cmnt = ft_strsub((const char*)cmp_comment, 0, \
-		ft_strlen((const char*)cmp_comment));
-	ft_strdel((char**)&cmp_comment);
-	if (!(cmp_comment = (unsigned char *)ft_memalloc(sizeof(unsigned char) *
+	chmp->cmp_cmnt = ft_strsub((char *)champ_comment, 0,
+			ft_strlen((char *)champ_comment));
+	ft_strdel((char **)&champ_comment);
+	if (!(champ_comment = (unsigned char *)ft_memalloc(sizeof(unsigned char) *
 			4)))
 		ft_error("Malloc couldn't allocate the memory!\n");
-	if (read(fd, cmp_comment, 4) < 0)
+	if (read(fd, champ_comment, 4) < 0)
 		ft_error("There is no NULL after champ comment in one of the champ "
-				 "files!\n");
-	comment_null = ft_strsub((char*)cmp_comment, 0, 4);
+"files!\n");
+	comment_null = ft_strsub((char *)champ_comment, 0, 4);
 	if (comment_null != NULL)
 		ft_error("There is no NULL after champ comment in one of the champ "
-				 "files!\n");
+"files!\n");
 	ft_strdel(&comment_null);
-	ft_strdel((char**)&cmp_comment);
+	ft_strdel((char **)&champ_comment);
 }
 
 static void	fill_the_code(t_process *chmp, int fd)
 {
-	char 	*test;
+	char	*test;
 
 	if (!(chmp->code = (unsigned char *)ft_memalloc(sizeof(unsigned char) *
 			chmp->code_size)))
 		ft_error("Malloc couldn't allocate the memory!\n");
 	if (read(fd, chmp->code, chmp->code_size) < 0)
 		ft_error("There is no executable code to read for one of the "
-		   "champs!\n");
+"champs!\n");
 	test = ft_strnew(1);
 	if (read(fd, test, 1) > 0)
 		ft_error("There is something else, after executable code! "
-		   "Please, get rid of this!\n");
+"Please, get rid of this!\n");
 	ft_strdel(&test);
 }
 
-static void fill_the_champ(t_process *chmp, char *file_name)
+static void	fill_the_champ(t_process *chmp, char *file_name)
 {
-	// char 			*clion_file_name;
-	int				fd;
+	// char	*clion_file_name;
+	int		fd;
 
+		if ((fd = open(file_name, O_RDONLY)) < 0)	//for something real
 	// clion_file_name = ft_strjoin("../", file_name); //only for clion
-	// if ((fd = open(clion_file_name, O_RDONLY)) < 0) //only fo clion
-	if ((fd = open(file_name, O_RDONLY)) < 0)	//for something real
+	// if ((fd = open(clion_file_name, O_RDONLY)) < 0) //only for clion
 		ft_error("There is nothing to open from champ file!\n");
 	check_magic_header(fd);
 	fill_the_name_champ(chmp, fd);
 	fill_the_code_size(chmp, fd);
 	fill_the_comment(chmp, fd);
 	fill_the_code(chmp, fd);
-
 }
-
 
 static void	check_num(t_process *champs, int num, char *champ_name)
 {
@@ -153,16 +153,23 @@ static void	check_num(t_process *champs, int num, char *champ_name)
 	}
 }
 
-static void check_file_and_fill(char *file_name, t_process *chmp, int num)
+static void	check_file_type(char *file_name)
 {
 	int		i;
-	char 	*tmp;
+	char	*tmp;
 
 	i = ft_strlen(file_name);
 	tmp = ft_strsub(file_name, i - 4, 4);
 	if (!ft_strequ(tmp, ".cor"))
 		ft_error("Wrong type of the champion file!\n");
 	ft_strdel(&tmp);
+}
+
+static void	check_file_and_fill(char *file_name, t_process *chmp, int num)
+{
+	int		i;
+
+	check_file_type(file_name);
 	i = 0;
 	if (num != 0)
 	{
@@ -186,7 +193,7 @@ static void check_file_and_fill(char *file_name, t_process *chmp, int num)
 	}
 }
 
-static void how_many_champs(t_vm *vm)
+static void	how_many_champs(t_vm *vm)
 {
 	int i;
 	int j;
@@ -205,7 +212,7 @@ static void how_many_champs(t_vm *vm)
 static void	parse_champ(int argc, char **argv, t_vm *vm)
 {
 	int			l;
-	long int 	num;
+	long int	num;
 
 	l = 1;
 	while (l < argc)
@@ -220,8 +227,8 @@ static void	parse_champ(int argc, char **argv, t_vm *vm)
 		else if (ft_strequ(argv[l], "-dump"))
 		{
 			l++;
-			if ((num = ft_atoi(argv[l])) < 0 || num != (long long int)ft_latoi
-			(argv[l]))
+			if ((num = ft_atoi(argv[l])) < 0 || num != (long long int)
+			ft_latoi(argv[l]))
 				ft_error("Invalid number after after flag -dump.\n");
 		}
 		else
@@ -247,7 +254,7 @@ static void	ft_set_champs_to_null(t_process *champs)
 	}
 }
 
-void		parsing(int argc, char **argv, t_vm	*vm)
+void		parsing(int argc, char **argv, t_vm *vm)
 {
 	if (argc > 15)
 		ft_error("Too many arguments");
