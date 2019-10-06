@@ -97,7 +97,7 @@ void		game(t_vm *vm)
 {
 	// print_game_area(vm);
 	// exit(0);
-	ft_printf("%u\n", vm->dump);
+	// ft_printf("%u\n", vm->dump);
 	while (vm->carriages)
 	{
 		cycle(vm);
@@ -110,7 +110,7 @@ void		game(t_vm *vm)
 		}
 		if (vm->dump && vm->cycles_from_start >= vm->dump)
 			break ;
-		ft_printf("%u ", vm->cycles_from_start);
+		// ft_printf("%u ", vm->cycles_from_start);
 	}
 	ft_printf("\n");
 	if (vm->dump && vm->carriages)

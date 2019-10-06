@@ -139,6 +139,6 @@ void	ft_error(char *str);
 void	game(t_vm *vm);
 int		check_operation(t_vm *vm, t_carry *cr, t_cycle *cycle);
 void	calc_shift();
-void	carriages_init(t_vm *vm, int champ_nbr);
+void	carriages_init(t_vm *vm, int champ_nbr, int position);
 
 #endif
