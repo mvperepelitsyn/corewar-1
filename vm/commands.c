@@ -21,52 +21,52 @@ void	live(t_vm *vm, t_carry *cr)
 	if (dir == cr->reg[0])
 		vm->last_alive = dir;
 	l++;
-	ft_printf("alive!\n");
+	ft_printf("alive! ");
 }
 
 void	ld(t_vm *vm, t_carry *cr)
 {
-	ft_printf("ld\n");
+	ft_printf("ld ");
 }
 
 void	st(t_vm *vm, t_carry *cr)
 {
-	ft_printf("st\n");
+	ft_printf("st ");
 }
 
 void	add(t_vm *vm, t_carry *cr)
 {
-	ft_printf("add\n");
+	ft_printf("add ");
 }
 
 void	sub(t_vm *vm, t_carry *cr)
 {
-	ft_printf("sub\n");
+	ft_printf("sub ");
 }
 
 void	and(t_vm *vm, t_carry *cr)
 {
-	ft_printf("and\n");
+	ft_printf("and ");
 }
 
 void	or(t_vm *vm, t_carry *cr)
 {
-	ft_printf("or\n");
+	ft_printf("or ");
 }
 
 void	xor(t_vm *vm, t_carry *cr)
 {
-	ft_printf("xor\n");
+	ft_printf("xor ");
 }
 
 void	zjmp(t_vm *vm, t_carry *cr)
 {
-	ft_printf("zjmp\n");
+	ft_printf("zjmp ");
 }
 
 void	ldi(t_vm *vm, t_carry *cr)
 {
-	ft_printf("ldi\n");
+	ft_printf("ldi ");
 }
 
 void	sti(t_vm *vm, t_carry *cr)
@@ -77,25 +77,25 @@ void	sti(t_vm *vm, t_carry *cr)
 
 void	frk(t_vm *vm, t_carry *cr)
 {
-	ft_printf("frk\n");
+	ft_printf("frk ");
 }
 
 void	lld(t_vm *vm, t_carry *cr)
 {
-	ft_printf("lld\n");
+	ft_printf("lld ");
 }
 
 void	lldi(t_vm *vm, t_carry *cr)
 {
-	ft_printf("lldi\n");
+	ft_printf("lldi ");
 }
 
 void	lfrk(t_vm *vm, t_carry *cr)
 {
-	ft_printf("lfrk\n");
+	ft_printf("lfrk ");
 }
 
 void	aff(t_vm *vm, t_carry *cr)
 {
-	ft_printf("aff\n");
+	ft_printf("aff ");
 }
