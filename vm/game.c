@@ -73,6 +73,11 @@ static void	check_game(t_vm *vm)
 	vm->live_counter = 0;
 }
 
+static void	lala()
+{
+	//
+}
+
 static void	cycle(t_vm *vm)
 {
 	t_carry	*cr;
@@ -81,6 +86,8 @@ static void	cycle(t_vm *vm)
 	cr = vm->carriages;
 	while (cr)
 	{
+		if (cr->position == 15 && cr->cycles_before == 1)
+			lala();
 		if (!cr->cycles_before)
 		{
 			cr->cmd_code = vm->area[cr->position];

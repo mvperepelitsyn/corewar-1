@@ -5,7 +5,7 @@ void	live(t_vm *vm, t_carry *cr)
 	unsigned int	dir;
 	unsigned char	*ptr;
 	int				i;
-	static int		l;
+	int				*lala;
 
 	cr->last_live = 0;
 	vm->live_counter++;
@@ -20,7 +20,7 @@ void	live(t_vm *vm, t_carry *cr)
 		dir = ft_reverseint(dir);
 	if (dir == cr->reg[0])
 		vm->last_alive = dir;
-	l++;
+	lala = (int*)&dir;
 	ft_printf("alive! ");
 }
 
@@ -71,8 +71,9 @@ void	ldi(t_vm *vm, t_carry *cr)
 
 void	sti(t_vm *vm, t_carry *cr)
 {
-	ft_printf("car %u on %d: sti\tcycle: %u\n", cr->car_nbr, cr->position, \
-		vm->cycles_from_start);
+	// ft_printf("car %u on %d: sti\tcycle: %u\n", cr->car_nbr, cr->position, \
+	// 	vm->cycles_from_start);
+	ft_printf("sti ");
 }
 
 void	frk(t_vm *vm, t_carry *cr)
