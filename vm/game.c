@@ -34,6 +34,7 @@ static void	carriage_remover(t_vm *vm, t_carry *prev, t_carry *cur)
 	ptr = cur->next;
 	free(cur);
 	prev->next = ptr;
+	ft_printf("remove!\n");
 }
 
 static void	check_game(t_vm *vm)
@@ -47,9 +48,11 @@ static void	check_game(t_vm *vm)
 		while (vm->carriages)
 			carriage_remover(vm, prev, vm->carriages);
 	cur = vm->carriages;
+	// ft_printf("ctd: %d | ", vm->cycles_to_die);
 	while (cur)
 	{
 		next = cur->next;
+		// ft_printf("\tcar: %u, last_live: %d", cur->car_nbr, cur->last_live);
 		if (cur->last_live >= vm->cycles_to_die)
 		{
 			carriage_remover(vm, prev, cur);
@@ -59,8 +62,14 @@ static void	check_game(t_vm *vm)
 		prev = cur;
 		cur = cur->next;
 	}
-	if (vm->live_counter >= NBR_LIVE)
+	// ft_printf("\n");
+	if (vm->live_counter >= NBR_LIVE || vm->check_counter >= MAX_CHECKS)
+	{
 		vm->cycles_to_die -= CYCLE_DELTA;
+		vm->check_counter = 0;
+	}
+	else
+		vm->check_counter++;
 	vm->live_counter = 0;
 }
 
@@ -75,20 +84,24 @@ static void	cycle(t_vm *vm)
 		if (!cr->cycles_before)
 		{
 			cr->cmd_code = vm->area[cr->position];
+			// ft_printf("% hhu ", cr->cmd_code);
 			if (cr->cmd_code >= 1 && cr->cmd_code <= 16)
 				cr->cycles_before = g_cmd_prms[cr->cmd_code - 1].cycles_before;
 		}
 		if (cr->cycles_before)
 			cr->cycles_before--;
-		cr->jump_len = 1;
-		if (!cr->cycles_before && check_operation(vm, cr, &cycle))
-			vm->command[cr->cmd_code - 1](vm, cr);
+		if (!cr->cycles_before)
+		{
+			cr->jump_len = 1;
+			if (check_operation(vm, cr, &cycle))
+				vm->command[cr->cmd_code - 1](vm, cr);
+			cr->position += cr->jump_len;
+			if (cr->position >= MEM_SIZE)
+				cr->position -= MEM_SIZE;
+			else if (cr->position < 0)
+				cr->position += MEM_SIZE;
+		}
 		cr->last_live++;
-		cr->position += cr->jump_len;
-		if (cr->position >= MEM_SIZE)
-			cr->position -= MEM_SIZE;
-		else if (cr->position < 0)
-			cr->position += MEM_SIZE;
 		cr = cr->next;
 	}
 }
@@ -105,6 +118,7 @@ void		game(t_vm *vm)
 		vm->ctd_counter++;
 		if (vm->ctd_counter == vm->cycles_to_die || vm->cycles_to_die <= 0)
 		{
+			// ft_printf("lala! ");
 			check_game(vm);
 			vm->ctd_counter = 0;
 		}
