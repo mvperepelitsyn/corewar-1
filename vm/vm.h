@@ -7,7 +7,8 @@
 
 typedef struct s_vm		t_vm;
 typedef struct s_carry	t_carry;
-typedef	void			(*t_command)(t_vm *vm, t_carry *cr);
+typedef struct s_cycle	t_cycle;
+typedef	void			(*t_command)(t_vm *vm, t_carry *cr, t_cycle *cycle);
 
 
 /*
@@ -60,10 +61,10 @@ typedef struct	s_cmd_prms
 ** Current cycle params: cycle
 */
 
-typedef struct	s_cycle
+struct			s_cycle
 {
 	unsigned char		descript[3];//1
-}				t_cycle;
+};
 
 
 /*
@@ -111,22 +112,22 @@ static t_cmd_prms			g_cmd_prms[16] =
 ** Main command's functions:
 */
 
-void	live(t_vm *vm, t_carry *cr);
-void	ld(t_vm *vm, t_carry *cr);
-void	st(t_vm *vm, t_carry *cr);
-void	add(t_vm *vm, t_carry *cr);
-void	sub(t_vm *vm, t_carry *cr);
-void	and(t_vm *vm, t_carry *cr);
-void	or(t_vm *vm, t_carry *cr);
-void	xor(t_vm *vm, t_carry *cr);
-void	zjmp(t_vm *vm, t_carry *cr);
-void	ldi(t_vm *vm, t_carry *cr);
-void	sti(t_vm *vm, t_carry *cr);
-void	frk(t_vm *vm, t_carry *cr);
-void	lld(t_vm *vm, t_carry *cr);
-void	lldi(t_vm *vm, t_carry *cr);
-void	lfrk(t_vm *vm, t_carry *cr);
-void	aff(t_vm *vm, t_carry *cr);
+void	live(t_vm *vm, t_carry *cr, t_cycle *cycle);
+void	ld(t_vm *vm, t_carry *cr, t_cycle *cycle);
+void	st(t_vm *vm, t_carry *cr, t_cycle *cycle);
+void	add(t_vm *vm, t_carry *cr, t_cycle *cycle);
+void	sub(t_vm *vm, t_carry *cr, t_cycle *cycle);
+void	and(t_vm *vm, t_carry *cr, t_cycle *cycle);
+void	or(t_vm *vm, t_carry *cr, t_cycle *cycle);
+void	xor(t_vm *vm, t_carry *cr, t_cycle *cycle);
+void	zjmp(t_vm *vm, t_carry *cr, t_cycle *cycle);
+void	ldi(t_vm *vm, t_carry *cr, t_cycle *cycle);
+void	sti(t_vm *vm, t_carry *cr, t_cycle *cycle);
+void	frk(t_vm *vm, t_carry *cr, t_cycle *cycle);
+void	lld(t_vm *vm, t_carry *cr, t_cycle *cycle);
+void	lldi(t_vm *vm, t_carry *cr, t_cycle *cycle);
+void	lfrk(t_vm *vm, t_carry *cr, t_cycle *cycle);
+void	aff(t_vm *vm, t_carry *cr, t_cycle *cycle);
 
 /*
 ** Common functions:

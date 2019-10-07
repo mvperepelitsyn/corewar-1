@@ -1,6 +1,6 @@
 # include "vm.h"
 
-void	live(t_vm *vm, t_carry *cr)
+void	live(t_vm *vm, t_carry *cr, t_cycle *cycle)
 {
 	unsigned int	dir;
 	unsigned char	*ptr;
@@ -24,78 +24,95 @@ void	live(t_vm *vm, t_carry *cr)
 	ft_printf("alive! ");
 }
 
-void	ld(t_vm *vm, t_carry *cr)
+void	ld(t_vm *vm, t_carry *cr, t_cycle *cycle)
 {
+	unsigned int	dir;
+	unsigned char	*ptr;
+	int 			i;
+
+	i = 0;
+	ptr = (unsigned char *)&dir;
+
+	while (i < g_cmd_prms[cr->cmd_code - 1].dir_size)
+	{
+		ptr[i] = vm->area[cr->position + 1 + i];
+		if (i == 1 && (dir == T_IND || ft_reverseint(dir) == T_IND))
+		{
+
+			break ;
+		}
+		i++;
+	}
 	ft_printf("ld ");
 }
 
-void	st(t_vm *vm, t_carry *cr)
+void	st(t_vm *vm, t_carry *cr, t_cycle *cycle)
 {
 	ft_printf("st ");
 }
 
-void	add(t_vm *vm, t_carry *cr)
+void	add(t_vm *vm, t_carry *cr, t_cycle *cycle)
 {
 	ft_printf("add ");
 }
 
-void	sub(t_vm *vm, t_carry *cr)
+void	sub(t_vm *vm, t_carry *cr, t_cycle *cycle)
 {
 	ft_printf("sub ");
 }
 
-void	and(t_vm *vm, t_carry *cr)
+void	and(t_vm *vm, t_carry *cr, t_cycle *cycle)
 {
 	ft_printf("and ");
 }
 
-void	or(t_vm *vm, t_carry *cr)
+void	or(t_vm *vm, t_carry *cr, t_cycle *cycle)
 {
 	ft_printf("or ");
 }
 
-void	xor(t_vm *vm, t_carry *cr)
+void	xor(t_vm *vm, t_carry *cr, t_cycle *cycle)
 {
 	ft_printf("xor ");
 }
 
-void	zjmp(t_vm *vm, t_carry *cr)
+void	zjmp(t_vm *vm, t_carry *cr, t_cycle *cycle)
 {
 	ft_printf("zjmp ");
 }
 
-void	ldi(t_vm *vm, t_carry *cr)
+void	ldi(t_vm *vm, t_carry *cr, t_cycle *cycle)
 {
 	ft_printf("ldi ");
 }
 
-void	sti(t_vm *vm, t_carry *cr)
+void	sti(t_vm *vm, t_carry *cr, t_cycle *cycle)
 {
 	ft_printf("car %u on %d: sti\tcycle: %u\n", cr->car_nbr, cr->position, \
 		vm->cycles_from_start);
 }
 
-void	frk(t_vm *vm, t_carry *cr)
+void	frk(t_vm *vm, t_carry *cr, t_cycle *cycle)
 {
 	ft_printf("frk ");
 }
 
-void	lld(t_vm *vm, t_carry *cr)
+void	lld(t_vm *vm, t_carry *cr, t_cycle *cycle)
 {
 	ft_printf("lld ");
 }
 
-void	lldi(t_vm *vm, t_carry *cr)
+void	lldi(t_vm *vm, t_carry *cr, t_cycle *cycle)
 {
 	ft_printf("lldi ");
 }
 
-void	lfrk(t_vm *vm, t_carry *cr)
+void	lfrk(t_vm *vm, t_carry *cr, t_cycle *cycle)
 {
 	ft_printf("lfrk ");
 }
 
-void	aff(t_vm *vm, t_carry *cr)
+void	aff(t_vm *vm, t_carry *cr, t_cycle *cycle)
 {
 	ft_printf("aff ");
 }
