@@ -9,6 +9,7 @@ void		carriages_init(t_vm *vm, int champ_nbr, int position)
 	cr->reg[0] = (unsigned int)(-champ_nbr);
 	cr->car_nbr = (unsigned int)champ_nbr;
 	cr->position = position;
+	cr->vm = vm;
 	cr->next = vm->carriages;
 	vm->carriages = cr;
 }

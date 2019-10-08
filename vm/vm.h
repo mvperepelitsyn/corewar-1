@@ -8,7 +8,7 @@
 typedef struct s_vm		t_vm;
 typedef struct s_carry	t_carry;
 typedef struct s_cycle	t_cycle;
-typedef	void			(*t_command)(t_vm *vm, t_carry *cr, t_cycle *cycle);
+typedef	void			(*t_command)(t_carry *cr);
 
 
 /*
@@ -27,6 +27,8 @@ struct	s_carry
 	int					position;//carry position in game memory area
 	unsigned int		color;//carry color (champ color)
 	unsigned int		reg[16];//registr
+	t_cycle				*cycle;
+	t_vm				*vm;
 	struct s_carry		*next;
 };
 
@@ -61,9 +63,11 @@ typedef struct	s_cmd_prms
 ** Current cycle params: cycle
 */
 
-struct			s_cycle
+struct	s_cycle
 {
 	unsigned char		descript[3];//1
+	unsigned char		regs[3];
+	int					shift;
 };
 
 
@@ -85,49 +89,48 @@ struct			s_vm
 	t_carry				*carriages;
 	t_process			processes[MAX_PLAYERS];
 	t_command			command[16];
-
 };
 
 static t_cmd_prms			g_cmd_prms[16] =
 {
-	{1, 4, 0, 1, 10, {T_DIR}},
-	{2, 4, 1, 2, 5, {T_DIR | T_IND, T_REG}},
-	{3, 4, 1, 2, 5, {T_REG, T_IND | T_REG}},
-	{4, 4, 1, 3, 10, {T_REG, T_REG, T_REG}},
-	{5, 4, 1, 3, 10, {T_REG, T_REG, T_REG}},
-	{6, 4, 1, 3, 6, {T_REG | T_DIR | T_IND, T_REG | T_IND | T_DIR, T_REG}},
-	{7, 4, 1, 3, 6, {T_REG | T_IND | T_DIR, T_REG | T_IND | T_DIR, T_REG}},
-	{8, 4, 1, 3, 6, {T_REG | T_IND | T_DIR, T_REG | T_IND | T_DIR, T_REG}},
-	{9, 2, 0, 1, 20, {T_DIR}},
-	{10, 2, 1, 3, 25, {T_REG | T_DIR | T_IND, T_DIR | T_REG, T_REG}},
-	{11, 2, 1, 3, 25, {T_REG, T_REG | T_DIR | T_IND, T_DIR | T_REG}},
-	{12, 2, 0, 1, 800, {T_DIR}},
-	{13, 4, 1, 2, 10, {T_DIR | T_IND, T_REG}},
-	{14, 2, 1, 3, 50, {T_REG | T_DIR | T_IND, T_DIR | T_REG, T_REG}},
-	{15, 2, 0, 1, 1000, {T_DIR}},
-	{16, 4, 1, 1, 2, {T_REG}}
+	{1, 4, 0, 1, 10, {T_DIR}},/*alive*/
+	{2, 4, 1, 2, 5, {T_DIR | T_IND, T_REG}},/*ld*/
+	{3, 4, 1, 2, 5, {T_REG, T_IND | T_REG}},/*st*/
+	{4, 4, 1, 3, 10, {T_REG, T_REG, T_REG}},/*add*/
+	{5, 4, 1, 3, 10, {T_REG, T_REG, T_REG}},/*sub*/
+	{6, 4, 1, 3, 6, {T_REG | T_DIR | T_IND, T_REG | T_IND | T_DIR, T_REG}},/*and*/
+	{7, 4, 1, 3, 6, {T_REG | T_IND | T_DIR, T_REG | T_IND | T_DIR, T_REG}},/*or*/
+	{8, 4, 1, 3, 6, {T_REG | T_IND | T_DIR, T_REG | T_IND | T_DIR, T_REG}},/*xor*/
+	{9, 2, 0, 1, 20, {T_DIR}},/*zjmp*/
+	{10, 2, 1, 3, 25, {T_REG | T_DIR | T_IND, T_DIR | T_REG, T_REG}},/*ldi*/
+	{11, 2, 1, 3, 25, {T_REG, T_REG | T_DIR | T_IND, T_DIR | T_REG}},/*sti*/
+	{12, 2, 0, 1, 800, {T_DIR}},/*frk*/
+	{13, 4, 1, 2, 10, {T_DIR | T_IND, T_REG}},/*lld*/
+	{14, 2, 1, 3, 50, {T_REG | T_DIR | T_IND, T_DIR | T_REG, T_REG}},/*lldi*/
+	{15, 2, 0, 1, 1000, {T_DIR}},/*lfrk*/
+	{16, 4, 1, 1, 2, {T_REG}}/*aff*/
 };
 
 /*
 ** Main command's functions:
 */
 
-void	live(t_vm *vm, t_carry *cr, t_cycle *cycle);
-void	ld(t_vm *vm, t_carry *cr, t_cycle *cycle);
-void	st(t_vm *vm, t_carry *cr, t_cycle *cycle);
-void	add(t_vm *vm, t_carry *cr, t_cycle *cycle);
-void	sub(t_vm *vm, t_carry *cr, t_cycle *cycle);
-void	and(t_vm *vm, t_carry *cr, t_cycle *cycle);
-void	or(t_vm *vm, t_carry *cr, t_cycle *cycle);
-void	xor(t_vm *vm, t_carry *cr, t_cycle *cycle);
-void	zjmp(t_vm *vm, t_carry *cr, t_cycle *cycle);
-void	ldi(t_vm *vm, t_carry *cr, t_cycle *cycle);
-void	sti(t_vm *vm, t_carry *cr, t_cycle *cycle);
-void	frk(t_vm *vm, t_carry *cr, t_cycle *cycle);
-void	lld(t_vm *vm, t_carry *cr, t_cycle *cycle);
-void	lldi(t_vm *vm, t_carry *cr, t_cycle *cycle);
-void	lfrk(t_vm *vm, t_carry *cr, t_cycle *cycle);
-void	aff(t_vm *vm, t_carry *cr, t_cycle *cycle);
+void	live(t_carry *cr);
+void	ld(t_carry *cr);
+void	st(t_carry *cr);
+void	add(t_carry *cr);
+void	sub(t_carry *cr);
+void	and(t_carry *cr);
+void	or(t_carry *cr);
+void	xor(t_carry *cr);
+void	zjmp(t_carry *cr);
+void	ldi(t_carry *cr);
+void	sti(t_carry *cr);
+void	frk(t_carry *cr);
+void	lld(t_carry *cr);
+void	lldi(t_carry *cr);
+void	lfrk(t_carry *cr);
+void	aff(t_carry *cr);
 
 /*
 ** Common functions:
