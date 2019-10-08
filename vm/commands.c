@@ -55,6 +55,9 @@ void	ld(t_carry *cr)
 
 void	st(t_carry *cr)
 {
+	unsigned char	*src;
+	unsigned		*dst;
+	short			indir;
 	ft_printf("st ");
 }
 
