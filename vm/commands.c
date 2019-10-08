@@ -55,11 +55,18 @@ void	ld(t_vm *vm, t_carry *cr)
 
 void	st(t_vm *vm, t_carry *cr)
 {
+	cr->reg[cr->cycle->regs[2]] = cr->reg[cr->cycle->regs[0]] \
+		+ cr->reg[cr->cycle->regs[1]];
+	if (!cr->reg[cr->cycle->regs[2]])
+		cr->carry = 1;
+	else
+		cr->carry = 0;
 	ft_printf("st ");
 }
 
 void	add(t_vm *vm, t_carry *cr)
 {
+
 	ft_printf("add ");
 }
 
