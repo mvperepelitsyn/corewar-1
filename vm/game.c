@@ -48,11 +48,9 @@ static void	check_game(t_vm *vm)
 		while (vm->carriages)
 			carriage_remover(vm, prev, vm->carriages);
 	cur = vm->carriages;
-	// ft_printf("ctd: %d | ", vm->cycles_to_die);
 	while (cur)
 	{
 		next = cur->next;
-		// ft_printf("\tcar: %u, last_live: %d", cur->car_nbr, cur->last_live);
 		if (cur->last_live >= vm->cycles_to_die)
 		{
 			carriage_remover(vm, prev, cur);
@@ -62,7 +60,6 @@ static void	check_game(t_vm *vm)
 		prev = cur;
 		cur = cur->next;
 	}
-	// ft_printf("\n");
 	if (vm->live_counter >= NBR_LIVE || vm->check_counter >= MAX_CHECKS)
 	{
 		vm->cycles_to_die -= CYCLE_DELTA;
@@ -73,11 +70,6 @@ static void	check_game(t_vm *vm)
 	vm->live_counter = 0;
 }
 
-static void	lala()
-{
-	//
-}
-
 static void	cycle(t_vm *vm)
 {
 	t_carry	*cr;
@@ -86,12 +78,11 @@ static void	cycle(t_vm *vm)
 	cr = vm->carriages;
 	while (cr)
 	{
-		if (cr->position == 15 && cr->cycles_before == 1)
-			lala();
+		ft_bzero((void*)&cycle, sizeof(cycle));
+		cr->cycle = &cycle;
 		if (!cr->cycles_before)
 		{
 			cr->cmd_code = vm->area[cr->position];
-			// ft_printf("% hhu ", cr->cmd_code);
 			if (cr->cmd_code >= 1 && cr->cmd_code <= 16)
 				cr->cycles_before = g_cmd_prms[cr->cmd_code - 1].cycles_before;
 		}
@@ -102,11 +93,14 @@ static void	cycle(t_vm *vm)
 			cr->jump_len = 1;
 			if (check_operation(vm, cr, &cycle))
 				vm->command[cr->cmd_code - 1](vm, cr);
-			cr->position += cr->jump_len;
-			if (cr->position >= MEM_SIZE)
-				cr->position -= MEM_SIZE;
-			else if (cr->position < 0)
-				cr->position += MEM_SIZE;
+			if (!cycle.shift)
+			{
+				cr->position += cr->jump_len;
+				if (cr->position >= MEM_SIZE)
+					cr->position -= MEM_SIZE;
+				else if (cr->position < 0)
+					cr->position += MEM_SIZE;
+			}
 		}
 		cr->last_live++;
 		cr = cr->next;

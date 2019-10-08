@@ -7,6 +7,7 @@
 
 typedef struct s_vm		t_vm;
 typedef struct s_carry	t_carry;
+typedef struct s_cycle	t_cycle;
 typedef	void			(*t_command)(t_vm *vm, t_carry *cr);
 
 
@@ -26,6 +27,7 @@ struct	s_carry
 	int					position;//carry position in game memory area
 	unsigned int		color;//carry color (champ color)
 	unsigned int		reg[16];//registr
+	t_cycle				*cycle;
 	struct s_carry		*next;
 };
 
@@ -60,10 +62,12 @@ typedef struct	s_cmd_prms
 ** Current cycle params: cycle
 */
 
-typedef struct	s_cycle
+struct	s_cycle
 {
 	unsigned char		descript[3];//1
-}				t_cycle;
+	unsigned char		regs[3];
+	int					shift;
+};
 
 
 /*
@@ -84,7 +88,6 @@ struct			s_vm
 	t_carry				*carriages;
 	t_process			processes[MAX_PLAYERS];
 	t_command			command[16];
-
 };
 
 static t_cmd_prms			g_cmd_prms[16] =

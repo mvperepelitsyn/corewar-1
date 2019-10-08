@@ -45,7 +45,10 @@ static int	check_reg(t_vm *vm, t_carry *cr, t_cycle *cycle)
 				&& vm->area[cr->position + shift] <= 16))
 			return (0);
 		if (cycle->descript[i] == 1)
+		{
+			cycle->regs[i] = vm->area[cr->position + shift];
 			shift++;
+		}
 		else if (cycle->descript[i] == 2)
 			shift += (int)g_cmd_prms[cr->cmd_code - 1].dir_size;
 		else

@@ -26,6 +26,30 @@ void	live(t_vm *vm, t_carry *cr)
 
 void	ld(t_vm *vm, t_carry *cr)
 {
+	unsigned char	*src;
+	unsigned char	*dst;
+	short			indir;
+
+	src = &vm->area[cr->position + 2];
+	if (cr->cycle->descript[0] == 3)
+	{
+		dst = (unsigned char*)&indir;
+		dst[1] = src[0];
+		dst[0] = src[1];
+		indir %= IDX_MOD;
+		src = &vm->area[cr->position + indir];
+	}
+	dst = (unsigned char*)&cr->reg[cr->cycle->regs[1]];
+	indir = 0;
+	while (indir < REG_SIZE)
+	{
+		dst[REG_SIZE - 1 - indir] = src[indir];
+		indir++;
+	}
+	if (!cr->reg[cr->cycle->regs[1]])
+		cr->carry = 1;
+	else
+		cr->carry = 0;
 	ft_printf("ld ");
 }
 
