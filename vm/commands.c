@@ -128,8 +128,7 @@ void	sub(t_carry *cr)
 	ft_printf("sub ");
 }
 /*
-** Is there any check that in and operation first and second argument would be
-** the same type?
+** It has to be checked carefully!
 */
 void	and(t_carry *cr)
 {
@@ -138,10 +137,18 @@ void	and(t_carry *cr)
 	int 			i;
 	unsigned char	*ptr1;
 	unsigned char	*ptr2;
+	short 			indir1;
+	short 			indir2;
+	unsigned char	*src1;
+	unsigned char	*src2;
 
+	dir1 = 0;
+	dir2 = 0;
 	if (cr->cycle->descript[0] == 1 && cr->cycle->descript[1] == 1)
-		cr->reg[cr->cycle->descript[2]] = cr->reg[cr->cycle->descript[0]] &
-				cr->reg[cr->cycle->descript[1]];
+	{
+		dir1 = cr->reg[cr->cycle->descript[0]];
+		dir2 = cr->reg[cr->cycle->descript[1]];
+	}
 	else if (cr->cycle->descript[0] == 2 && cr->cycle->descript[1] == 2)
 	{
 		i = 0;
@@ -149,8 +156,8 @@ void	and(t_carry *cr)
 		ptr2 = (unsigned char *)&dir2;
 		while (i < g_cmd_prms[cr->cmd_code - 1].dir_size)
 		{
-			ptr1[i] = cr->vm->area[cr->position + 1 + i];
-			ptr2[i] = cr->vm->area[cr->position + 5 + i];
+			ptr1[i] = cr->vm->area[cr->position + 2 + i];
+			ptr2[i] = cr->vm->area[cr->position + 6 + i];
 			i++;
 		}
 		if (ft_islitendian())
@@ -158,23 +165,167 @@ void	and(t_carry *cr)
 			dir1 = ft_reverseint(dir1);
 			dir2 = ft_reverseint(dir2);
 		}
-		cr->reg[cr->cycle->descript[2]] = dir1 & dir2;
 	}
 	else if (cr->cycle->descript[0] == 3 && cr->cycle->descript[1] == 3)
 	{
-		
+		src1 = &cr->vm->area[cr->position + 2];
+		src2 = &cr->vm->area[cr->position + 4];
+		ptr1 = (unsigned char *)&indir1;
+		ptr2 = (unsigned char *)&indir2;
+		short_ind(ptr1, src1);
+		short_ind(ptr2, src2);
+		indir1 = indir_position(indir1, cr);
+		indir2 = indir_position(indir2, cr);
+		src1 = &cr->vm->area[indir1];
+		src2 = &cr->vm->area[indir2];
+		i = 0;
+		ptr1 = (unsigned char *)&dir1;
+		ptr2 = (unsigned char *)&dir2;
+		while (i < g_cmd_prms[cr->cmd_code - 1].dir_size)
+		{
+			ptr1[i] = src1[i];
+			ptr2[i] = src2[i];
+			i++;
+		}
 	}
+	cr->reg[cr->cycle->descript[2]] = dir1 & dir2;
+	if (!cr->reg[cr->cycle->regs[2]])
+		cr->carry = 1;
+	else
+		cr->carry = 0;
 	ft_printf("and ");
 }
 
 void	or(t_carry *cr)
 {
-	ft_printf("or ");
+	unsigned int	dir1;
+	unsigned int	dir2;
+	int 			i;
+	unsigned char	*ptr1;
+	unsigned char	*ptr2;
+	short 			indir1;
+	short 			indir2;
+	unsigned char	*src1;
+	unsigned char	*src2;
+
+	dir1 = 0;
+	dir2 = 0;
+	if (cr->cycle->descript[0] == 1 && cr->cycle->descript[1] == 1)
+	{
+		dir1 = cr->reg[cr->cycle->descript[0]];
+		dir2 = cr->reg[cr->cycle->descript[1]];
+	}
+	else if (cr->cycle->descript[0] == 2 && cr->cycle->descript[1] == 2)
+	{
+		i = 0;
+		ptr1 = (unsigned char *)&dir1;
+		ptr2 = (unsigned char *)&dir2;
+		while (i < g_cmd_prms[cr->cmd_code - 1].dir_size)
+		{
+			ptr1[i] = cr->vm->area[cr->position + 2 + i];
+			ptr2[i] = cr->vm->area[cr->position + 6 + i];
+			i++;
+		}
+		if (ft_islitendian())
+		{
+			dir1 = ft_reverseint(dir1);
+			dir2 = ft_reverseint(dir2);
+		}
+	}
+	else if (cr->cycle->descript[0] == 3 && cr->cycle->descript[1] == 3)
+	{
+		src1 = &cr->vm->area[cr->position + 2];
+		src2 = &cr->vm->area[cr->position + 4];
+		ptr1 = (unsigned char *)&indir1;
+		ptr2 = (unsigned char *)&indir2;
+		short_ind(ptr1, src1);
+		short_ind(ptr2, src2);
+		indir1 = indir_position(indir1, cr);
+		indir2 = indir_position(indir2, cr);
+		src1 = &cr->vm->area[indir1];
+		src2 = &cr->vm->area[indir2];
+		i = 0;
+		ptr1 = (unsigned char *)&dir1;
+		ptr2 = (unsigned char *)&dir2;
+		while (i < g_cmd_prms[cr->cmd_code - 1].dir_size)
+		{
+			ptr1[i] = src1[i];
+			ptr2[i] = src2[i];
+			i++;
+		}
+	}
+	cr->reg[cr->cycle->descript[2]] = dir1 | dir2;
+	if (!cr->reg[cr->cycle->regs[2]])
+		cr->carry = 1;
+	else
+		cr->carry = 0;
+	ft_printf("and ");	ft_printf("or ");
 }
 
 void	xor(t_carry *cr)
 {
-	ft_printf("xor ");
+	unsigned int	dir1;
+	unsigned int	dir2;
+	int 			i;
+	unsigned char	*ptr1;
+	unsigned char	*ptr2;
+	short 			indir1;
+	short 			indir2;
+	unsigned char	*src1;
+	unsigned char	*src2;
+
+	dir1 = 0;
+	dir2 = 0;
+	if (cr->cycle->descript[0] == 1 && cr->cycle->descript[1] == 1)
+	{
+		dir1 = cr->reg[cr->cycle->descript[0]];
+		dir2 = cr->reg[cr->cycle->descript[1]];
+	}
+	else if (cr->cycle->descript[0] == 2 && cr->cycle->descript[1] == 2)
+	{
+		i = 0;
+		ptr1 = (unsigned char *)&dir1;
+		ptr2 = (unsigned char *)&dir2;
+		while (i < g_cmd_prms[cr->cmd_code - 1].dir_size)
+		{
+			ptr1[i] = cr->vm->area[cr->position + 2 + i];
+			ptr2[i] = cr->vm->area[cr->position + 6 + i];
+			i++;
+		}
+		if (ft_islitendian())
+		{
+			dir1 = ft_reverseint(dir1);
+			dir2 = ft_reverseint(dir2);
+		}
+	}
+	else if (cr->cycle->descript[0] == 3 && cr->cycle->descript[1] == 3)
+	{
+		src1 = &cr->vm->area[cr->position + 2];
+		src2 = &cr->vm->area[cr->position + 4];
+		ptr1 = (unsigned char *)&indir1;
+		ptr2 = (unsigned char *)&indir2;
+		short_ind(ptr1, src1);
+		short_ind(ptr2, src2);
+		indir1 = indir_position(indir1, cr);
+		indir2 = indir_position(indir2, cr);
+		src1 = &cr->vm->area[indir1];
+		src2 = &cr->vm->area[indir2];
+		i = 0;
+		ptr1 = (unsigned char *)&dir1;
+		ptr2 = (unsigned char *)&dir2;
+		while (i < g_cmd_prms[cr->cmd_code - 1].dir_size)
+		{
+			ptr1[i] = src1[i];
+			ptr2[i] = src2[i];
+			i++;
+		}
+	}
+	cr->reg[cr->cycle->descript[2]] = dir1 ^ dir2;
+	if (!cr->reg[cr->cycle->regs[2]])
+		cr->carry = 1;
+	else
+		cr->carry = 0;
+	ft_printf("and ");	ft_printf("xor ");
 }
 
 void	zjmp(t_carry *cr)
