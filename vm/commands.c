@@ -37,7 +37,12 @@ void	ld(t_carry *cr)
 		dst[1] = src[0];
 		dst[0] = src[1];
 		indir %= IDX_MOD;
-		src = &cr->vm->area[cr->position + indir];
+		indir += cr->position;
+		if (indir < 0)
+			indir += MEM_SIZE;
+		else if (indir >= MEM_SIZE)
+			indir -= MEM_SIZE;
+		src = &cr->vm->area[indir];
 	}
 	dst = (unsigned char*)&cr->reg[cr->cycle->regs[1]];
 	indir = 0;
@@ -109,6 +114,10 @@ void	zjmp(t_carry *cr)
 	dst[0] = src[1];
 	dir %= IDX_MOD;
 	cr->position += dir;
+	if (cr->position < 0)
+		cr->position += MEM_SIZE;
+	else if (cr->position >= MEM_SIZE)
+		cr->position -= MEM_SIZE;
 	cr->cycle->shift = 1;
 	ft_printf("zjmp ");
 }
