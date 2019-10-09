@@ -138,16 +138,7 @@ void	zjmp(t_carry *cr)
 		return ;
 	dst = (unsigned char*)&dir;
 	src = (unsigned char*)&cr->vm->area[cr->position + 1];
-	if (ft_islitendian())
-	{
-		dst[1] = src[0];
-		dst[0] = src[1];
-	}
-	else
-	{
-		dst[0] = src[0];
-		dst[1] = src[1];
-	}
+	short_ind(dst, src);
 	dir %= IDX_MOD;
 	cr->position += dir;
 	if (cr->position < 0)
@@ -160,13 +151,22 @@ void	zjmp(t_carry *cr)
 
 void	ldi(t_carry *cr)
 {
+	short dir1;
+	short dir2;
+
+	dir1 = get_param(cr, 0);
+	dir2 = get_param(cr, 1);
+	cr->reg[cr->cycle->descript[2]] = cr->position + (dir1 + dir2) % IDX_MOD;
 	ft_printf("ldi ");
 }
 
 void	sti(t_carry *cr)
 {
+	short dir1;
+	short dir2;
 	// ft_printf("car %u on %d: sti\tcycle: %u\n", cr->car_nbr, cr->position, \
 	// 	vm->cycles_from_start);
+
 	ft_printf("sti ");
 }
 

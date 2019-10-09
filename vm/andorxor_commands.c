@@ -16,7 +16,8 @@ static short	help_andorxor(t_carry *cr, short toggle,
 		while (i < g_cmd_prms[cr->cmd_code - 1].dir_size)
 		{
 			dest[i] = (toggle == 0) ? cr->vm->area[cr->position + 2 + i] :
-					cr->vm->area[cr->position + 6 + i];
+					cr->vm->area[cr->position + 2 + g_cmd_prms[cr->cmd_code -
+					1].dir_size + i];
 			i++;
 		}
 	}
@@ -33,7 +34,7 @@ static short	help_andorxor(t_carry *cr, short toggle,
 	return (dir);
 }
 
-static short	andorxor(t_carry *cr, short toggle)
+short			get_param(t_carry *cr, short toggle)
 {
 	unsigned int	dir;
 	unsigned char	*dest;
@@ -67,8 +68,8 @@ void			and(t_carry *cr)
 	unsigned int	dir1;
 	unsigned int	dir2;
 
-	dir1 = andorxor(cr, 0);
-	dir2 = andorxor(cr, 1);
+	dir1 = get_param(cr, 0);
+	dir2 = get_param(cr, 1);
 	cr->reg[cr->cycle->descript[2]] = dir1 & dir2;
 	if (!cr->reg[cr->cycle->regs[2]])
 		cr->carry = 1;
@@ -82,8 +83,8 @@ void			or(t_carry *cr)
 	unsigned int	dir1;
 	unsigned int	dir2;
 
-	dir1 = andorxor(cr, 0);
-	dir2 = andorxor(cr, 1);
+	dir1 = get_param(cr, 0);
+	dir2 = get_param(cr, 1);
 	cr->reg[cr->cycle->descript[2]] = dir1 | dir2;
 	if (!cr->reg[cr->cycle->regs[2]])
 		cr->carry = 1;
@@ -97,8 +98,8 @@ void			xor(t_carry *cr)
 	unsigned int	dir1;
 	unsigned int	dir2;
 
-	dir1 = andorxor(cr, 0);
-	dir2 = andorxor(cr, 1);
+	dir1 = get_param(cr, 0);
+	dir2 = get_param(cr, 1);
 	cr->reg[cr->cycle->descript[2]] = dir1 ^ dir2;
 	if (!cr->reg[cr->cycle->regs[2]])
 		cr->carry = 1;
