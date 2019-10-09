@@ -34,8 +34,16 @@ void	ld(t_carry *cr)
 	if (cr->cycle->descript[0] == 3)
 	{
 		dst = (unsigned char*)&indir;
-		dst[1] = src[0];
-		dst[0] = src[1];
+		if (ft_islitendian())
+		{
+			dst[1] = src[0];
+			dst[0] = src[1];
+		}
+		else
+		{
+			dst[0] = src[0];
+			dst[1] = src[1];
+		}
 		indir %= IDX_MOD;
 		src = &cr->vm->area[cr->position + indir];
 	}
@@ -55,9 +63,36 @@ void	ld(t_carry *cr)
 
 void	st(t_carry *cr)
 {
+	unsigned char	*dst;
 	unsigned char	*src;
-	unsigned		*dst;
 	short			indir;
+	int 			i;
+
+	if (cr->cycle->descript[1] == 1)
+		cr->reg[cr->cycle->regs[1]] = cr->reg[cr->cycle->regs[0]];
+	else
+	{
+		i = 0;
+		src = &cr->vm->area[cr->position + 3];
+		dst = (unsigned char *)&indir;
+		if (ft_islitendian())
+		{
+			dst[1] = src[0];
+			dst[0] = src[1];
+		}
+		else
+		{
+			dst[0] = src[0];
+			dst[1] = src[1];
+		}
+		indir %= IDX_MOD;
+		src = (unsigned char *)&(cr->reg[cr->cycle->regs[0]]);
+		while (i < REG_SIZE)
+		{
+			cr->vm->area[cr->position + indir + i] = src[i];
+			i++;
+		}
+	}
 	ft_printf("st ");
 }
 
@@ -82,9 +117,43 @@ void	sub(t_carry *cr)
 		cr->carry = 0;
 	ft_printf("sub ");
 }
-
+/*
+** Is there any check that in and operation first and second argument would be
+** the same type?
+*/
 void	and(t_carry *cr)
 {
+	unsigned int	dir1;
+	unsigned int	dir2;
+	int 			i;
+	unsigned char	*ptr1;
+	unsigned char	*ptr2;
+
+	if (cr->cycle->descript[0] == 1 && cr->cycle->descript[1] == 1)
+		cr->reg[cr->cycle->descript[2]] = cr->reg[cr->cycle->descript[0]] &
+				cr->reg[cr->cycle->descript[1]];
+	else if (cr->cycle->descript[0] == 2 && cr->cycle->descript[1] == 2)
+	{
+		i = 0;
+		ptr1 = (unsigned char *)&dir1;
+		ptr2 = (unsigned char *)&dir2;
+		while (i < g_cmd_prms[cr->cmd_code - 1].dir_size)
+		{
+			ptr1[i] = cr->vm->area[cr->position + 1 + i];
+			ptr2[i] = cr->vm->area[cr->position + 5 + i];
+			i++;
+		}
+		if (ft_islitendian())
+		{
+			dir1 = ft_reverseint(dir1);
+			dir2 = ft_reverseint(dir2);
+		}
+		cr->reg[cr->cycle->descript[2]] = dir1 & dir2;
+	}
+	else if (cr->cycle->descript[0] == 3 && cr->cycle->descript[1] == 3)
+	{
+		
+	}
 	ft_printf("and ");
 }
 
@@ -150,5 +219,6 @@ void	lfrk(t_carry *cr)
 
 void	aff(t_carry *cr)
 {
+	ft_printf("%c", (char)(cr->reg[cr->cycle->regs[0]]));
 	ft_printf("aff ");
 }
