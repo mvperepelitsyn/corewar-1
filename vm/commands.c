@@ -338,8 +338,16 @@ void	zjmp(t_carry *cr)
 		return ;
 	dst = (unsigned char*)&dir;
 	src = (unsigned char*)&cr->vm->area[cr->position + 1];
-	dst[1] = src[0];
-	dst[0] = src[1];
+	if (ft_islitendian())
+	{
+		dst[1] = src[0];
+		dst[0] = src[1];
+	}
+	else
+	{
+		dst[0] = src[0];
+		dst[1] = src[1];
+	}
 	dir %= IDX_MOD;
 	cr->position += dir;
 	if (cr->position < 0)
@@ -362,8 +370,54 @@ void	sti(t_carry *cr)
 	ft_printf("sti ");
 }
 
+static void	copy_carriage(t_carry *cr_src, short dir)
+{
+	t_carry	*cr;
+	int		i;
+
+	if (!(cr = ft_memalloc(sizeof(t_carry))))
+		ft_error("Malloc couldn't allocate the memory!\n");
+	i = 0;
+	while (i < 16)
+	{
+		cr->reg[i] = cr_src->reg[i];
+		i++;
+	}
+	cr->car_nbr = ++cr_src->vm->car_count;
+	cr->position = dir;
+	cr->vm = cr_src->vm;
+	cr->carry = cr_src->carry;
+	cr->last_live = cr_src->last_live;
+	cr->color = cr_src->color;
+	cr->next = cr->vm->carriages;
+	cr->vm->carriages = cr;
+}
+
 void	frk(t_carry *cr)
 {
+	short			dir;
+	unsigned char	*src;
+	unsigned char	*dst;
+
+	src = &cr->vm->area[cr->position + 1];
+	dst = (unsigned char*)&dir;
+	if (ft_islitendian())
+	{
+		dst[1] = src[0];
+		dst[0] = src[1];
+	}
+	else
+	{
+		dst[0] = src[0];
+		dst[1] = src[1];
+	}
+	dir %= IDX_MOD;
+	dir += cr->position;
+	if (dir < 0)
+		dir += MEM_SIZE;
+	else if (dir >= MEM_SIZE)
+		dir -= MEM_SIZE;
+	copy_carriage(cr, dir);
 	ft_printf("frk ");
 }
 
@@ -379,7 +433,29 @@ void	lldi(t_carry *cr)
 
 void	lfrk(t_carry *cr)
 {
-	ft_printf("lfrk ");
+	short			dir;
+	unsigned char	*src;
+	unsigned char	*dst;
+
+	src = &cr->vm->area[cr->position + 1];
+	dst = (unsigned char*)&dir;
+	if (ft_islitendian())
+	{
+		dst[1] = src[0];
+		dst[0] = src[1];
+	}
+	else
+	{
+		dst[0] = src[0];
+		dst[1] = src[1];
+	}
+	dir += cr->position;
+	if (dir < 0)
+		dir += MEM_SIZE;
+	else if (dir >= MEM_SIZE)
+		dir -= MEM_SIZE;
+	copy_carriage(cr, dir);
+	ft_printf("frk ");
 }
 
 void	aff(t_carry *cr)

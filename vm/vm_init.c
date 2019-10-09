@@ -12,6 +12,7 @@ void		carriages_init(t_vm *vm, int champ_nbr, int position)
 	cr->vm = vm;
 	cr->next = vm->carriages;
 	vm->carriages = cr;
+	vm->car_count++;
 }
 
 static void	area_init(t_vm *vm)

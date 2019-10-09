@@ -18,7 +18,7 @@ typedef	void			(*t_command)(t_carry *cr);
 struct	s_carry
 {
 	unsigned int		car_nbr;//carry number
-	unsigned char		alive;// are you still alive?
+	unsigned char		alive;// are you still alive? <- check it var please
 	unsigned char		carry;//flag "carry"
 	unsigned char		cmd_code;//current operation code
 	unsigned char		jump_len;//bytes to second instruction
@@ -78,6 +78,7 @@ struct	s_cycle
 struct			s_vm
 {
 	unsigned char		champs_count;
+	unsigned int		car_count;
 	unsigned int		last_alive;//number of last alive champion
 	unsigned char		*area;
 	unsigned int		cycles_from_start;
