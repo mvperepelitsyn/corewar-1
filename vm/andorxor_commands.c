@@ -4,59 +4,49 @@
 
 #include "vm.h"
 
-static short	help_andorxor(t_carry *cr, short toggle,
-		unsigned const char *src, int i)
+static short	help_andorxor(t_carry *cr, unsigned const char *src, int i)
 {
 	unsigned char	*dest;
-	short			dir;
+	unsigned int	prm;
 
-	dest = (unsigned char *)&dir;
-	if (src == NULL)
+	dest = (unsigned char *)&prm;
+	while (i < g_cmd_prms[cr->cmd_code - 1].dir_size)
 	{
-		while (i < g_cmd_prms[cr->cmd_code - 1].dir_size)
-		{
-			dest[i] = (toggle == 0) ? cr->vm->area[cr->position + 2 + i] :
-					cr->vm->area[cr->position + 2 + g_cmd_prms[cr->cmd_code -
-					1].dir_size + i];
-			i++;
-		}
-	}
-	else
-	{
-		while (i < g_cmd_prms[cr->cmd_code - 1].dir_size)
-		{
-			dest[i] = src[i];
-			i++;
-		}
+		dest[i] = src[i];
+		i++;
 	}
 	if (ft_islitendian())
-		dir = ft_reverseint(dir);
-	return (dir);
+		prm = ft_reverseint(prm);
+	return (prm);
 }
 
-short			get_param(t_carry *cr, short toggle)
+unsigned int	get_param(t_carry *cr, short toggle)
 {
-	unsigned int	dir;
+	unsigned int	prm;
 	unsigned char	*dest;
-	short			in;
+	short			indir;
 	unsigned char	*src;
 
-	dir = 0;
+	prm = 0;
 	if (cr->cycle->descript[toggle] == 1)
-		dir = cr->reg[cr->cycle->descript[toggle]];
+		prm = cr->reg[cr->cycle->descript[toggle]];
 	else if (cr->cycle->descript[toggle] == 2)
-		dir = help_andorxor(cr, toggle, NULL, 0);
+	{
+		src = (toggle == 0) ? &cr->vm->area[cr->position + 2] : &cr->vm->area[cr
+					->position + 2 + g_cmd_prms[cr->cmd_code - 1].dir_size];
+		prm = help_andorxor(cr, src, 0);
+	}
 	else if (cr->cycle->descript[toggle] == 3)
 	{
 		src = (toggle == 0) ? &cr->vm->area[cr->position + 2] :
 			&cr->vm->area[cr->position + 4];
-		dest = (unsigned char *)&in;
+		dest = (unsigned char *)&indir;
 		short_ind(dest, src);
-		in = indir_position(in, cr);
-		src = &cr->vm->area[in];
-		dir = help_andorxor(cr, toggle, src, 0);
+		indir = indir_position(indir, cr);
+		src = &cr->vm->area[indir];
+		prm = help_andorxor(cr, src, 0);
 	}
-	return (dir);
+	return (prm);
 }
 
 /*
@@ -65,12 +55,12 @@ short			get_param(t_carry *cr, short toggle)
 
 void			and(t_carry *cr)
 {
-	unsigned int	dir1;
-	unsigned int	dir2;
+	unsigned int	prm1;
+	unsigned int	prm2;
 
-	dir1 = get_param(cr, 0);
-	dir2 = get_param(cr, 1);
-	cr->reg[cr->cycle->descript[2]] = dir1 & dir2;
+	prm1 = get_param(cr, 0);
+	prm2 = get_param(cr, 1);
+	cr->reg[cr->cycle->descript[2]] = prm1 & prm2;
 	if (!cr->reg[cr->cycle->regs[2]])
 		cr->carry = 1;
 	else
@@ -80,12 +70,12 @@ void			and(t_carry *cr)
 
 void			or(t_carry *cr)
 {
-	unsigned int	dir1;
-	unsigned int	dir2;
+	unsigned int	prm1;
+	unsigned int	prm2;
 
-	dir1 = get_param(cr, 0);
-	dir2 = get_param(cr, 1);
-	cr->reg[cr->cycle->descript[2]] = dir1 | dir2;
+	prm1 = get_param(cr, 0);
+	prm2 = get_param(cr, 1);
+	cr->reg[cr->cycle->descript[2]] = prm1 | prm2;
 	if (!cr->reg[cr->cycle->regs[2]])
 		cr->carry = 1;
 	else
@@ -95,12 +85,12 @@ void			or(t_carry *cr)
 
 void			xor(t_carry *cr)
 {
-	unsigned int	dir1;
-	unsigned int	dir2;
+	unsigned int	prm1;
+	unsigned int	prm2;
 
-	dir1 = get_param(cr, 0);
-	dir2 = get_param(cr, 1);
-	cr->reg[cr->cycle->descript[2]] = dir1 ^ dir2;
+	prm1 = get_param(cr, 0);
+	prm2 = get_param(cr, 1);
+	cr->reg[cr->cycle->descript[2]] = prm1 ^ prm2;
 	if (!cr->reg[cr->cycle->regs[2]])
 		cr->carry = 1;
 	else
