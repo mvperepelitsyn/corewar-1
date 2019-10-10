@@ -301,6 +301,12 @@ void	lld(t_carry *cr)
 
 void	lldi(t_carry *cr)
 {
+	unsigned int	prm1;
+	unsigned int	prm2;
+
+	prm1 = get_param(cr, 0);
+	prm2 = get_param(cr, 1);
+	cr->reg[cr->cycle->descript[2]] = cr->position + (prm1 + prm2);
 	ft_printf("lldi ");
 }
 
