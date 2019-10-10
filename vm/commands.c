@@ -272,7 +272,43 @@ void	frk(t_carry *cr)
 
 void	lld(t_carry *cr)
 {
-	ft_printf("lld ");
+	unsigned char	*src;
+	unsigned char	*dst;
+	short			indir;
+
+	src = &cr->vm->area[cr->position + 2];
+	if (cr->cycle->descript[0] == 3)
+	{
+		dst = (unsigned char*)&indir;
+		if (ft_islitendian())
+		{
+			dst[1] = src[0];
+			dst[0] = src[1];
+		}
+		else
+		{
+			dst[0] = src[0];
+			dst[1] = src[1];
+		}
+		indir += cr->position;
+		if (indir < 0)
+			indir += MEM_SIZE;
+		else if (indir >= MEM_SIZE)
+			indir -= MEM_SIZE;
+		src = &cr->vm->area[indir];
+	}
+	dst = (unsigned char*)&cr->reg[cr->cycle->regs[1]];
+	indir = 0;
+	while (indir < REG_SIZE)
+	{
+		dst[REG_SIZE - 1 - indir] = src[indir];
+		indir++;
+	}
+	if (!cr->reg[cr->cycle->regs[1]])
+		cr->carry = 1;
+	else
+		cr->carry = 0;
+	ft_printf("ld ");
 }
 
 void	lldi(t_carry *cr)
