@@ -4,7 +4,7 @@ NAME = corewar
 
 HEAD = ./
 SRC = vm.c vm_init.c auxiliary.c parsing.c game.c check_operation.c commands.c
-andorxor_commands.c
+commands_utillities.c
 
 OBJ = $(addprefix $(OBJPATH)/,$(SRC:.c=.o))
 OBJPATH = ./objects

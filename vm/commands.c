@@ -34,22 +34,8 @@ void	ld(t_carry *cr)
 	if (cr->cycle->descript[0] == 3)
 	{
 		dst = (unsigned char*)&indir;
-		if (ft_islitendian())
-		{
-			dst[1] = src[0];
-			dst[0] = src[1];
-		}
-		else
-		{
-			dst[0] = src[0];
-			dst[1] = src[1];
-		}
-		indir %= IDX_MOD;
-		indir += cr->position;
-		if (indir < 0)
-			indir += MEM_SIZE;
-		else if (indir >= MEM_SIZE)
-			indir -= MEM_SIZE;
+		short_ind(dst, src);
+		indir = indir_position(indir, cr);
 		src = &cr->vm->area[indir];
 	}
 	dst = (unsigned char*)&cr->reg[cr->cycle->regs[1]];
@@ -80,22 +66,8 @@ void	st(t_carry *cr)
 		i = 0;
 		src = &cr->vm->area[cr->position + 3];
 		dst = (unsigned char *)&indir;
-		if (ft_islitendian())
-		{
-			dst[1] = src[0];
-			dst[0] = src[1];
-		}
-		else
-		{
-			dst[0] = src[0];
-			dst[1] = src[1];
-		}
-		indir %= IDX_MOD;
-		indir += cr->position;
-		if (indir < 0)
-			indir += MEM_SIZE;
-		else if (indir >= MEM_SIZE)
-			indir -= MEM_SIZE;
+		short_ind(dst, src);
+		indir = indir_position(indir, cr);
 		src = (unsigned char *)&(cr->reg[cr->cycle->regs[0]]);
 		while (i < REG_SIZE)
 		{
@@ -128,6 +100,52 @@ void	sub(t_carry *cr)
 	ft_printf("sub ");
 }
 
+void	and(t_carry *cr)
+{
+	unsigned int	prm1;
+	unsigned int	prm2;
+
+	prm1 = get_param(cr, 0);
+	prm2 = get_param(cr, 1);
+	cr->reg[cr->cycle->descript[2]] = prm1 & prm2;
+	if (!cr->reg[cr->cycle->regs[2]])
+		cr->carry = 1;
+	else
+		cr->carry = 0;
+	ft_printf("and ");
+}
+
+void	or(t_carry *cr)
+{
+	unsigned int	prm1;
+	unsigned int	prm2;
+
+	prm1 = get_param(cr, 0);
+	prm2 = get_param(cr, 1);
+	cr->reg[cr->cycle->descript[2]] = prm1 | prm2;
+	if (!cr->reg[cr->cycle->regs[2]])
+		cr->carry = 1;
+	else
+		cr->carry = 0;
+	ft_printf("or ");
+}
+
+void	xor(t_carry *cr)
+{
+	unsigned int	prm1;
+	unsigned int	prm2;
+
+	prm1 = get_param(cr, 0);
+	prm2 = get_param(cr, 1);
+	cr->reg[cr->cycle->descript[2]] = prm1 ^ prm2;
+	if (!cr->reg[cr->cycle->regs[2]])
+		cr->carry = 1;
+	else
+		cr->carry = 0;
+	ft_printf("xor ");
+}
+
+
 void	zjmp(t_carry *cr)
 {
 	short			dir;
@@ -151,22 +169,41 @@ void	zjmp(t_carry *cr)
 
 void	ldi(t_carry *cr)
 {
-	short dir1;
-	short dir2;
+	unsigned int	prm1;
+	unsigned int	prm2;
 
-	dir1 = get_param(cr, 0);
-	dir2 = get_param(cr, 1);
-	cr->reg[cr->cycle->descript[2]] = cr->position + (dir1 + dir2) % IDX_MOD;
+	prm1 = get_param(cr, 0);
+	prm2 = get_param(cr, 1);
+	cr->reg[cr->cycle->descript[2]] = cr->position + (prm1 + prm2) % IDX_MOD;
 	ft_printf("ldi ");
 }
 
 void	sti(t_carry *cr)
 {
-	short dir1;
-	short dir2;
 	// ft_printf("car %u on %d: sti\tcycle: %u\n", cr->car_nbr, cr->position, \
 	// 	vm->cycles_from_start);
 
+	unsigned char	*dst;
+	unsigned char	*src;
+	short			indir;
+	int 			i;
+
+	i = cr->position + (get_param(cr, 1) + get_param3(cr)) % IDX_MOD;
+	if (i < 0)
+		i += MEM_SIZE;
+	else if (i >= MEM_SIZE)
+		i -= MEM_SIZE;
+	src = &cr->vm->area[i];
+	i = 0;
+	dst = (unsigned char *)&indir;
+	short_ind(dst, src);
+	indir = indir_position(indir, cr);
+	src = (unsigned char *)&(cr->reg[cr->cycle->regs[0]]);
+	while (i < REG_SIZE)
+	{
+		cr->vm->area[indir + i] = src[i];
+		i++;
+	}
 	ft_printf("sti ");
 }
 
@@ -223,7 +260,43 @@ void	frk(t_carry *cr)
 
 void	lld(t_carry *cr)
 {
-	ft_printf("lld ");
+	unsigned char	*src;
+	unsigned char	*dst;
+	short			indir;
+
+	src = &cr->vm->area[cr->position + 2];
+	if (cr->cycle->descript[0] == 3)
+	{
+		dst = (unsigned char*)&indir;
+		if (ft_islitendian())
+		{
+			dst[1] = src[0];
+			dst[0] = src[1];
+		}
+		else
+		{
+			dst[0] = src[0];
+			dst[1] = src[1];
+		}
+		indir += cr->position;
+		if (indir < 0)
+			indir += MEM_SIZE;
+		else if (indir >= MEM_SIZE)
+			indir -= MEM_SIZE;
+		src = &cr->vm->area[indir];
+	}
+	dst = (unsigned char*)&cr->reg[cr->cycle->regs[1]];
+	indir = 0;
+	while (indir < REG_SIZE)
+	{
+		dst[REG_SIZE - 1 - indir] = src[indir];
+		indir++;
+	}
+	if (!cr->reg[cr->cycle->regs[1]])
+		cr->carry = 1;
+	else
+		cr->carry = 0;
+	ft_printf("ld ");
 }
 
 void	lldi(t_carry *cr)

@@ -145,6 +145,7 @@ void			short_ind(unsigned char *dst, unsigned const char *src);
 short			indir_position(short indir, t_carry *cr);
 
 unsigned int	get_param(t_carry *cr, short toggle);
+unsigned int	get_param3(t_carry *cr);
 void			game(t_vm *vm);
 int				check_operation(t_vm *vm, t_carry *cr, t_cycle *cycle);
 void			calc_shift();
