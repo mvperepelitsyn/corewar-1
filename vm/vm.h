@@ -137,13 +137,18 @@ void	aff(t_carry *cr);
 ** Common functions:
 */
 
-int		display_usage();
-void	parsing(int argc, char **argv, t_vm	*vm);
-void	vm_init(t_vm *vm);
-void	ft_error(char *str);
-void	game(t_vm *vm);
-int		check_operation(t_vm *vm, t_carry *cr, t_cycle *cycle);
-void	calc_shift();
-void	carriages_init(t_vm *vm, int champ_nbr, int position);
+int				display_usage();
+void			parsing(int argc, char **argv, t_vm	*vm);
+void			vm_init(t_vm *vm);
+void			ft_error(char *str);
+void			short_ind(unsigned char *dst, unsigned const char *src);
+short			indir_position(short indir, t_carry *cr);
+
+unsigned int	get_param(t_carry *cr, short toggle);
+unsigned int	get_param3(t_carry *cr);
+void			game(t_vm *vm);
+int				check_operation(t_vm *vm, t_carry *cr, t_cycle *cycle);
+void			calc_shift();
+void			carriages_init(t_vm *vm, int champ_nbr, int position);
 
 #endif
