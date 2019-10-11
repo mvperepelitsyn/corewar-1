@@ -1,4 +1,5 @@
 # include "vm.h"
+#include <stdio.h>
 
 static void	print_game_area(t_vm *vm)
 {
@@ -20,6 +21,30 @@ static void	print_game_area(t_vm *vm)
 		byte++;
 	}
 }
+
+static void	game_area_frame(t_vm *vm)
+{
+	unsigned int	byte;
+
+	byte = 0;
+	ft_printf("------------------------------------------\n");
+	while (byte < MEM_SIZE)
+	{
+		if (byte)
+			ft_printf("%#06x : ", byte);
+		else
+			ft_printf("0x0000 : ");
+		while (byte % 64 < 63)
+		{
+			ft_printf("%02x ", (unsigned int)vm->area[byte]);
+			byte++;
+		}
+		ft_printf("%02x\n", (unsigned int)vm->area[byte]);
+		byte++;
+	}
+	ft_printf("------------------------------------------\n");
+}
+
 
 static void	carriage_remover(t_vm *vm, t_carry *prev, t_carry *cur)
 {
@@ -115,6 +140,9 @@ void		game(t_vm *vm)
 	while (vm->carriages)
 	{
 		cycle(vm);
+		printf("\e[1;1H\e[2J");
+		game_area_frame(vm);
+		usleep(10000);
 		vm->cycles_from_start++;
 		vm->ctd_counter++;
 		if (vm->ctd_counter == vm->cycles_to_die || vm->cycles_to_die <= 0)
@@ -128,6 +156,7 @@ void		game(t_vm *vm)
 		// ft_printf("%u ", vm->cycles_from_start);
 	}
 	ft_printf("\n");
+	print_game_area(vm);
 	if (vm->dump && vm->carriages)
 		print_game_area(vm);
 	else
