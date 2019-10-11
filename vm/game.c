@@ -92,7 +92,7 @@ static void	cycle(t_vm *vm)
 		{
 			cr->jump_len = 1;
 			if (check_operation(vm, cr, &cycle))
-				vm->command[cr->cmd_code - 1](vm, cr);
+				vm->command[cr->cmd_code - 1](cr);
 			if (!cycle.shift)
 			{
 				cr->position += cr->jump_len;
