@@ -21,7 +21,7 @@ void	live(t_carry *cr)
 	if (dir == cr->reg[0])
 		cr->vm->last_alive = dir;
 	lala = (int*)&dir;
-	ft_printf("alive! ");
+//	ft_printf("alive! ");
 }
 
 void	ld(t_carry *cr)
@@ -112,7 +112,7 @@ void	and(t_carry *cr)
 		cr->carry = 1;
 	else
 		cr->carry = 0;
-	ft_printf("and ");
+//	ft_printf("and ");
 }
 
 void	or(t_carry *cr)
@@ -164,7 +164,7 @@ void	zjmp(t_carry *cr)
 	else if (cr->position >= MEM_SIZE)
 		cr->position -= MEM_SIZE;
 	cr->cycle->shift = 1;
-	ft_printf("zjmp ");
+//	ft_printf("zjmp ");
 }
 
 void	ldi(t_carry *cr)
@@ -204,7 +204,7 @@ void	sti(t_carry *cr)
 		cr->vm->area[indir + i] = src[i];
 		i++;
 	}
-	ft_printf("sti ");
+//	ft_printf("sti ");
 }
 
 static void	copy_carriage(t_carry *cr_src, short dir)
