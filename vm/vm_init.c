@@ -8,6 +8,7 @@ void		carriages_init(t_vm *vm, int champ_nbr, int position)
 		ft_error("Malloc couldn't allocate the memory!\n");
 	cr->reg[0] = (unsigned int)(-champ_nbr);
 	cr->car_nbr = (unsigned int)champ_nbr;
+	cr->color = (champ_nbr == 3) ? 5 : champ_nbr;
 	cr->position = position;
 	cr->vm = vm;
 	cr->next = vm->carriages;
@@ -25,6 +26,8 @@ static void	area_init(t_vm *vm)
 	champ_area = MEM_SIZE / vm->champs_count;
 	champ_nbr = 0;
 	if (!(vm->area = ft_memalloc(MEM_SIZE)))
+		ft_error("Malloc couldn't allocate the memory!\n");
+	if (vm->v && !(vm->back = ft_memalloc(MEM_SIZE)))
 		ft_error("Malloc couldn't allocate the memory!\n");
 	while (champ_nbr < vm->champs_count)
 	{
