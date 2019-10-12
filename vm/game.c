@@ -25,27 +25,36 @@ static void	print_game_area(t_vm *vm)
 static void	game_area_frame(t_vm *vm)
 {
 	unsigned int	byte;
+	unsigned char	clr;
 	char			*start;
 	char			*end;
+	char			*color;
 
 	byte = 0;
 	start = "\033[";
 	end = "\033[0m";
 	// ft_printf("------------------------------------------\n");
+	ft_printf("\e[1;1H\e[2J");
 	while (byte < MEM_SIZE)
 	{
+		clr = (vm->back[byte] == 2) ? 35 : vm->back[byte] + 31;
+		color = ft_itoa(clr);
 		if (byte)
 			ft_printf("%#06x : ", byte);
 		else
 			ft_printf("0x0000 : ");
 		while (byte % 64 < 63)
 		{
-			ft_printf("%02x ", (unsigned int)vm->area[byte]);
+			ft_printf("%s%s%02x%s ", start, color, \
+				(unsigned int)vm->area[byte], end);
 			byte++;
 		}
 		ft_printf("%02x\n", (unsigned int)vm->area[byte]);
+		free(color);
 		byte++;
 	}
+	usleep(200000);
+	ft_printf("\e[1;1H\e[2J");
 	// ft_printf("------------------------------------------\n");
 }
 
@@ -145,10 +154,8 @@ void		game(t_vm *vm)
 	while (vm->carriages)
 	{
 		cycle(vm);
-		// ft_printf("\e[1;1H\e[2J");
-		// game_area_frame(vm);
-		// usleep(200000);
-		// ft_printf("\e[1;1H\e[2J");
+		if (vm->v)
+			game_area_frame(vm);
 		vm->cycles_from_start++;
 		vm->ctd_counter++;
 		if (vm->ctd_counter == vm->cycles_to_die || vm->cycles_to_die <= 0)

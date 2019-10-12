@@ -8,12 +8,27 @@ void		carriages_init(t_vm *vm, int champ_nbr, int position)
 		ft_error("Malloc couldn't allocate the memory!\n");
 	cr->reg[0] = (unsigned int)(-champ_nbr);
 	cr->car_nbr = (unsigned int)champ_nbr;
-	cr->color = (champ_nbr == 3) ? 5 : champ_nbr;
+	cr->color = champ_nbr;
 	cr->position = position;
 	cr->vm = vm;
 	cr->next = vm->carriages;
 	vm->carriages = cr;
 	vm->car_count++;
+}
+
+static int alloc_back(t_vm *vm)
+{
+	int		i;
+
+	if (!(vm->back = malloc(MEM_SIZE)))
+		return (0);
+	i = 0;
+	while (i < MEM_SIZE)
+	{
+		vm->back[i] = 255;
+		i++;
+	}
+	return (1);
 }
 
 static void	area_init(t_vm *vm)
@@ -27,7 +42,7 @@ static void	area_init(t_vm *vm)
 	champ_nbr = 0;
 	if (!(vm->area = ft_memalloc(MEM_SIZE)))
 		ft_error("Malloc couldn't allocate the memory!\n");
-	if (vm->v && !(vm->back = ft_memalloc(MEM_SIZE)))
+	if (vm->v && !alloc_back(vm))
 		ft_error("Malloc couldn't allocate the memory!\n");
 	while (champ_nbr < vm->champs_count)
 	{
@@ -37,6 +52,7 @@ static void	area_init(t_vm *vm)
 		while (j < vm->processes[champ_nbr].code_size)
 		{
 			vm->area[i] = vm->processes[champ_nbr].code[j];
+			vm->back[i] = champ_nbr - 1;
 			i++;
 			j++;
 		}
