@@ -77,6 +77,7 @@ struct	s_cycle
 
 struct			s_vm
 {
+	char 				v;
 	unsigned char		champs_count;
 	unsigned int		car_count;
 	unsigned int		last_alive;//number of last alive champion

@@ -134,15 +134,15 @@ static void	cycle(t_vm *vm)
 
 void		game(t_vm *vm)
 {
-	// print_game_area(vm);
+	 print_game_area(vm);
 	// exit(0);
 	// ft_printf("%u\n", vm->dump);
 	while (vm->carriages)
 	{
 		cycle(vm);
-		printf("\e[1;1H\e[2J");
-		game_area_frame(vm);
-		usleep(10000);
+//		printf("\e[1;1H\e[2J");
+//		game_area_frame(vm);
+//		usleep(10000);
 		vm->cycles_from_start++;
 		vm->ctd_counter++;
 		if (vm->ctd_counter == vm->cycles_to_die || vm->cycles_to_die <= 0)
