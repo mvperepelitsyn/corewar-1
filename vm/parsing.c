@@ -209,12 +209,10 @@ static void	how_many_champs(t_vm *vm)
 	vm->champs_count = j;
 }
 
-static void	parse_champ(int argc, char **argv, t_vm *vm)
+static void	parse_champ(int argc, char **argv, t_vm *vm, int l)
 {
-	int			l;
 	long int	num;
 
-	l = 1;
 	while (l < argc)
 	{
 		if (ft_strequ(argv[l], "-n"))
@@ -263,6 +261,6 @@ void		parsing(int argc, char **argv, t_vm *vm)
 	else
 	{
 		ft_set_champs_to_null(vm->processes);
-		parse_champ(argc, argv, vm);
+		parse_champ(argc, argv, vm, 1);
 	}
 }
