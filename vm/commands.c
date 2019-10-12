@@ -75,6 +75,7 @@ void	st(t_carry *cr)
 		src = (unsigned char *)&(cr->reg[cr->cycle->regs[0]]);
 		while (i < REG_SIZE)
 		{
+			cr->vm->back[indir + i] = cr->color - 1;
 			cr->vm->area[indir + i] = src[i];
 			i++;
 		}
@@ -213,6 +214,7 @@ void	sti(t_carry *cr)
 	src = (unsigned char *)&(cr->reg[cr->cycle->regs[0]]);
 	while (i < REG_SIZE)
 	{
+		cr->vm->back[indir + i] = cr->color - 1;
 		cr->vm->area[indir + i] = src[i];
 		i++;
 	}
