@@ -52,7 +52,8 @@ static void	area_init(t_vm *vm)
 		while (j < vm->processes[champ_nbr].code_size)
 		{
 			vm->area[i] = vm->processes[champ_nbr].code[j];
-			vm->back[i] = champ_nbr - 1;
+			if (vm->v)
+				vm->back[i] = (unsigned char)champ_nbr;
 			i++;
 			j++;
 		}

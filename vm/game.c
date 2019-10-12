@@ -1,5 +1,5 @@
 # include "vm.h"
-#include <stdio.h>
+// #include <stdio.h>
 
 static void	print_game_area(t_vm *vm)
 {
@@ -25,32 +25,44 @@ static void	print_game_area(t_vm *vm)
 static void	game_area_frame(t_vm *vm)
 {
 	unsigned int	byte;
-	unsigned char	clr;
-	char			*start;
-	char			*end;
-	char			*color;
+	char			start[3];
+	char			end[4];
+	unsigned char	color;
 
 	byte = 0;
-	start = "\033[";
-	end = "\033[0m";
+	// start = "\033[";
+	// end = "\033[0m";
+	// start[0] = '\033';
+	// start[1] = '[';
+	// end[0] = '\033';
+	// end[1] = '[';
+	// end[2] = '0';
+	// end[3] = 'm';
 	// ft_printf("------------------------------------------\n");
 	ft_printf("\e[1;1H\e[2J");
 	while (byte < MEM_SIZE)
 	{
-		clr = (vm->back[byte] == 2) ? 35 : vm->back[byte] + 31;
-		color = ft_itoa(clr);
+		if (vm->back[byte] != 255)
+			color = (vm->back[byte] == 2) ? 35 : vm->back[byte] + 31;
+		else
+			color = 37;
 		if (byte)
 			ft_printf("%#06x : ", byte);
 		else
 			ft_printf("0x0000 : ");
 		while (byte % 64 < 63)
 		{
-			ft_printf("%s%s%02x%s ", start, color, \
-				(unsigned int)vm->area[byte], end);
+			ft_printf("\033[");
+			ft_printf("%hhum", color);
+			ft_printf("%02x ", (unsigned int)vm->area[byte]);
+			ft_printf("\033[0m");
 			byte++;
+			// ft_printf("%s ", color);
 		}
-		ft_printf("%02x\n", (unsigned int)vm->area[byte]);
-		free(color);
+			ft_printf("\033[");
+			ft_printf("%hhum", color);
+			ft_printf("%02x ", (unsigned int)vm->area[byte]);
+			ft_printf("\033[0m\n");
 		byte++;
 	}
 	usleep(200000);
@@ -151,9 +163,12 @@ void		game(t_vm *vm)
 	// exit(0);
 	// ft_printf("%u\n", vm->dump);
 	vm->debug = 0;
+	// if (vm->v)
+	// 	game_area_frame(vm);
 	while (vm->carriages)
 	{
 		cycle(vm);
+
 		if (vm->v)
 			game_area_frame(vm);
 		vm->cycles_from_start++;
@@ -169,7 +184,7 @@ void		game(t_vm *vm)
 		// ft_printf("%u ", vm->cycles_from_start);
 	}
 	ft_printf("\n");
-	print_game_area(vm);
+	// print_game_area(vm);
 	if (vm->dump && vm->carriages)
 		print_game_area(vm);
 	else
