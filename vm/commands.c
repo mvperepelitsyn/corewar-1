@@ -21,7 +21,8 @@ void	live(t_carry *cr)
 	if (dir == cr->reg[0])
 		cr->vm->last_alive = dir;
 	lala = (int*)&dir;
-//	ft_printf("alive! ");
+	if (cr->vm->debug)
+		ft_printf("alive! ");
 }
 
 void	ld(t_carry *cr)
@@ -45,11 +46,14 @@ void	ld(t_carry *cr)
 		dst[REG_SIZE - 1 - indir] = src[indir];
 		indir++;
 	}
+	if (cr && cr->cycle)
+		ft_printf("%hhu\n", cr->cycle->regs[1]);
 	if (!cr->reg[cr->cycle->regs[1]])
 		cr->carry = 1;
 	else
 		cr->carry = 0;
-	ft_printf("ld ");
+	if (cr->vm->debug)
+		ft_printf("ld ");
 }
 
 void	st(t_carry *cr)
@@ -75,7 +79,8 @@ void	st(t_carry *cr)
 			i++;
 		}
 	}
-	ft_printf("st ");
+	if (cr->vm->debug)
+		ft_printf("st ");
 }
 
 void	add(t_carry *cr)
@@ -86,7 +91,8 @@ void	add(t_carry *cr)
 		cr->carry = 1;
 	else
 		cr->carry = 0;
-	ft_printf("add ");
+	if (cr->vm->debug)
+		ft_printf("add ");
 }
 
 void	sub(t_carry *cr)
@@ -97,7 +103,8 @@ void	sub(t_carry *cr)
 		cr->carry = 1;
 	else
 		cr->carry = 0;
-	ft_printf("sub ");
+	if (cr->vm->debug)
+		ft_printf("sub ");
 }
 
 void	and(t_carry *cr)
@@ -112,7 +119,8 @@ void	and(t_carry *cr)
 		cr->carry = 1;
 	else
 		cr->carry = 0;
-//	ft_printf("and ");
+	if (cr->vm->debug)
+		ft_printf("and ");
 }
 
 void	or(t_carry *cr)
@@ -127,7 +135,8 @@ void	or(t_carry *cr)
 		cr->carry = 1;
 	else
 		cr->carry = 0;
-	ft_printf("or ");
+	if (cr->vm->debug)
+		ft_printf("or ");
 }
 
 void	xor(t_carry *cr)
@@ -142,7 +151,8 @@ void	xor(t_carry *cr)
 		cr->carry = 1;
 	else
 		cr->carry = 0;
-	ft_printf("xor ");
+	if (cr->vm->debug)
+		ft_printf("xor ");
 }
 
 
@@ -164,7 +174,8 @@ void	zjmp(t_carry *cr)
 	else if (cr->position >= MEM_SIZE)
 		cr->position -= MEM_SIZE;
 	cr->cycle->shift = 1;
-//	ft_printf("zjmp ");
+	if (cr->vm->debug)
+		ft_printf("zjmp ");
 }
 
 void	ldi(t_carry *cr)
@@ -175,7 +186,8 @@ void	ldi(t_carry *cr)
 	prm1 = get_param(cr, 0);
 	prm2 = get_param(cr, 1);
 	cr->reg[cr->cycle->descript[2]] = cr->position + (prm1 + prm2) % IDX_MOD;
-	ft_printf("ldi ");
+	if (cr->vm->debug)
+		ft_printf("ldi ");
 }
 
 void	sti(t_carry *cr)
@@ -204,7 +216,8 @@ void	sti(t_carry *cr)
 		cr->vm->area[indir + i] = src[i];
 		i++;
 	}
-//	ft_printf("sti ");
+	if (cr->vm->debug)
+		ft_printf("sti ");
 }
 
 static void	copy_carriage(t_carry *cr_src, short dir)
@@ -255,7 +268,8 @@ void	frk(t_carry *cr)
 	else if (dir >= MEM_SIZE)
 		dir -= MEM_SIZE;
 	copy_carriage(cr, dir);
-	ft_printf("frk ");
+	if (cr->vm->debug)
+		ft_printf("frk ");
 }
 
 void	lld(t_carry *cr)
@@ -296,7 +310,8 @@ void	lld(t_carry *cr)
 		cr->carry = 1;
 	else
 		cr->carry = 0;
-	ft_printf("ld ");
+	if (cr->vm->debug)
+		ft_printf("ld ");
 }
 
 void	lldi(t_carry *cr)
@@ -307,7 +322,8 @@ void	lldi(t_carry *cr)
 	prm1 = get_param(cr, 0);
 	prm2 = get_param(cr, 1);
 	cr->reg[cr->cycle->descript[2]] = cr->position + (prm1 + prm2);
-	ft_printf("lldi ");
+	if (cr->vm->debug)
+		ft_printf("lldi ");
 }
 
 void	lfrk(t_carry *cr)
@@ -334,11 +350,13 @@ void	lfrk(t_carry *cr)
 	else if (dir >= MEM_SIZE)
 		dir -= MEM_SIZE;
 	copy_carriage(cr, dir);
-	ft_printf("frk ");
+	if (cr->vm->debug)
+		ft_printf("frk ");
 }
 
 void	aff(t_carry *cr)
 {
 	ft_printf("%c", (char)(cr->reg[cr->cycle->regs[0]]));
-	ft_printf("aff ");
+	if (cr->vm->debug)
+		ft_printf("aff ");
 }

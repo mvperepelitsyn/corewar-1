@@ -77,10 +77,13 @@ struct	s_cycle
 
 struct			s_vm
 {
+	char				v;
+	char				debug;
 	unsigned char		champs_count;
 	unsigned int		car_count;
 	unsigned int		last_alive;//number of last alive champion
 	unsigned char		*area;
+	unsigned char		*back;
 	unsigned int		cycles_from_start;
 	unsigned int		dump;
 	int					cycles_to_die;

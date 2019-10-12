@@ -25,9 +25,13 @@ static void	print_game_area(t_vm *vm)
 static void	game_area_frame(t_vm *vm)
 {
 	unsigned int	byte;
+	char			*start;
+	char			*end;
 
 	byte = 0;
-	ft_printf("------------------------------------------\n");
+	start = "\033[";
+	end = "\033[0m";
+	// ft_printf("------------------------------------------\n");
 	while (byte < MEM_SIZE)
 	{
 		if (byte)
@@ -42,7 +46,7 @@ static void	game_area_frame(t_vm *vm)
 		ft_printf("%02x\n", (unsigned int)vm->area[byte]);
 		byte++;
 	}
-	ft_printf("------------------------------------------\n");
+	// ft_printf("------------------------------------------\n");
 }
 
 
@@ -137,12 +141,14 @@ void		game(t_vm *vm)
 	// print_game_area(vm);
 	// exit(0);
 	// ft_printf("%u\n", vm->dump);
+	vm->debug = 0;
 	while (vm->carriages)
 	{
 		cycle(vm);
-		printf("\e[1;1H\e[2J");
-		game_area_frame(vm);
-		usleep(10000);
+		// ft_printf("\e[1;1H\e[2J");
+		// game_area_frame(vm);
+		// usleep(200000);
+		// ft_printf("\e[1;1H\e[2J");
 		vm->cycles_from_start++;
 		vm->ctd_counter++;
 		if (vm->ctd_counter == vm->cycles_to_die || vm->cycles_to_die <= 0)
