@@ -256,7 +256,7 @@ static void	ft_set_champs_to_null(t_process *champs)
 
 void		parsing(int argc, char **argv, t_vm *vm)
 {
-	if (argc > 15)
+	if (argc > 16)
 		ft_error("Too many arguments");
 	else
 	{
