@@ -25,7 +25,7 @@ struct	s_carry
 	int					last_live;//cycles from last live call
 	unsigned int		cycles_before;//cycles before current operation
 	int					position;//carry position in game memory area
-	unsigned int		color;//carry color (champ color)
+	unsigned char		color;//carry color (champ color)
 	unsigned int		reg[16];//registr
 	t_cycle				*cycle;
 	t_vm				*vm;
