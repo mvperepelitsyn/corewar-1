@@ -48,8 +48,6 @@ void	ld(t_carry *cr)
 		dst[REG_SIZE - 1 - indir] = src[indir];
 		indir++;
 	}
-	if (cr && cr->cycle)
-		ft_printf("%hhu\n", cr->cycle->regs[1]);
 	if (!cr->reg[cr->cycle->regs[1]])
 		cr->carry = 1;
 	else
