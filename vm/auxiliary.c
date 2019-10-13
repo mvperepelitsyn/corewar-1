@@ -3,11 +3,7 @@
 short	indir_position(short indir, t_carry *cr)
 {
 	indir %= IDX_MOD;
-	indir += cr->position;
-	if (indir < 0)
-		indir += MEM_SIZE;
-	else if (indir >= MEM_SIZE)
-		indir -= MEM_SIZE;
+	check_position(indir + cr->position);
 	return (indir);
 }
 
@@ -38,4 +34,13 @@ void	ft_error(char *str)
 	else
 		ft_printf("%s\n", str);
 	exit(69);
+}
+
+int		check_position(int position)
+{
+	if (position < 0)
+		position += MEM_SIZE;
+	else if (position >= MEM_SIZE)
+		position -= MEM_SIZE;
+	return (position);
 }

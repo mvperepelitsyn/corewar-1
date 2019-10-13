@@ -46,7 +46,7 @@ static int	check_reg(t_vm *vm, t_carry *cr, t_cycle *cycle)
 			return (0);
 		if (cycle->descript[i] == 1)
 		{
-			cycle->regs[i] = vm->area[cr->position + shift];
+			cycle->regs[i] = vm->area[cr->position + shift] - 1;
 			shift++;
 		}
 		else if (cycle->descript[i] == 2)

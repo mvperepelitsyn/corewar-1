@@ -13,7 +13,7 @@ void	live(t_carry *cr)
 	i = 0;
 	while (i < g_cmd_prms[cr->cmd_code - 1].dir_size)
 	{
-		ptr[i] = cr->vm->area[cr->position + 1 + i];
+		ptr[i] = cr->vm->area[check_position(cr->position + 1 + i)];
 		i++;
 	}
 	if (ft_islitendian())
@@ -33,7 +33,7 @@ void	ld(t_carry *cr)
 	unsigned char	*dst;
 	short			indir;
 
-	src = &cr->vm->area[cr->position + 2];
+	src = &cr->vm->area[check_position(cr->position + 2)];
 	if (cr->cycle->descript[0] == 3)
 	{
 		dst = (unsigned char*)&indir;
@@ -70,7 +70,7 @@ void	st(t_carry *cr)
 	else
 	{
 		i = 0;
-		src = &cr->vm->area[cr->position + 3];
+		src = &cr->vm->area[check_position(cr->position + 3)];
 		dst = (unsigned char *)&indir;
 		short_ind(dst, src);
 		indir = indir_position(indir, cr);
@@ -78,8 +78,8 @@ void	st(t_carry *cr)
 		while (i < REG_SIZE)
 		{
 			if (cr->vm->v)
-				cr->vm->back[indir + i] = cr->color - 1;
-			cr->vm->area[indir + i] = src[i];
+				cr->vm->back[check_position(indir + i)] = cr->color - 1;
+			cr->vm->area[check_position(indir + i)] = src[i];
 			i++;
 		}
 	}
@@ -169,7 +169,7 @@ void	zjmp(t_carry *cr)
 	if (!cr->carry)
 		return ;
 	dst = (unsigned char*)&dir;
-	src = (unsigned char*)&cr->vm->area[cr->position + 1];
+	src = (unsigned char*)&cr->vm->area[check_position(cr->position + 1)];
 	short_ind(dst, src);
 	dir %= IDX_MOD;
 	cr->position += dir;
@@ -189,7 +189,7 @@ void	ldi(t_carry *cr)
 
 	prm1 = get_param(cr, 0);
 	prm2 = get_param(cr, 1);
-	cr->reg[cr->cycle->descript[2]] = cr->position + (prm1 + prm2) % IDX_MOD;
+	cr->reg[cr->cycle->descript[2]] = check_position(cr->position + (prm1 + prm2) % IDX_MOD); //is check_position legit here?
 	if (cr->vm->debug)
 		ft_printf("ldi ");
 }
@@ -204,12 +204,7 @@ void	sti(t_carry *cr)
 	short			indir;
 	int 			i;
 
-	i = cr->position + (get_param(cr, 1) + get_param3(cr)) % IDX_MOD;
-	if (i < 0)
-		i += MEM_SIZE;
-	else if (i >= MEM_SIZE)
-		i -= MEM_SIZE;
-	src = &cr->vm->area[i];
+	src = &cr->vm->area[check_position(cr->position + (get_param(cr, 1) + get_param3(cr)) % IDX_MOD)];
 	i = 0;
 	dst = (unsigned char *)&indir;
 	short_ind(dst, src);
@@ -218,8 +213,8 @@ void	sti(t_carry *cr)
 	while (i < REG_SIZE)
 	{
 		if (cr->vm->v)
-			cr->vm->back[indir + i] = cr->color - 1;
-		cr->vm->area[indir + i] = src[i];
+			cr->vm->back[check_position(indir + i)] = cr->color - 1;
+		cr->vm->area[check_position(indir + i)] = src[i];
 		i++;
 	}
 	if (cr->vm->debug)
@@ -255,7 +250,7 @@ void	frk(t_carry *cr)
 	unsigned char	*src;
 	unsigned char	*dst;
 
-	src = &cr->vm->area[cr->position + 1];
+	src = &cr->vm->area[check_position(cr->position + 1)];
 	dst = (unsigned char*)&dir;
 	if (ft_islitendian())
 	{
@@ -284,7 +279,7 @@ void	lld(t_carry *cr)
 	unsigned char	*dst;
 	short			indir;
 
-	src = &cr->vm->area[cr->position + 2];
+	src = &cr->vm->area[check_position(cr->position + 2)];
 	if (cr->cycle->descript[0] == 3)
 	{
 		dst = (unsigned char*)&indir;
@@ -327,7 +322,7 @@ void	lldi(t_carry *cr)
 
 	prm1 = get_param(cr, 0);
 	prm2 = get_param(cr, 1);
-	cr->reg[cr->cycle->descript[2]] = cr->position + (prm1 + prm2);
+	cr->reg[cr->cycle->descript[2]] = check_position(cr->position + (prm1 + prm2)); //is check_position legit here?
 	if (cr->vm->debug)
 		ft_printf("lldi ");
 }
@@ -338,7 +333,7 @@ void	lfrk(t_carry *cr)
 	unsigned char	*src;
 	unsigned char	*dst;
 
-	src = &cr->vm->area[cr->position + 1];
+	src = &cr->vm->area[check_position(cr->position + 1)];
 	dst = (unsigned char*)&dir;
 	if (ft_islitendian())
 	{
