@@ -21,6 +21,8 @@ void	live(t_carry *cr)
 	if (dir == cr->reg[0])
 		cr->vm->last_alive = dir;
 	lala = (int*)&dir;
+	if (cr->vm->v)
+		cr->vm->back[cr->position] |= 200;
 	if (cr->vm->debug)
 		ft_printf("alive! ");
 }

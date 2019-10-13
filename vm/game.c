@@ -39,43 +39,43 @@ static int	check_car_position(t_vm *vm, int pos, unsigned char *color)
 	return (0);
 }
 
+static void	print_byte(t_vm *vm, int byte, char ending)
+{
+	unsigned char	cr_clr;
+	unsigned char	color;
+
+	if (vm->back[byte] != 255)
+		color = (vm->back[byte] == 2) ? 35 : vm->back[byte] + 31;
+	else
+		color = 37;
+	if (!check_car_position(vm, byte, &cr_clr))
+		ft_printf("\033[%hhum%02x\033[0m%c", color, \
+			(unsigned int)vm->area[byte], ending);
+	else
+		ft_printf("\033[30;%hhum%02x\033[0m%c", cr_clr, \
+			(unsigned int)vm->area[byte], ending);
+}
+
 static void	game_area_frame(t_vm *vm)
 {
 	int				byte;
-	unsigned char	color;
-	unsigned char	cr_clr;
 
-	byte = 0;
+	byte = -1;
 	ft_printf("\e[1;1H\e[2J");
-	while (byte < MEM_SIZE)
+	while (++byte < MEM_SIZE)
 	{
-		if (vm->back[byte] != 255)
-			color = (vm->back[byte] == 2) ? 35 : vm->back[byte] + 31;
-		else
-			color = 37;
 		if (byte)
 			ft_printf("%#06x : ", byte);
 		else
 			ft_printf("0x0000 : ");
 		while (byte % 64 < 63)
 		{
-			if (!check_car_position(vm, byte, &cr_clr))
-				ft_printf("\033[%hhum%02x\033[0m ", color, \
-					(unsigned int)vm->area[byte]);
-			else
-				ft_printf("\033[30;%hhum%02x\033[0m ", cr_clr, \
-					(unsigned int)vm->area[byte]);
+			print_byte(vm, byte, ' ');
 			byte++;
 		}
-		if (!check_car_position(vm, byte, &cr_clr))
-			ft_printf("\033[%hhum%02x\033[0m\n", color, \
-				(unsigned int)vm->area[byte]);
-		else
-			ft_printf("\033[30;%hhum%02x\033[0m\n", cr_clr, \
-				(unsigned int)vm->area[byte]);
-		byte++;
+		print_byte(vm, byte, '\n');
 	}
-	usleep(200000);
+	usleep(400000);
 	ft_printf("\e[1;1H\e[2J");
 }
 
