@@ -88,6 +88,7 @@ static void	carriage_remover(t_vm *vm, t_carry *prev, t_carry *cur)
 	{
 		vm->carriages = cur->next;
 		free(cur);
+		ft_printf("the carriage has been fred\n");
 		return ;
 	}
 	ptr = cur->next;
@@ -135,6 +136,8 @@ static void	cycle(t_vm *vm)
 	t_cycle	cycle;
 
 	cr = vm->carriages;
+	if (vm->cycles_from_start == 304)
+		vm->cycles_from_start = 304;
 	while (cr)
 	{
 		ft_bzero((void*)&cycle, sizeof(cycle));
