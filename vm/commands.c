@@ -182,12 +182,19 @@ void	zjmp(t_carry *cr)
 
 void	ldi(t_carry *cr)
 {
-	unsigned int	prm1;
-	unsigned int	prm2;
+	unsigned char	*src;
+	unsigned char	*dst;
+	short			i;
 
-	prm1 = get_param(cr, 0);
-	prm2 = get_param(cr, 1);
-	cr->reg[cr->cycle->descript[2]] = check_position(cr->position + (prm1 + prm2) % IDX_MOD); //is check_position legit here?
+	src = &cr->vm->area[check_position(cr->position + (get_param(cr, 0) +
+					 get_param(cr, 1)) % IDX_MOD)];
+	dst = (unsigned char*)&cr->reg[cr->cycle->regs[2]];
+	i = 0;
+	while (i < REG_SIZE)
+	{
+		dst[REG_SIZE - 1 - i] = src[i];
+		i++;
+	}
 	if (cr->vm->debug)
 		ft_printf("ldi ");
 }
@@ -315,12 +322,19 @@ void	lld(t_carry *cr)
 
 void	lldi(t_carry *cr)
 {
-	unsigned int	prm1;
-	unsigned int	prm2;
+	unsigned char	*src;
+	unsigned char	*dst;
+	short			i;
 
-	prm1 = get_param(cr, 0);
-	prm2 = get_param(cr, 1);
-	cr->reg[cr->cycle->descript[2]] = check_position(cr->position + (prm1 + prm2)); //is check_position legit here?
+	src = &cr->vm->area[check_position(cr->position + (get_param(cr, 0) +
+					 get_param(cr, 1)))];
+	dst = (unsigned char*)&cr->reg[cr->cycle->regs[2]];
+	i = 0;
+	while (i < REG_SIZE)
+	{
+		dst[REG_SIZE - 1 - i] = src[i];
+		i++;
+	}
 	if (cr->vm->debug)
 		ft_printf("lldi ");
 }
