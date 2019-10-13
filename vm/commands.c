@@ -33,7 +33,7 @@ void	ld(t_carry *cr)
 	unsigned char	*dst;
 	short			indir;
 
-	src = &cr->vm->area[cr->position + 2];
+	src = &cr->vm->area[check_position(cr->position + 2)];
 	if (cr->cycle->descript[0] == 3)
 	{
 		dst = (unsigned char*)&indir;

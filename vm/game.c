@@ -61,7 +61,8 @@ static void	game_area_frame(t_vm *vm)
 	int				byte;
 
 	byte = -1;
-	ft_printf("\e[1;1H\e[2J");
+	// ft_printf("\e[1;1H\e[2J");
+	ft_printf("\nCycles from start: %u\n", vm->cycles_from_start);
 	while (++byte < MEM_SIZE)
 	{
 		if (byte)
@@ -75,7 +76,7 @@ static void	game_area_frame(t_vm *vm)
 		}
 		print_byte(vm, byte, '\n');
 	}
-	usleep(400000);
+	usleep(100000);
 	ft_printf("\e[1;1H\e[2J");
 }
 
@@ -171,7 +172,7 @@ void		game(t_vm *vm)
 	// print_game_area(vm);
 	// exit(0);
 	// ft_printf("%u\n", vm->dump);
-	vm->debug = 0;
+	vm->debug = 1;
 	// if (vm->v)
 	// 	game_area_frame(vm);
 	while (vm->carriages)
