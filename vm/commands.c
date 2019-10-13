@@ -347,22 +347,9 @@ void	lfrk(t_carry *cr)
 
 	src = &cr->vm->area[check_position(cr->position + 1)];
 	dst = (unsigned char*)&dir;
-	if (ft_islitendian())
-	{
-		dst[1] = src[0];
-		dst[0] = src[1];
-	}
-	else
-	{
-		dst[0] = src[0];
-		dst[1] = src[1];
-	}
-	dir += cr->position;
-	if (dir < 0)
-		dir += MEM_SIZE;
-	else if (dir >= MEM_SIZE)
-		dir -= MEM_SIZE;
-	copy_carriage(cr, dir);
+
+	short_ind(dst, src);
+	copy_carriage(cr, check_position(dir + cr->position));
 	if (cr->vm->debug)
 		ft_printf("frk ");
 }

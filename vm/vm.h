@@ -154,5 +154,7 @@ int				check_operation(t_vm *vm, t_carry *cr, t_cycle *cycle);
 void			calc_shift();
 void			carriages_init(t_vm *vm, int champ_nbr, int position);
 int				check_position(int position);
+void			game_area_frame(t_vm *vm);
+void		print_game_area(t_vm *vm);
 
 #endif

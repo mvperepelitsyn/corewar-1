@@ -1,86 +1,6 @@
 # include "vm.h"
 // #include <stdio.h>
 
-static void	print_game_area(t_vm *vm)
-{
-	unsigned int	byte;
-
-	byte = 0;
-	while (byte < MEM_SIZE)
-	{
-		if (byte)
-			ft_printf("%#06x : ", byte);
-		else
-			ft_printf("0x0000 : ");
-		while (byte % 32 < 31)
-		{
-			ft_printf("%02x ", (unsigned int)vm->area[byte]);
-			byte++;
-		}
-		ft_printf("%02x\n", (unsigned int)vm->area[byte]);
-		byte++;
-	}
-}
-
-static int	check_car_position(t_vm *vm, int pos, unsigned char *color)
-{
-	t_carry			*cr;
-
-	cr = vm->carriages;
-	while (cr)
-	{
-		if (pos == cr->position)
-		{
-			*color = (cr->color == 3) ? 45 : cr->color + 40;
-			return (1);
-		}
-		cr = cr->next;
-	}
-	return (0);
-}
-
-static void	print_byte(t_vm *vm, int byte, char ending)
-{
-	unsigned char	cr_clr;
-	unsigned char	color;
-
-	if (vm->back[byte] != 255)
-		color = (vm->back[byte] == 2) ? 35 : vm->back[byte] + 31;
-	else
-		color = 37;
-	if (!check_car_position(vm, byte, &cr_clr))
-		ft_printf("\033[%hhum%02x\033[0m%c", color, \
-			(unsigned int)vm->area[byte], ending);
-	else
-		ft_printf("\033[30;%hhum%02x\033[0m%c", cr_clr, \
-			(unsigned int)vm->area[byte], ending);
-}
-
-static void	game_area_frame(t_vm *vm)
-{
-	int				byte;
-
-	byte = -1;
-	// ft_printf("\e[1;1H\e[2J");
-	ft_printf("\nCycles from start: %u\n", vm->cycles_from_start);
-	while (++byte < MEM_SIZE)
-	{
-		if (byte)
-			ft_printf("%#06x : ", byte);
-		else
-			ft_printf("0x0000 : ");
-		while (byte % 64 < 63)
-		{
-			print_byte(vm, byte, ' ');
-			byte++;
-		}
-		print_byte(vm, byte, '\n');
-	}
-	usleep(100000);
-	ft_printf("\e[1;1H\e[2J");
-}
-
-
 static void	carriage_remover(t_vm *vm, t_carry *prev, t_carry *cur)
 {
 	t_carry	*ptr;
@@ -89,13 +9,15 @@ static void	carriage_remover(t_vm *vm, t_carry *prev, t_carry *cur)
 	{
 		vm->carriages = cur->next;
 		free(cur);
-		ft_printf("the carriage has been fred\n");
+	if (vm->debug)
+		ft_printf("remove!\n");
 		return ;
 	}
 	ptr = cur->next;
 	free(cur);
 	prev->next = ptr;
-	ft_printf("remove!\n");
+	if (vm->debug)
+		ft_printf("remove!\n");
 }
 
 static void	check_game(t_vm *vm)
@@ -175,7 +97,7 @@ void		game(t_vm *vm)
 	// print_game_area(vm);
 	// exit(0);
 	// ft_printf("%u\n", vm->dump);
-	vm->debug = 1;
+	vm->debug = 0;
 	// if (vm->v)
 	// 	game_area_frame(vm);
 	while (vm->carriages)
