@@ -59,6 +59,8 @@ static void	cycle(t_vm *vm)
 	t_cycle	cycle;
 
 	cr = vm->carriages;
+	if (vm->cycles_from_start == 304)
+		vm->cycles_from_start = 304;
 	while (cr)
 	{
 		ft_bzero((void*)&cycle, sizeof(cycle));

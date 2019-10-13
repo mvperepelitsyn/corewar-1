@@ -13,7 +13,7 @@ void	live(t_carry *cr)
 	i = 0;
 	while (i < g_cmd_prms[cr->cmd_code - 1].dir_size)
 	{
-		ptr[i] = cr->vm->area[cr->position + 1 + i];
+		ptr[i] = cr->vm->area[check_position(cr->position + 1 + i)];
 		i++;
 	}
 	if (ft_islitendian())
@@ -48,8 +48,6 @@ void	ld(t_carry *cr)
 		dst[REG_SIZE - 1 - indir] = src[indir];
 		indir++;
 	}
-	// if (cr && cr->cycle)
-	// 	ft_printf("%hhu\n", cr->cycle->regs[1]);
 	if (!cr->reg[cr->cycle->regs[1]])
 		cr->carry = 1;
 	else
@@ -78,8 +76,8 @@ void	st(t_carry *cr)
 		while (i < REG_SIZE)
 		{
 			if (cr->vm->v)
-				cr->vm->back[indir + i] = cr->color - 1;
-			cr->vm->area[indir + i] = src[i];
+				cr->vm->back[check_position(indir + i)] = cr->color - 1;
+			cr->vm->area[check_position(indir + i)] = src[i];
 			i++;
 		}
 	}
@@ -189,7 +187,7 @@ void	ldi(t_carry *cr)
 
 	prm1 = get_param(cr, 0);
 	prm2 = get_param(cr, 1);
-	cr->reg[cr->cycle->descript[2]] = cr->position + (prm1 + prm2) % IDX_MOD;
+	cr->reg[cr->cycle->descript[2]] = check_position(cr->position + (prm1 + prm2) % IDX_MOD); //is check_position legit here?
 	if (cr->vm->debug)
 		ft_printf("ldi ");
 }
@@ -204,12 +202,7 @@ void	sti(t_carry *cr)
 	short			indir;
 	int 			i;
 
-	i = cr->position + (get_param(cr, 1) + get_param3(cr)) % IDX_MOD;
-	if (i < 0)
-		i += MEM_SIZE;
-	else if (i >= MEM_SIZE)
-		i -= MEM_SIZE;
-	src = &cr->vm->area[i];
+	src = &cr->vm->area[check_position(cr->position + (get_param(cr, 1) + get_param3(cr)) % IDX_MOD)];
 	i = 0;
 	dst = (unsigned char *)&indir;
 	short_ind(dst, src);
@@ -327,7 +320,7 @@ void	lldi(t_carry *cr)
 
 	prm1 = get_param(cr, 0);
 	prm2 = get_param(cr, 1);
-	cr->reg[cr->cycle->descript[2]] = cr->position + (prm1 + prm2);
+	cr->reg[cr->cycle->descript[2]] = check_position(cr->position + (prm1 + prm2)); //is check_position legit here?
 	if (cr->vm->debug)
 		ft_printf("lldi ");
 }
