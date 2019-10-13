@@ -38,21 +38,29 @@ static int	check_car_position(t_vm *vm, int pos, unsigned char *color)
 	return (0);
 }
 
+// static void	print_alive()
+// {
+//
+// }
+
 static void	print_byte(t_vm *vm, int byte, char ending)
 {
 	unsigned char	cr_clr;
 	unsigned char	color;
-	unsigned char	cycles;
 
-	if (vm->back[byte] != 255)
+	if (vm->back[byte] != 255 && vm->back[byte] < 4)
 		color = (vm->back[byte] == 2) ? 35 : vm->back[byte] + 31;
 	else if (vm->back[byte] == 255)
 		color = 37;
 	else
 	{
-		cycles = (vm->back[byte] >> 2) - 1;
 		cr_clr = vm->back[byte] << 6;
-		cr_clr >>= 2;
+		cr_clr >>= 6;
+		cr_clr = (cr_clr == 3) ? 45 : cr_clr + 41;
+		ft_printf("\033[0;%hhum%02x\033[0m%c", cr_clr, \
+			(unsigned int)vm->area[byte], ending);
+		vm->back[byte] -= 4;
+		return ;
 	}
 	if (!check_car_position(vm, byte, &cr_clr))
 		ft_printf("\033[%hhum%02x\033[0m%c", color, \
