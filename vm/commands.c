@@ -48,8 +48,8 @@ void	ld(t_carry *cr)
 		dst[REG_SIZE - 1 - indir] = src[indir];
 		indir++;
 	}
-	if (cr && cr->cycle)
-		ft_printf("%hhu\n", cr->cycle->regs[1]);
+	// if (cr && cr->cycle)
+	// 	ft_printf("%hhu\n", cr->cycle->regs[1]);
 	if (!cr->reg[cr->cycle->regs[1]])
 		cr->carry = 1;
 	else
@@ -70,7 +70,7 @@ void	st(t_carry *cr)
 	else
 	{
 		i = 0;
-		src = &cr->vm->area[cr->position + 3];
+		src = &cr->vm->area[check_position(cr->position + 3)];
 		dst = (unsigned char *)&indir;
 		short_ind(dst, src);
 		indir = indir_position(indir, cr);
@@ -169,7 +169,7 @@ void	zjmp(t_carry *cr)
 	if (!cr->carry)
 		return ;
 	dst = (unsigned char*)&dir;
-	src = (unsigned char*)&cr->vm->area[cr->position + 1];
+	src = (unsigned char*)&cr->vm->area[check_position(cr->position + 1)];
 	short_ind(dst, src);
 	dir %= IDX_MOD;
 	cr->position += dir;
@@ -218,8 +218,8 @@ void	sti(t_carry *cr)
 	while (i < REG_SIZE)
 	{
 		if (cr->vm->v)
-			cr->vm->back[indir + i] = cr->color - 1;
-		cr->vm->area[indir + i] = src[i];
+			cr->vm->back[check_position(indir + i)] = cr->color - 1;
+		cr->vm->area[check_position(indir + i)] = src[i];
 		i++;
 	}
 	if (cr->vm->debug)
@@ -255,7 +255,7 @@ void	frk(t_carry *cr)
 	unsigned char	*src;
 	unsigned char	*dst;
 
-	src = &cr->vm->area[cr->position + 1];
+	src = &cr->vm->area[check_position(cr->position + 1)];
 	dst = (unsigned char*)&dir;
 	if (ft_islitendian())
 	{
@@ -284,7 +284,7 @@ void	lld(t_carry *cr)
 	unsigned char	*dst;
 	short			indir;
 
-	src = &cr->vm->area[cr->position + 2];
+	src = &cr->vm->area[check_position(cr->position + 2)];
 	if (cr->cycle->descript[0] == 3)
 	{
 		dst = (unsigned char*)&indir;
@@ -338,24 +338,11 @@ void	lfrk(t_carry *cr)
 	unsigned char	*src;
 	unsigned char	*dst;
 
-	src = &cr->vm->area[cr->position + 1];
+	src = &cr->vm->area[check_position(cr->position + 1)];
 	dst = (unsigned char*)&dir;
-	if (ft_islitendian())
-	{
-		dst[1] = src[0];
-		dst[0] = src[1];
-	}
-	else
-	{
-		dst[0] = src[0];
-		dst[1] = src[1];
-	}
-	dir += cr->position;
-	if (dir < 0)
-		dir += MEM_SIZE;
-	else if (dir >= MEM_SIZE)
-		dir -= MEM_SIZE;
-	copy_carriage(cr, dir);
+
+	short_ind(dst, src);
+	copy_carriage(cr, check_position(dir + cr->position));
 	if (cr->vm->debug)
 		ft_printf("frk ");
 }
