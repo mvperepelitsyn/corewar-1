@@ -218,6 +218,8 @@ void	ldi(t_carry *cr)
 		ft_printf("ldi ");
 }
 
+//TODO: why sti's indir is incorrect, it has to be 16 in order to work properly
+
 void	sti(t_carry *cr)
 {
 	unsigned char	*dst;
