@@ -68,6 +68,7 @@ void	ld(t_carry *cr)
 void	st(t_carry *cr)
 {
 	int 			src_i;
+	unsigned char	*src;
 	unsigned char	*dst;
 	short			indir;
 	int 			i;
@@ -89,14 +90,13 @@ void	st(t_carry *cr)
 			dst[1] = cr->vm->area[src_i + 1];
 		}
 		i = 0;
-		src_i = check_position(cr->cycle->regs[0]);
+		src = (unsigned char *)&(cr->reg[cr->cycle->regs[0]]);
 		indir = indir_position(indir, cr);
 		while (i < REG_SIZE)
 		{
 			if (cr->vm->v)
 				cr->vm->back[check_position(indir + i)] = cr->color - 1;
-			cr->vm->area[check_position(indir + i)] =
-					cr->reg[check_position(src_i + i)];
+			cr->vm->area[check_position(indir + i)] = src[i];
 			i++;
 		}
 	}
