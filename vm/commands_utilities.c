@@ -4,7 +4,7 @@
 
 #include "vm.h"
 
-static unsigned int	help_get_param(t_carry *cr, unsigned const char *src, int i)
+static unsigned int	help_get_param(t_carry *cr, int src_i, int i)
 {
 	unsigned char	*dest;
 	unsigned int	prm;
@@ -12,7 +12,7 @@ static unsigned int	help_get_param(t_carry *cr, unsigned const char *src, int i)
 	dest = (unsigned char *)&prm;
 	while (i < g_cmd_prms[cr->cmd_code - 1].dir_size)
 	{
-		dest[i] = src[i];
+		dest[i] = cr->vm->area[check_position(src_i + i)];
 		i++;
 	}
 	if (ft_islitendian())
@@ -27,16 +27,16 @@ static unsigned int	help_get_param(t_carry *cr, unsigned const char *src, int i)
 unsigned int		get_param3(t_carry *cr)
 {
 	unsigned int	prm;
-	unsigned char	*src;
+	int 			src_i;
 
 	prm = 0;
 	if (cr->cycle->descript[2] == 1)
 		prm = cr->reg[cr->cycle->descript[2]];
 	else if (cr->cycle->descript[2] == 2)
 	{
-		src = &cr->vm->area[check_position(cr->position + 2 +
-					  (2 * g_cmd_prms[cr->cmd_code - 1].dir_size))];
-		prm = help_get_param(cr, src, 0);
+		src_i = check_position(cr->position + 2 +
+							   (2 * g_cmd_prms[cr->cmd_code - 1].dir_size));
+		prm = help_get_param(cr, src_i, 0);
 	}
 	return (prm);
 }
@@ -46,27 +46,35 @@ unsigned int		get_param(t_carry *cr, short toggle)
 	unsigned int	prm;
 	unsigned char	*dest;
 	short			indir;
-	unsigned char	*src;
+	int 			src_i;
 
 	prm = 0;
 	if (cr->cycle->descript[toggle] == 1)
 		prm = cr->reg[cr->cycle->descript[toggle]];
 	else if (cr->cycle->descript[toggle] == 2)
 	{
-		src = (toggle == 0) ? &cr->vm->area[check_position(cr->position + 2)] :
-				&cr->vm->area[check_position(cr->position + 2 + g_cmd_prms[cr->
-				cmd_code - 1].dir_size)];
-		prm = help_get_param(cr, src, 0);
+		src_i = (toggle == 0) ? check_position(cr->position + 2) :
+				check_position(cr->position + 2 + g_cmd_prms[cr->cmd_code -
+				1].dir_size);
+		prm = help_get_param(cr, src_i, 0);
 	}
 	else if (cr->cycle->descript[toggle] == 3)
 	{
-		src = (toggle == 0) ? &cr->vm->area[check_position(cr->position + 2)] :
-			&cr->vm->area[check_position(cr->position + 4)];
+		src_i = (toggle == 0) ? check_position(cr->position + 2) :
+				check_position(cr->position + 4);
 		dest = (unsigned char *)&indir;
-		short_ind(dest, src);
+		if (cr->vm->l_endian)
+		{
+			dest[1] = cr->vm->area[src_i];
+			dest[0] = cr->vm->area[check_position((src_i) + 1)];
+		}
+		else
+		{
+			dest[0] = cr->vm->area[src_i];
+			dest[1] = cr->vm->area[src_i + 1];
+		}
 		indir = indir_position(indir, cr);
-		src = &cr->vm->area[indir];
-		prm = help_get_param(cr, src, 0);
+		prm = help_get_param(cr, indir, 0);
 	}
 	return (prm);
 }

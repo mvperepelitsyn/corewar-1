@@ -7,6 +7,20 @@ short	indir_position(short indir, t_carry *cr)
 	return (indir);
 }
 
+void	rotate_or_not(t_carry *cr, unsigned char *dest, int src_i)
+{
+	if (cr->vm->l_endian)
+	{
+		dest[1] = cr->vm->area[src_i];
+		dest[0] = cr->vm->area[check_position((src_i) + 1)];
+	}
+	else
+		{
+			dest[0] = cr->vm->area[src_i];
+			dest[1] = cr->vm->area[src_i + 1];
+		}
+}
+
 void	short_ind(unsigned char *dst, unsigned const char *src)
 {
 	if (ft_islitendian())

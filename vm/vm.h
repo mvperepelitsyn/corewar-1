@@ -79,6 +79,7 @@ struct			s_vm
 {
 	char				v;
 	char				debug;
+	char				l_endian;
 	unsigned char		champs_count;
 	unsigned int		car_count;
 	unsigned int		last_alive;//number of last alive champion
@@ -145,6 +146,7 @@ void			parsing(int argc, char **argv, t_vm	*vm);
 void			vm_init(t_vm *vm);
 void			ft_error(char *str);
 void			short_ind(unsigned char *dst, unsigned const char *src);
+void			rotate_or_not(t_carry *cr, unsigned char *dest, int src_i);
 short			indir_position(short indir, t_carry *cr);
 
 unsigned int	get_param(t_carry *cr, short toggle);

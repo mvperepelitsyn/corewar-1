@@ -29,24 +29,33 @@ void	live(t_carry *cr)
 
 void	ld(t_carry *cr)
 {
-	unsigned char	*src;
+	int				src_i;
 	unsigned char	*dst;
 	short			indir;
 
-	src = &cr->vm->area[check_position(cr->position + 2)];
+	src_i = check_position(cr->position + 2);
 	if (cr->cycle->descript[0] == 3)
 	{
 		dst = (unsigned char*)&indir;
-		short_ind(dst, src);
+		if (cr->vm->l_endian)
+		{
+			dst[1] = cr->vm->area[src_i];
+			dst[0] = cr->vm->area[check_position(src_i + 1)];
+		}
+		else
+		{
+			dst[1] = cr->vm->area[check_position(src_i + 1)];
+			dst[0] = cr->vm->area[src_i];
+		}
 		indir = indir_position(indir, cr);
-		src = &cr->vm->area[indir];
 	}
 	dst = (unsigned char*)&cr->reg[cr->cycle->regs[1]];
-	indir = 0;
-	while (indir < REG_SIZE)
+	src_i = 0;
+	while (src_i < REG_SIZE)
 	{
-		dst[REG_SIZE - 1 - indir] = src[indir];
+		dst[REG_SIZE - 1 - src_i] = cr->vm->area[check_position(indir)];
 		indir++;
+		src_i++;
 	}
 	if (!cr->reg[cr->cycle->regs[1]])
 		cr->carry = 1;
@@ -58,8 +67,8 @@ void	ld(t_carry *cr)
 
 void	st(t_carry *cr)
 {
+	int 			src_i;
 	unsigned char	*dst;
-	unsigned char	*src;
 	short			indir;
 	int 			i;
 
@@ -67,17 +76,27 @@ void	st(t_carry *cr)
 		cr->reg[cr->cycle->regs[1]] = cr->reg[cr->cycle->regs[0]];
 	else
 	{
-		i = 0;
-		src = &cr->vm->area[check_position(cr->position + 3)];
+		src_i = check_position(cr->position + 3);
 		dst = (unsigned char *)&indir;
-		short_ind(dst, src);
+		if (cr->vm->l_endian)
+		{
+			dst[1] = cr->vm->area[src_i];
+			dst[0] = cr->vm->area[check_position((src_i) + 1)];
+		}
+		else
+		{
+			dst[0] = cr->vm->area[src_i];
+			dst[1] = cr->vm->area[src_i + 1];
+		}
+		i = 0;
+		src_i = check_position(cr->cycle->regs[0]);
 		indir = indir_position(indir, cr);
-		src = (unsigned char *)&(cr->reg[cr->cycle->regs[0]]);
 		while (i < REG_SIZE)
 		{
 			if (cr->vm->v)
 				cr->vm->back[check_position(indir + i)] = cr->color - 1;
-			cr->vm->area[check_position(indir + i)] = src[i];
+			cr->vm->area[check_position(indir + i)] =
+					cr->reg[check_position(src_i + i)];
 			i++;
 		}
 	}
@@ -116,7 +135,7 @@ void	and(t_carry *cr)
 
 	prm1 = get_param(cr, 0);
 	prm2 = get_param(cr, 1);
-	cr->reg[cr->cycle->descript[2]] = prm1 & prm2;
+	cr->reg[cr->cycle->regs[2]] = prm1 & prm2;
 	if (!cr->reg[cr->cycle->regs[2]])
 		cr->carry = 1;
 	else
@@ -132,7 +151,7 @@ void	or(t_carry *cr)
 
 	prm1 = get_param(cr, 0);
 	prm2 = get_param(cr, 1);
-	cr->reg[cr->cycle->descript[2]] = prm1 | prm2;
+	cr->reg[cr->cycle->regs[2]] = prm1 | prm2;
 	if (!cr->reg[cr->cycle->regs[2]])
 		cr->carry = 1;
 	else
@@ -148,7 +167,7 @@ void	xor(t_carry *cr)
 
 	prm1 = get_param(cr, 0);
 	prm2 = get_param(cr, 1);
-	cr->reg[cr->cycle->descript[2]] = prm1 ^ prm2;
+	cr->reg[cr->cycle->regs[2]] = prm1 ^ prm2;
 	if (!cr->reg[cr->cycle->regs[2]])
 		cr->carry = 1;
 	else
@@ -201,25 +220,32 @@ void	ldi(t_carry *cr)
 
 void	sti(t_carry *cr)
 {
-	// ft_printf("car %u on %d: sti\tcycle: %u\n", cr->car_nbr, cr->position, \
-	// 	vm->cycles_from_start);
-
 	unsigned char	*dst;
-	unsigned char	*src;
 	short			indir;
 	int 			i;
+	int 			src_i;
 
-	src = &cr->vm->area[check_position(cr->position + (get_param(cr, 1) + get_param3(cr)) % IDX_MOD)];
+	src_i = check_position(cr->position + (get_param(cr, 1) + get_param3(cr)) % IDX_MOD);
 	i = 0;
 	dst = (unsigned char *)&indir;
-	short_ind(dst, src);
+	if (cr->vm->l_endian)
+	{
+		dst[1] = cr->vm->area[src_i];
+		dst[0] = cr->vm->area[check_position((src_i) + 1)];
+	}
+	else
+	{
+		dst[0] = cr->vm->area[src_i];
+		dst[1] = cr->vm->area[src_i + 1];
+	}
 	indir = indir_position(indir, cr);
-	src = (unsigned char *)&(cr->reg[cr->cycle->regs[0]]);
+	src_i = check_position(cr->cycle->regs[0]);
 	while (i < REG_SIZE)
 	{
 		if (cr->vm->v)
 			cr->vm->back[check_position(indir + i)] = cr->color - 1;
-		cr->vm->area[check_position(indir + i)] = src[i];
+		cr->vm->area[check_position(indir + i)] =
+				cr->reg[check_position(src_i + i)];
 		i++;
 	}
 	if (cr->vm->debug)

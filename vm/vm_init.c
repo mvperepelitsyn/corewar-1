@@ -81,5 +81,6 @@ void		vm_init(t_vm *vm)
 	vm->command[15] = (t_command) & aff;
 	vm->last_alive = vm->champs_count;
 	vm->cycles_to_die = CYCLE_TO_DIE;
+	vm->l_endian = (char)ft_islitendian();
 	area_init(vm);
 }
