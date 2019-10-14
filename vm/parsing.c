@@ -112,12 +112,12 @@ static void	fill_the_code(t_process *chmp, int fd)
 
 static void	fill_the_champ(t_process *chmp, char *file_name)
 {
-	// char	*clion_file_name;
+	 char	*clion_file_name;
 	int		fd;
 
-	if ((fd = open(file_name, O_RDONLY)) < 0)	//for something real
-	// clion_file_name = ft_strjoin("../", file_name); //only for clion
-	// if ((fd = open(clion_file_name, O_RDONLY)) < 0) //only for clion
+//	if ((fd = open(file_name, O_RDONLY)) < 0)	//for something real
+	 clion_file_name = ft_strjoin("../", file_name); //only for clion
+	 if ((fd = open(clion_file_name, O_RDONLY)) < 0) //only for clion
 		ft_error("There is nothing to open from champ file!\n");
 	check_magic_header(fd);
 	fill_the_name_champ(chmp, fd);

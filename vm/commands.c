@@ -47,13 +47,13 @@ void	ld(t_carry *cr)
 			dst[1] = cr->vm->area[check_position(src_i + 1)];
 			dst[0] = cr->vm->area[src_i];
 		}
-		indir = indir_position(indir, cr);
+		src_i = indir_position(indir, cr);
 	}
 	dst = (unsigned char*)&cr->reg[cr->cycle->regs[1]];
-	src_i = 0;
-	while (src_i < REG_SIZE)
+	indir = 0;
+	while (src_i < REG_SIZE)//endian??
 	{
-		dst[REG_SIZE - 1 - src_i] = cr->vm->area[check_position(indir)];
+		dst[REG_SIZE - 1 - indir] = cr->vm->area[check_position(src_i)];
 		indir++;
 		src_i++;
 	}
@@ -201,17 +201,17 @@ void	zjmp(t_carry *cr)
 
 void	ldi(t_carry *cr)
 {
-	unsigned char	*src;
+	int 			src_i;
 	unsigned char	*dst;
 	short			i;
 
-	src = &cr->vm->area[check_position(cr->position + (get_param(cr, 0) +
-					 get_param(cr, 1)) % IDX_MOD)];
+	src_i = check_position(cr->position + (get_param(cr, 0) +
+										   get_param(cr, 1)) % IDX_MOD);
 	dst = (unsigned char*)&cr->reg[cr->cycle->regs[2]];
 	i = 0;
 	while (i < REG_SIZE)
 	{
-		dst[REG_SIZE - 1 - i] = src[i];
+		dst[REG_SIZE - 1 - i] = cr->vm->area[check_position(src_i + i)];
 		i++;
 	}
 	if (cr->vm->debug)
@@ -221,6 +221,7 @@ void	ldi(t_carry *cr)
 void	sti(t_carry *cr)
 {
 	unsigned char	*dst;
+	unsigned char	*src;
 	short			indir;
 	int 			i;
 	int 			src_i;
@@ -228,7 +229,7 @@ void	sti(t_carry *cr)
 	src_i = check_position(cr->position + (get_param(cr, 1) + get_param3(cr)) % IDX_MOD);
 	i = 0;
 	dst = (unsigned char *)&indir;
-	if (cr->vm->l_endian)
+	if (cr->vm->l_endian) //if it is npt a little_endian than it closer than it is now
 	{
 		dst[1] = cr->vm->area[src_i];
 		dst[0] = cr->vm->area[check_position((src_i) + 1)];
@@ -236,16 +237,15 @@ void	sti(t_carry *cr)
 	else
 	{
 		dst[0] = cr->vm->area[src_i];
-		dst[1] = cr->vm->area[src_i + 1];
+		dst[1] = cr->vm->area[check_position(src_i + 1)];
 	}
 	indir = indir_position(indir, cr);
-	src_i = check_position(cr->cycle->regs[0]);
+	src = (unsigned char *)&(cr->reg[cr->cycle->regs[0]]);
 	while (i < REG_SIZE)
 	{
 		if (cr->vm->v)
 			cr->vm->back[check_position(indir + i)] = cr->color - 1;
-		cr->vm->area[check_position(indir + i)] =
-				cr->reg[check_position(src_i + i)];
+		cr->vm->area[check_position(indir + i)] = src[i];
 		i++;
 	}
 	if (cr->vm->debug)

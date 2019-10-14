@@ -34,8 +34,9 @@ unsigned int		get_param3(t_carry *cr)
 		prm = cr->reg[cr->cycle->descript[2]];
 	else if (cr->cycle->descript[2] == 2)
 	{
-		src_i = check_position(cr->position + 2 +
-							   (2 * g_cmd_prms[cr->cmd_code - 1].dir_size));
+//		src_i = check_position(cr->position + 2 +
+//							   (2 * g_cmd_prms[cr->cmd_code - 1].dir_size));
+		src_i = check_position(cr->position + 2 + 1 + g_cmd_prms[cr->cmd_code - 1].dir_size);
 		prm = help_get_param(cr, src_i, 0);
 	}
 	return (prm);
@@ -53,9 +54,10 @@ unsigned int		get_param(t_carry *cr, short toggle)
 		prm = cr->reg[cr->cycle->descript[toggle]];
 	else if (cr->cycle->descript[toggle] == 2)
 	{
-		src_i = (toggle == 0) ? check_position(cr->position + 2) :
-				check_position(cr->position + 2 + g_cmd_prms[cr->cmd_code -
-				1].dir_size);
+//		src_i = (toggle == 0) ? check_position(cr->position + 2) :
+//				check_position(cr->position + 2 + g_cmd_prms[cr->cmd_code -
+//				1].dir_size);
+		src_i = cr->position + 2 + 1;
 		prm = help_get_param(cr, src_i, 0);
 	}
 	else if (cr->cycle->descript[toggle] == 3)
