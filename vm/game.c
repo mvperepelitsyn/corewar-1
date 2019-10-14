@@ -53,6 +53,11 @@ static void	check_game(t_vm *vm)
 	vm->live_counter = 0;
 }
 
+void debug()
+{
+	//
+}
+
 static void	cycle(t_vm *vm)
 {
 	t_carry	*cr;
@@ -76,6 +81,8 @@ static void	cycle(t_vm *vm)
 		if (!cr->cycles_before)
 		{
 			cr->jump_len = 1;
+			if (cr->cmd_code == 9)
+				debug();
 			if (check_operation(vm, cr, &cycle))
 				vm->command[cr->cmd_code - 1](cr);
 			if (!cycle.shift)
@@ -97,7 +104,7 @@ void		game(t_vm *vm)
 	// print_game_area(vm);
 	// exit(0);
 	// ft_printf("%u\n", vm->dump);
-	vm->debug = 0;
+	vm->debug = 1;
 	// if (vm->v)
 	// 	game_area_frame(vm);
 	while (vm->carriages)

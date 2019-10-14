@@ -90,6 +90,6 @@ void	game_area_frame(t_vm *vm)
 		}
 		print_byte(vm, byte, '\n');
 	}
-	usleep(200000);
+	usleep(400000);
 	ft_printf("\e[1;1H\e[2J");
 }

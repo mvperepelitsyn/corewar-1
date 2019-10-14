@@ -47,13 +47,13 @@ void	ld(t_carry *cr)
 			dst[1] = cr->vm->area[check_position(src_i + 1)];
 			dst[0] = cr->vm->area[src_i];
 		}
-		indir = indir_position(indir, cr);
+		src_i = indir_position(indir, cr);
 	}
 	dst = (unsigned char*)&cr->reg[cr->cycle->regs[1]];
-	src_i = 0;
-	while (src_i < REG_SIZE)
+	indir = 0;
+	while (src_i < REG_SIZE)//endian??
 	{
-		dst[REG_SIZE - 1 - src_i] = cr->vm->area[check_position(indir)];
+		dst[REG_SIZE - 1 - indir] = cr->vm->area[check_position(src_i)];
 		indir++;
 		src_i++;
 	}
@@ -125,7 +125,7 @@ void	and(t_carry *cr)
 
 	prm1 = get_param(cr, 0);
 	prm2 = get_param(cr, 1);
-	cr->reg[cr->cycle->descript[2]] = prm1 & prm2;
+	cr->reg[cr->cycle->regs[2]] = prm1 & prm2;
 	if (!cr->reg[cr->cycle->regs[2]])
 		cr->carry = 1;
 	else
