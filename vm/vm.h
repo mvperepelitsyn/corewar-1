@@ -79,6 +79,7 @@ struct			s_vm
 {
 	char				v;
 	char				debug;
+	char				l_endian;
 	unsigned char		champs_count;
 	unsigned int		car_count;
 	unsigned int		last_alive;//number of last alive champion

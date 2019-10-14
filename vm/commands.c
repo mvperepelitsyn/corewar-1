@@ -29,24 +29,33 @@ void	live(t_carry *cr)
 
 void	ld(t_carry *cr)
 {
-	unsigned char	*src;
+	int				src_i;
 	unsigned char	*dst;
 	short			indir;
 
-	src = &cr->vm->area[check_position(cr->position + 2)];
+	src_i = check_position(cr->position + 2);
 	if (cr->cycle->descript[0] == 3)
 	{
 		dst = (unsigned char*)&indir;
-		short_ind(dst, src);
+		if (cr->vm->l_endian)
+		{
+			dst[1] = cr->vm->area[src_i];
+			dst[0] = cr->vm->area[check_position(src_i + 1)];
+		}
+		else
+		{
+			dst[1] = cr->vm->area[check_position(src_i + 1)];
+			dst[0] = cr->vm->area[src_i];
+		}
 		indir = indir_position(indir, cr);
-		src = &cr->vm->area[indir];
 	}
 	dst = (unsigned char*)&cr->reg[cr->cycle->regs[1]];
-	indir = 0;
-	while (indir < REG_SIZE)
+	src_i = 0;
+	while (src_i < REG_SIZE)
 	{
-		dst[REG_SIZE - 1 - indir] = src[indir];
+		dst[REG_SIZE - 1 - src_i] = cr->vm->area[check_position(indir)];
 		indir++;
+		src_i++;
 	}
 	if (!cr->reg[cr->cycle->regs[1]])
 		cr->carry = 1;
