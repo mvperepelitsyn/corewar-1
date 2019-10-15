@@ -104,7 +104,7 @@ void		game(t_vm *vm)
 	// print_game_area(vm);
 	// exit(0);
 	// ft_printf("%u\n", vm->dump);
-	vm->debug = 0;
+	vm->debug = 1;
 	// if (vm->v)
 	// 	game_area_frame(vm);
 	while (vm->carriages)
@@ -130,6 +130,7 @@ void		game(t_vm *vm)
 	if (vm->dump && vm->carriages)
 		print_game_area(vm);
 	else
-		ft_printf("Contestant %hhu, \"%s\", has won !\n", vm->last_alive, \
-			vm->processes[vm->last_alive - 1].cmp_name);
+		ft_printf("Contestant %u, \"%s\", has won !\n", \
+			((int)vm->last_alive * -1), \
+			vm->processes[((int)vm->last_alive * -1) - 1].cmp_name);
 }

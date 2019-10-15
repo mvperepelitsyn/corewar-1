@@ -123,6 +123,8 @@ int			check_operation(t_vm *vm, t_carry *cr, t_cycle *cycle)
 			return (0);
 		}
 	}
+	else
+		cr->cycle->descript[0] = 2;
 	calc_shift(cr, cycle);
 	return(1);
 }
