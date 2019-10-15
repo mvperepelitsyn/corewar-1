@@ -140,7 +140,7 @@ static void		from_memory_to_var(t_carry *cr, void *var, \
 	}
 }
 
-static int		get_shift(t_carry *cr, int prm_nbr)
+int				get_shift(t_carry *cr, int prm_nbr)
 {
 	int		shift;
 	int		i;
