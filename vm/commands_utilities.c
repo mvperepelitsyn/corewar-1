@@ -148,7 +148,7 @@ int				get_shift(t_carry *cr, int prm_nbr)
 	int		shift;
 	int		i;
 
-	shift = 2;//
+	shift = (g_cmd_prms[cr->cmd_code - 1].descript) ? 2 : 1;
 	i = 0;
 	while (i < prm_nbr)
 	{

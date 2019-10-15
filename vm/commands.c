@@ -3,28 +3,22 @@
 void	live(t_carry *cr)
 {
 	unsigned int	dir;
-	unsigned char	*ptr;
-	int				i;
-	int				*lala;
+	int				*champ_nbr;
 
 	cr->last_live = 0;
 	cr->vm->live_counter++;
-	ptr = (unsigned char*)&dir;
-	i = 0;
-	while (i < g_cmd_prms[cr->cmd_code - 1].dir_size)
-	{
-		ptr[i] = cr->vm->area[check_position(cr->position + 1 + i)];
-		i++;
-	}
-	if (ft_islitendian())
-		dir = ft_reverseint(dir);
-	if (dir == cr->reg[0])
+	dir = get_param(cr, 0);
+	champ_nbr = (int*)&dir;
+	if ((champ_nbr[0] * -1) > 0 && champ_nbr[0] <= (int)cr->vm->champs_count)
 		cr->vm->last_alive = dir;
-	lala = (int*)&dir;
 	if (cr->vm->v)
 		cr->vm->back[cr->position] |= 200;
 	if (cr->vm->debug)
-		ft_printf("alive! ");
+	{
+		ft_printf("%d ", champ_nbr[0]);
+		ft_printf("%d ", cr->reg[0]);
+		ft_printf("alive %d! ", cr->vm->last_alive);
+	}
 }
 
 void	ld(t_carry *cr)
