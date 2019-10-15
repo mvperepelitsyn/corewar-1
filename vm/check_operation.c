@@ -36,17 +36,19 @@ static int	check_reg(t_vm *vm, t_carry *cr, t_cycle *cycle)
 {
 	int		i;
 	int		shift;
+	int		position;
 
 	i = 0;
 	shift = 2;
 	while (i < g_cmd_prms[cr->cmd_code - 1].prms_count)
 	{
-		if (cycle->descript[i] == 1 && !(vm->area[cr->position + shift] >= 1 \
-				&& vm->area[cr->position + shift] <= 16))
+		position = check_position(cr->position + shift);
+		if (cycle->descript[i] == 1 && \
+			!(vm->area[position] >= 1 && vm->area[position] <= 16))
 			return (0);
 		if (cycle->descript[i] == 1)
 		{
-			cycle->regs[i] = vm->area[cr->position + shift] - 1;
+			cycle->regs[i] = vm->area[position] - 1;
 			shift++;
 		}
 		else if (cycle->descript[i] == 2)

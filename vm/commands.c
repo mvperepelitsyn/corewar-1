@@ -133,8 +133,15 @@ void	and(t_carry *cr)
 	unsigned int	prm1;
 	unsigned int	prm2;
 
+	// for (int i = 0; i < 8; i++)
+	// 	ft_printf("%hhu ", cr->vm->area[cr->position + i]);
+	// ft_printf("\n");
 	prm1 = get_param(cr, 0);
+	// ft_printf("%d\n", cr->reg[0]);
+	// ft_printf("%hhu\n", cr->cycle->regs[0]);
+	// ft_printf("%u\n", prm1);
 	prm2 = get_param(cr, 1);
+	// ft_printf("%u\n", prm2);
 	cr->reg[cr->cycle->regs[2]] = prm1 & prm2;
 	if (!cr->reg[cr->cycle->regs[2]])
 		cr->carry = 1;

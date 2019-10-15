@@ -149,7 +149,7 @@ void			short_ind(unsigned char *dst, unsigned const char *src);
 void			rotate_or_not(t_carry *cr, unsigned char *dest, int src_i);
 short			indir_position(short indir, t_carry *cr);
 
-unsigned int	get_param(t_carry *cr, short toggle);
+unsigned int	get_param(t_carry *cr, int prm_nbr);
 unsigned int	get_param3(t_carry *cr);
 void			game(t_vm *vm);
 int				check_operation(t_vm *vm, t_carry *cr, t_cycle *cycle);
