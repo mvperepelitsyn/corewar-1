@@ -87,6 +87,33 @@ unsigned int		get_param3(t_carry *cr)
 ** --------------------------------------------------------------------------
 */
 
+void			from_var_to_memory(t_carry *cr, void *var, \
+	int position, int	size)
+{
+	unsigned char	*ptr;
+	int				i;
+
+	ptr = (unsigned char *)var;
+	i = 0;
+	if (cr->vm->l_endian)
+	{
+		while (i < size)
+		{
+			cr->vm->area[check_position(position + (size - i - 1))] = ptr[i];
+			i++;
+		}
+	}
+	else
+	{
+		while (i < size)
+		{
+			cr->vm->area[check_position(position + i)] = ptr[i];
+			i++;
+		}
+	}
+}
+
+
 static void		from_memory_to_var(t_carry *cr, void *var, \
 	int position, int	size)
 {

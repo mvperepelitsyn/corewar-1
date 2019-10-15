@@ -229,34 +229,45 @@ void	ldi(t_carry *cr)
 
 void	sti(t_carry *cr)
 {
-	unsigned char	*dst;
-	unsigned char	*src;
-	short			indir;
-	int 			i;
-	int 			src_i;
+	// unsigned char	*dst;
+	// unsigned char	*src;
+	// short			indir;
+	// int 			i;
+	// int 			src_i;
+	//
+	// src_i = check_position(cr->position + (get_param(cr, 1) + get_param3(cr)) % IDX_MOD);
+	// i = 0;
+	// dst = (unsigned char *)&indir;
+	// if (cr->vm->l_endian) //if it is npt a little_endian than it closer than it is now
+	// {
+	// 	dst[1] = cr->vm->area[src_i];
+	// 	dst[0] = cr->vm->area[check_position((src_i) + 1)];
+	// }
+	// else
+	// {
+	// 	dst[0] = cr->vm->area[src_i];
+	// 	dst[1] = cr->vm->area[check_position(src_i + 1)];
+	// }
+	// indir = indir_position(indir, cr);
+	// src = (unsigned char *)&(cr->reg[cr->cycle->regs[0]]);
+	// while (i < REG_SIZE)
+	// {
+	// 	if (cr->vm->v)
+	// 		cr->vm->back[check_position(indir + i)] = cr->color - 1;
+	// 	cr->vm->area[check_position(indir + i)] = src[i];
+	// 	i++;
+	// }
+	unsigned int	p1;
+	unsigned int	p2;
+	unsigned int	p3;
+	unsigned int	position;
 
-	src_i = check_position(cr->position + (get_param(cr, 1) + get_param3(cr)) % IDX_MOD);
-	i = 0;
-	dst = (unsigned char *)&indir;
-	if (cr->vm->l_endian) //if it is npt a little_endian than it closer than it is now
-	{
-		dst[1] = cr->vm->area[src_i];
-		dst[0] = cr->vm->area[check_position((src_i) + 1)];
-	}
-	else
-	{
-		dst[0] = cr->vm->area[src_i];
-		dst[1] = cr->vm->area[check_position(src_i + 1)];
-	}
-	indir = indir_position(indir, cr);
-	src = (unsigned char *)&(cr->reg[cr->cycle->regs[0]]);
-	while (i < REG_SIZE)
-	{
-		if (cr->vm->v)
-			cr->vm->back[check_position(indir + i)] = cr->color - 1;
-		cr->vm->area[check_position(indir + i)] = src[i];
-		i++;
-	}
+	p1 = get_param(cr, 0);
+	p2 = get_param(cr, 1);
+	p3 = get_param(cr, 2);
+
+	position = check_position(cr->position + (p2 + p3) % IDX_MOD);
+	from_var_to_memory(cr, &p1, position, REG_SIZE);
 	if (cr->vm->debug)
 		ft_printf("sti ");
 }

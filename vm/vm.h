@@ -157,6 +157,8 @@ void			calc_shift();
 void			carriages_init(t_vm *vm, int champ_nbr, int position);
 int				check_position(int position);
 void			game_area_frame(t_vm *vm);
-void		print_game_area(t_vm *vm);
+void			print_game_area(t_vm *vm);
+void			from_var_to_memory(t_carry *cr, void *var, int position, \
+	int	size);
 
 #endif
