@@ -85,6 +85,7 @@ struct			s_vm
 	unsigned int		last_alive;//number of last alive champion
 	unsigned char		*area;
 	unsigned char		*back;
+	unsigned char		*light;
 	unsigned int		cycles_from_start;
 	unsigned int		dump;
 	int					cycles_to_die;
