@@ -66,6 +66,8 @@ static void	cycle(t_vm *vm)
 	cr = vm->carriages;
 	if (vm->cycles_from_start == 304)
 		vm->cycles_from_start = 304;
+	// if (cy == 9)
+	// 	debug();
 	while (cr)
 	{
 		ft_bzero((void*)&cycle, sizeof(cycle));
@@ -125,7 +127,7 @@ void		game(t_vm *vm)
 			break ;
 		// ft_printf("%u ", vm->cycles_from_start);
 	}
-	ft_printf("\n");
+	// ft_printf("\n");
 	// print_game_area(vm);
 	if (vm->dump && vm->carriages)
 	{

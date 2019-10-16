@@ -4,6 +4,7 @@ static void	declare_champs(t_process *p)
 {
 	int		i;
 
+	ft_printf("Introducing contestants...\n");
 	i = 0;
 	while(p[i].cmp_nbr)
 	{
