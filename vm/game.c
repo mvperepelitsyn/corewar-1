@@ -104,7 +104,7 @@ void		game(t_vm *vm)
 	// print_game_area(vm);
 	// exit(0);
 	// ft_printf("%u\n", vm->dump);
-	vm->debug = 1;
+	vm->debug = 0;
 	// if (vm->v)
 	// 	game_area_frame(vm);
 	while (vm->carriages)
@@ -128,7 +128,12 @@ void		game(t_vm *vm)
 	ft_printf("\n");
 	// print_game_area(vm);
 	if (vm->dump && vm->carriages)
-		print_game_area(vm);
+	{
+		if (vm->v)
+			game_area_frame(vm);
+		else
+			print_game_area(vm);
+	}
 	else
 		ft_printf("Contestant %u, \"%s\", has won !\n", \
 			((int)vm->last_alive * -1), \

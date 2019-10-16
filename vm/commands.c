@@ -16,7 +16,6 @@ void	live(t_carry *cr)
 	if (cr->vm->debug)
 	{
 		ft_printf("%d ", champ_nbr[0]);
-		ft_printf("%d ", cr->reg[0]);
 		ft_printf("alive %d! ", cr->vm->last_alive);
 	}
 }
@@ -61,38 +60,43 @@ void	ld(t_carry *cr)
 
 void	st(t_carry *cr)
 {
-	int 			src_i;
-	unsigned char	*src;
-	unsigned char	*dst;
+	// int 			src_i;
+	// unsigned char	*src;
+	// unsigned char	*dst;
 	short			indir;
-	int 			i;
+	// int 			i;
 
 	if (cr->cycle->descript[1] == 1)
 		cr->reg[cr->cycle->regs[1]] = cr->reg[cr->cycle->regs[0]];
 	else
 	{
-		src_i = check_position(cr->position + 3);
-		dst = (unsigned char *)&indir;
-		if (cr->vm->l_endian)
-		{
-			dst[1] = cr->vm->area[src_i];
-			dst[0] = cr->vm->area[check_position((src_i) + 1)];
-		}
-		else
-		{
-			dst[0] = cr->vm->area[src_i];
-			dst[1] = cr->vm->area[src_i + 1];
-		}
-		i = 0;
-		src = (unsigned char *)&(cr->reg[cr->cycle->regs[0]]);
-		indir = indir_position(indir, cr);
-		while (i < REG_SIZE)
-		{
-			if (cr->vm->v)
-				cr->vm->back[check_position(indir + i)] = cr->color - 1;
-			cr->vm->area[check_position(indir + i)] = src[i];
-			i++;
-		}
+		indir = get_param(cr, 1);
+		indir %= IDX_MOD;
+		from_var_to_memory(cr, &cr->reg[cr->cycle->regs[0]], \
+			check_position(cr->position + indir), REG_SIZE);
+		// src_i = check_position(cr->position + 3);
+		// dst = (unsigned char *)&indir;
+		// if (cr->vm->l_endian)
+		// {
+		// 	dst[1] = cr->vm->area[src_i];
+		// 	dst[0] = cr->vm->area[check_position((src_i) + 1)];
+		// }
+		// else
+		// {
+		// 	dst[0] = cr->vm->area[src_i];
+		// 	dst[1] = cr->vm->area[src_i + 1];
+		// }
+		// i = 0;
+		// src = (unsigned char *)&(cr->reg[cr->cycle->regs[0]]);
+		// indir = indir_position(indir, cr);
+		// while (i < REG_SIZE)
+		// {
+		// 	if (cr->vm->v)
+		// 		cr->vm->back[check_position(indir + i)] = cr->color - 1;
+		// 	cr->vm->area[check_position(indir + i)] = src[i];
+		// 	i++;
+		// }
+
 	}
 	if (cr->vm->debug)
 		ft_printf("st ");

@@ -175,7 +175,8 @@ unsigned int	get_param(t_carry *cr, int prm_nbr)
 	else
 	{
 		from_memory_to_var(cr, &indir, check_position(cr->position + shift), 2);
-		from_memory_to_var(cr, &prm, check_position(cr->position + indir), 4);
+		// from_memory_to_var(cr, &prm, check_position(cr->position + indir), 4);
+		return (indir);
 	}
 	return (prm);
 }

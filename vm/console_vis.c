@@ -75,7 +75,7 @@ void	game_area_frame(t_vm *vm)
 	int				byte;
 
 	byte = -1;
-	// ft_printf("\e[1;1H\e[2J");
+	ft_printf("\e[1;1H\e[2J");
 	ft_printf("\nCycles from start: %u\n", vm->cycles_from_start);
 	while (++byte < MEM_SIZE)
 	{
@@ -92,5 +92,5 @@ void	game_area_frame(t_vm *vm)
 	}
 	// usleep(20000);
 	usleep(400000);
-	ft_printf("\e[1;1H\e[2J");
+	// ft_printf("\e[1;1H\e[2J");
 }
