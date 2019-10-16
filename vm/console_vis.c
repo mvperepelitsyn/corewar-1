@@ -65,8 +65,14 @@ static void	print_byte(t_vm *vm, int byte, char ending)
 	if (!check_car_position(vm, byte, &cr_clr))
 	{
 		if (!vm->light[byte])
-			ft_printf("\033[%hhum%02x\033[0m%c", color, \
-				(unsigned int)vm->area[byte], ending);
+		{
+			if (color == 37)
+				ft_printf("\033[2;%hhum%02x\033[0m%c", color, \
+					(unsigned int)vm->area[byte], ending);
+			else
+				ft_printf("\033[%hhum%02x\033[0m%c", color, \
+					(unsigned int)vm->area[byte], ending);
+		}
 		else
 		{
 			ft_printf("\033[1;%hhum%02x\033[0m%c", color, \

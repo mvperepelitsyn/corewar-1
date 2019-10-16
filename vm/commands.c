@@ -86,16 +86,24 @@ void	and(t_carry *cr)
 {
 	unsigned int	prm1;
 	unsigned int	prm2;
+	short 			indir;
 
-	// for (int i = 0; i < 8; i++)
-	// 	ft_printf("%hhu ", cr->vm->area[cr->position + i]);
-	// ft_printf("\n");
-	prm1 = get_param(cr, 0);
-	// ft_printf("%d\n", cr->reg[0]);
-	// ft_printf("%hhu\n", cr->cycle->regs[0]);
-	// ft_printf("%u\n", prm1);
-	prm2 = get_param(cr, 1);
-	// ft_printf("%u\n", prm2);
+	if (cr->cycle->descript[0] == 3)
+	{
+		indir = get_param(cr, 0);
+		from_memory_to_var(cr, &prm1, check_position(cr->position +
+		indir % IDX_MOD), REG_SIZE);
+	}
+	else
+		prm1 = get_param(cr, 0);
+	if (cr->cycle->descript[1] == 3)
+	{
+		indir = get_param(cr, 1);
+		from_memory_to_var(cr, &prm2, check_position(cr->position +
+		indir % IDX_MOD), REG_SIZE);
+	}
+	else
+		prm2 = get_param(cr, 1);
 	cr->reg[cr->cycle->regs[2]] = prm1 & prm2;
 	if (!cr->reg[cr->cycle->regs[2]])
 		cr->carry = 1;
@@ -109,9 +117,24 @@ void	or(t_carry *cr)
 {
 	unsigned int	prm1;
 	unsigned int	prm2;
+	short 			indir;
 
-	prm1 = get_param(cr, 0);
-	prm2 = get_param(cr, 1);
+	if (cr->cycle->descript[0] == 3)
+	{
+		indir = get_param(cr, 0);
+		from_memory_to_var(cr, &prm1, check_position(cr->position +
+		indir % IDX_MOD), REG_SIZE);
+	}
+	else
+		prm1 = get_param(cr, 0);
+	if (cr->cycle->descript[1] == 3)
+	{
+		indir = get_param(cr, 1);
+		from_memory_to_var(cr, &prm2, check_position(cr->position +
+		indir % IDX_MOD), REG_SIZE);
+	}
+	else
+		prm2 = get_param(cr, 1);
 	cr->reg[cr->cycle->regs[2]] = prm1 | prm2;
 	if (!cr->reg[cr->cycle->regs[2]])
 		cr->carry = 1;
@@ -125,9 +148,24 @@ void	xor(t_carry *cr)
 {
 	unsigned int	prm1;
 	unsigned int	prm2;
+	short 			indir;
 
-	prm1 = get_param(cr, 0);
-	prm2 = get_param(cr, 1);
+	if (cr->cycle->descript[0] == 3)
+	{
+		indir = get_param(cr, 0);
+		from_memory_to_var(cr, &prm1, check_position(cr->position +
+		indir % IDX_MOD), REG_SIZE);
+	}
+	else
+		prm1 = get_param(cr, 0);
+	if (cr->cycle->descript[1] == 3)
+	{
+		indir = get_param(cr, 1);
+		from_memory_to_var(cr, &prm2, check_position(cr->position +
+		indir % IDX_MOD), REG_SIZE);
+	}
+	else
+		prm2 = get_param(cr, 1);
 	cr->reg[cr->cycle->regs[2]] = prm1 ^ prm2;
 	if (!cr->reg[cr->cycle->regs[2]])
 		cr->carry = 1;
@@ -165,69 +203,42 @@ void	ldi(t_carry *cr)
 	unsigned int	position;
 	unsigned int	p1;
 	unsigned int	p2;
+	short 			indir;
 
-	p1 = get_param(cr, 0);
+	if (cr->cycle->descript[0] == 3)
+	{
+		indir = get_param(cr, 0);
+		from_memory_to_var(cr, &p1, check_position(cr->position +
+		indir % IDX_MOD), REG_SIZE);
+	}
+	else
+		p1 = get_param(cr, 0);
 	p2 = get_param(cr, 1);
 	position = check_position(cr->position + (p1 + p2) % IDX_MOD);
 	from_memory_to_var(cr, &cr->reg[cr->cycle->regs[2]], position, REG_SIZE);
 	if (cr->vm->debug)
 		ft_printf("ldi ");
-//	int 			src_i;
-//	unsigned char	*dst;
-//	short			i;
-//
-//	src_i = check_position(cr->position + (get_param(cr, 0) +
-//										   get_param(cr, 1)) % IDX_MOD);
-//	dst = (unsigned char*)&cr->reg[cr->cycle->regs[2]];
-//	i = 0;
-//	while (i < REG_SIZE)
-//	{
-//		dst[REG_SIZE - 1 - i] = cr->vm->area[check_position(src_i + i)];
-//		i++;
-//	}
-//	if (cr->vm->debug)
-//		ft_printf("ldi ");
 }
 
-//TODO: why sti's indir is incorrect, it has to be 16 in order to work properly
+// is it correct var in sti's from_var_to_memory??
 
 void	sti(t_carry *cr)
 {
-	// unsigned char	*dst;
-	// unsigned char	*src;
-	// short			indir;
-	// int 			i;
-	// int 			src_i;
-	//
-	// src_i = check_position(cr->position + (get_param(cr, 1) + get_param3(cr)) % IDX_MOD);
-	// i = 0;
-	// dst = (unsigned char *)&indir;
-	// if (cr->vm->l_endian) //if it is npt a little_endian than it closer than it is now
-	// {
-	// 	dst[1] = cr->vm->area[src_i];
-	// 	dst[0] = cr->vm->area[check_position((src_i) + 1)];
-	// }
-	// else
-	// {
-	// 	dst[0] = cr->vm->area[src_i];
-	// 	dst[1] = cr->vm->area[check_position(src_i + 1)];
-	// }
-	// indir = indir_position(indir, cr);
-	// src = (unsigned char *)&(cr->reg[cr->cycle->regs[0]]);
-	// while (i < REG_SIZE)
-	// {
-	// 	if (cr->vm->v)
-	// 		cr->vm->back[check_position(indir + i)] = cr->color - 1;
-	// 	cr->vm->area[check_position(indir + i)] = src[i];
-	// 	i++;
-	// }
 	unsigned int	p1;
 	unsigned int	p2;
 	unsigned int	p3;
 	unsigned int	position;
+	short 			indir;
 
 	p1 = get_param(cr, 0);
-	p2 = get_param(cr, 1);
+	if (cr->cycle->descript[1] == 3)
+	{
+		indir = get_param(cr, 1);
+		from_memory_to_var(cr, &p2, check_position(cr->position +
+		indir % IDX_MOD), REG_SIZE);
+	}
+	else
+		p2 = get_param(cr, 1);
 	p3 = get_param(cr, 2);
 	position = check_position(cr->position + (p2 + p3) % IDX_MOD);
 	from_var_to_memory(cr, &p1, position, REG_SIZE);
@@ -289,15 +300,15 @@ void	frk(t_carry *cr)
 
 void	lld(t_carry *cr)
 {
-	unsigned int	p1;
+	short 			indir;
 	unsigned int	posit;
 
-	p1 = get_param(cr, 0);
-	if (cr->cycle->descript[1] == 2)
-		cr->reg[cr->cycle->regs[1]] = p1;
+	if (cr->cycle->descript[0] == 2)
+		cr->reg[cr->cycle->regs[1]] = get_param(cr, 0);
 	else
 	{
-		posit = check_position(cr->position + p1);
+		indir = get_param(cr, 0);
+		posit = check_position(cr->position + indir);
 		from_var_to_memory(cr, &cr->reg[cr->cycle->regs[1]], posit, REG_SIZE);
 	}
 	if (!cr->reg[cr->cycle->regs[1]])
@@ -306,44 +317,6 @@ void	lld(t_carry *cr)
 		cr->carry = 0;
 	if (cr->vm->debug)
 		ft_printf("lld ");
-//	unsigned char	*src;
-//	unsigned char	*dst;
-//	short			indir;
-//
-//	src = &cr->vm->area[check_position(cr->position + 2)];
-//	if (cr->cycle->descript[0] == 3)
-//	{
-//		dst = (unsigned char*)&indir;
-//		if (ft_islitendian())
-//		{
-//			dst[1] = src[0];
-//			dst[0] = src[1];
-//		}
-//		else
-//		{
-//			dst[0] = src[0];
-//			dst[1] = src[1];
-//		}
-//		indir += cr->position;
-//		if (indir < 0)
-//			indir += MEM_SIZE;
-//		else if (indir >= MEM_SIZE)
-//			indir -= MEM_SIZE;
-//		src = &cr->vm->area[indir];
-//	}
-//	dst = (unsigned char*)&cr->reg[cr->cycle->regs[1]];
-//	indir = 0;
-//	while (indir < REG_SIZE)
-//	{
-//		dst[REG_SIZE - 1 - indir] = src[indir];
-//		indir++;
-//	}
-//	if (!cr->reg[cr->cycle->regs[1]])
-//		cr->carry = 1;
-//	else
-//		cr->carry = 0;
-//	if (cr->vm->debug)
-//		ft_printf("ld ");
 }
 
 void	lldi(t_carry *cr)
@@ -351,28 +324,21 @@ void	lldi(t_carry *cr)
 	unsigned int	position;
 	unsigned int	p1;
 	unsigned int	p2;
+	short 			indir;
 
-	p1 = get_param(cr, 0);
+	if (cr->cycle->descript[0] == 3)
+	{
+		indir = get_param(cr, 0);
+		from_memory_to_var(cr, &p1, check_position(cr->position +
+		indir % IDX_MOD), REG_SIZE);
+	}
+	else
+		p1 = get_param(cr, 0);
 	p2 = get_param(cr, 1);
 	position = check_position(cr->position + (p1 + p2));
 	from_memory_to_var(cr, &cr->reg[cr->cycle->regs[2]], position, REG_SIZE);
 	if (cr->vm->debug)
 		ft_printf("lldi ");
-//	unsigned char	*src;
-//	unsigned char	*dst;
-//	short			i;
-//
-//	src = &cr->vm->area[check_position(cr->position + (get_param(cr, 0) +
-//					 get_param(cr, 1)))];
-//	dst = (unsigned char*)&cr->reg[cr->cycle->regs[2]];
-//	i = 0;
-//	while (i < REG_SIZE)
-//	{
-//		dst[REG_SIZE - 1 - i] = src[i];
-//		i++;
-//	}
-//	if (cr->vm->debug)
-//		ft_printf("lldi ");
 }
 
 void	lfrk(t_carry *cr)
