@@ -11,12 +11,12 @@ void		print_game_area(t_vm *vm)
 			ft_printf("%#06x : ", byte);
 		else
 			ft_printf("0x0000 : ");
-		while (byte % 32 < 31)
+		while (byte % 64 < 63)
 		{
 			ft_printf("%02x ", (unsigned int)vm->area[byte]);
 			byte++;
 		}
-		ft_printf("%02x\n", (unsigned int)vm->area[byte]);
+		ft_printf("%02x \n", (unsigned int)vm->area[byte]);
 		byte++;
 	}
 }
@@ -105,7 +105,7 @@ void	game_area_frame(t_vm *vm)
 		}
 		print_byte(vm, byte, '\n');
 	}
-	 usleep(20000);
+//	 usleep(20000);
 //	usleep(400000);
 	// ft_printf("\e[1;1H\e[2J");
 }
