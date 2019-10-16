@@ -22,15 +22,15 @@ void	live(t_carry *cr)
 
 void	ld(t_carry *cr)
 {
-	unsigned int	p1;
+	short 			indir;
 	unsigned int	posit;
 
-	p1 = get_param(cr, 0);
 	if (cr->cycle->descript[0] == 2)
-		cr->reg[cr->cycle->regs[1]] = p1;
+		cr->reg[cr->cycle->regs[1]] = get_param(cr, 0);
 	else
 	{
-		posit = check_position(cr->position + p1 % IDX_MOD);
+		indir = get_param(cr, 0);
+		posit = check_position(cr->position + indir % IDX_MOD);
 		from_var_to_memory(cr, &cr->reg[cr->cycle->regs[1]], posit, REG_SIZE);
 	}
 	if (!cr->reg[cr->cycle->regs[1]])
@@ -77,11 +77,7 @@ void	ld(t_carry *cr)
 
 void	st(t_carry *cr)
 {
-	// int 			src_i;
-	// unsigned char	*src;
-	// unsigned char	*dst;
 	short			indir;
-	// int 			i;
 
 	if (cr->cycle->descript[1] == 1)
 		cr->reg[cr->cycle->regs[1]] = cr->reg[cr->cycle->regs[0]];
