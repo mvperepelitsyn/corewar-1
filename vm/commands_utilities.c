@@ -99,6 +99,9 @@ void			from_var_to_memory(t_carry *cr, void *var, \
 	{
 		while (i < size)
 		{
+			if (cr->vm->v)
+				cr->vm->back[check_position(position + (size - i - 1))] =
+						cr->color - 1;
 			cr->vm->area[check_position(position + (size - i - 1))] = ptr[i];
 			i++;
 		}
@@ -107,6 +110,8 @@ void			from_var_to_memory(t_carry *cr, void *var, \
 	{
 		while (i < size)
 		{
+			if (cr->vm->v)
+				cr->vm->back[check_position(position + 1)] = cr->color - 1;
 			cr->vm->area[check_position(position + i)] = ptr[i];
 			i++;
 		}
@@ -114,7 +119,7 @@ void			from_var_to_memory(t_carry *cr, void *var, \
 }
 
 
-static void		from_memory_to_var(t_carry *cr, void *var, \
+void			from_memory_to_var(t_carry *cr, void *var, \
 	int position, int	size)
 {
 	unsigned char	*ptr;
