@@ -127,7 +127,6 @@ void		game(t_vm *vm)
 			break ;
 		// ft_printf("%u ", vm->cycles_from_start);
 	}
-	// ft_printf("\n");
 	// print_game_area(vm);
 	if (vm->dump && vm->carriages)
 	{

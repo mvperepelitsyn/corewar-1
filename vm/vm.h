@@ -77,6 +77,7 @@ struct	s_cycle
 
 struct			s_vm
 {
+	char 				a;
 	char				v;
 	char				debug;
 	char				l_endian;

@@ -63,6 +63,8 @@ static void	fill_the_code_size(t_process *chmp, int fd)
 	chmp->code_size = ((size_t *)rd_code_size)[0];
 	if (ft_islitendian())
 		chmp->code_size = ft_reverseint(chmp->code_size);
+	if (chmp->code_size > CHAMP_MAX_SIZE)
+		ft_error("The champion's code size is bigger that CHAMP_MAX_SIZE");
 	ft_strdel((char **)(&rd_code_size));
 }
 
@@ -112,12 +114,12 @@ static void	fill_the_code(t_process *chmp, int fd)
 
 static void	fill_the_champ(t_process *chmp, char *file_name)
 {
-	 // char	*clion_file_name;
+	char	*clion_file_name;
 	int		fd;
 
-	if ((fd = open(file_name, O_RDONLY)) < 0)	//for something real
-	 // clion_file_name = ft_strjoin("../", file_name); //only for clion
-	 // if ((fd = open(clion_file_name, O_RDONLY)) < 0) //only for clion
+//	if ((fd = open(file_name, O_RDONLY)) < 0)	//for something real
+	  clion_file_name = ft_strjoin("../", file_name); //only for clion
+	  if ((fd = open(clion_file_name, O_RDONLY)) < 0) //only for clion
 		ft_error("There is nothing to open from champ file!\n");
 	check_magic_header(fd);
 	fill_the_name_champ(chmp, fd);
@@ -231,6 +233,8 @@ static void	parse_champ(int argc, char **argv, t_vm *vm, int l)
 		}
 		else if (ft_strequ(argv[l], "-v"))
 			vm->v = 1;
+		else if (ft_strequ(argv[l], "-a"))
+			vm->a = 1;
 		else
 			check_file_and_fill(argv[l], vm->processes, 0);
 		l++;

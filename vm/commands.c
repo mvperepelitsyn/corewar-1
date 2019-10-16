@@ -358,7 +358,11 @@ void	lfrk(t_carry *cr)
 
 void	aff(t_carry *cr)
 {
-	write(1, (char*)&(cr->reg[cr->cycle->regs[0]]), 1);
+	char	prt;
+
+	prt = (char)(cr->reg[cr->cycle->regs[0]]);
+	if (cr->vm->a)
+		write(1, &prt, 1);
 	if (cr->vm->debug)
 		ft_printf("aff ");
 }
