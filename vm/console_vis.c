@@ -69,7 +69,7 @@ static void	print_byte(t_vm *vm, int byte, char ending)
 				(unsigned int)vm->area[byte], ending);
 		else
 		{
-			ft_printf("\033[1%hhum%02x\033[0m%c", color, \
+			ft_printf("\033[1;%hhum%02x\033[0m%c", color, \
 				(unsigned int)vm->area[byte], ending);
 			vm->light[byte]--;
 		}
