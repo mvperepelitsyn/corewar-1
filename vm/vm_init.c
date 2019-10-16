@@ -20,7 +20,7 @@ static int alloc_back(t_vm *vm)
 {
 	int		i;
 
-	if (!(vm->back = malloc(MEM_SIZE)))
+	if (!(vm->back = malloc(MEM_SIZE)) || !(vm->light = ft_memalloc(MEM_SIZE)))
 		return (0);
 	i = 0;
 	while (i < MEM_SIZE)

@@ -56,15 +56,24 @@ static void	print_byte(t_vm *vm, int byte, char ending)
 	{
 		cr_clr = vm->back[byte] << 6;
 		cr_clr >>= 6;
-		cr_clr = (cr_clr == 3) ? 45 : cr_clr + 41;
+		cr_clr = (cr_clr == 2) ? 45 : cr_clr + 41;
 		ft_printf("\033[0;%hhum%02x\033[0m%c", cr_clr, \
 			(unsigned int)vm->area[byte], ending);
 		vm->back[byte] -= 4;
 		return ;
 	}
 	if (!check_car_position(vm, byte, &cr_clr))
-		ft_printf("\033[%hhum%02x\033[0m%c", color, \
-			(unsigned int)vm->area[byte], ending);
+	{
+		if (!vm->light[byte])
+			ft_printf("\033[%hhum%02x\033[0m%c", color, \
+				(unsigned int)vm->area[byte], ending);
+		else
+		{
+			ft_printf("\033[1%hhum%02x\033[0m%c", color, \
+				(unsigned int)vm->area[byte], ending);
+			vm->light[byte]--;
+		}
+	}
 	else
 		ft_printf("\033[30;%hhum%02x\033[0m%c", cr_clr, \
 			(unsigned int)vm->area[byte], ending);
