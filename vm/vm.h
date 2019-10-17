@@ -63,7 +63,7 @@ typedef struct	s_cmd_prms
 ** Current cycle params: cycle
 */
 
-struct	s_cycle
+struct			s_cycle
 {
 	unsigned char		descript[3];//1
 	unsigned char		regs[3];
@@ -97,6 +97,25 @@ struct			s_vm
 	t_process			processes[MAX_PLAYERS];
 	t_command			command[16];
 };
+
+/*
+** Carriage params: sti
+*/
+
+typedef struct	s_sti
+{
+	unsigned int		reg1;
+	int					prm2;
+	short				dir2;
+	short				dir3;
+	int					reg3;
+	int					position;
+	short 				indir;
+}				t_sti;
+
+/*
+** GLOBAL Operation params:
+*/
 
 static t_cmd_prms			g_cmd_prms[16] =
 {
@@ -152,7 +171,7 @@ void			rotate_or_not(t_carry *cr, unsigned char *dest, int src_i);
 short			indir_position(short indir, t_carry *cr);
 void			from_memory_to_var(t_carry *cr, void *var, int position,
 		int size);
-unsigned int	get_param(t_carry *cr, int prm_nbr);
+void			get_param(t_carry *cr, void *param, int prm_nbr);
 unsigned int	get_param3(t_carry *cr);
 void			game(t_vm *vm);
 int				check_operation(t_vm *vm, t_carry *cr, t_cycle *cycle);

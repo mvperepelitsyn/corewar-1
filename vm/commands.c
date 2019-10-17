@@ -224,24 +224,27 @@ void	ldi(t_carry *cr)
 
 void	sti(t_carry *cr)
 {
-	unsigned int	p1;
-	int				p2;//sti neg + / shotr break sti_2
-	short			p3;//sti neg +
-	int				position;
-	int 			indir;
+	t_sti		sti;
 
-	p1 = get_param(cr, 0);
-	if (cr->cycle->descript[1] == 3)
-	{
-		indir = get_param(cr, 1);
-		from_memory_to_var(cr, &p2, check_position(cr->position +
-		indir % IDX_MOD), DIR_SIZE);
-	}
+	ft_bzero(&sti, sizeof(sti));
+	get_param(cr, &sti.reg1, 0);
+	if (cr->cycle->descript[1] == 1)
+		get_param(cr, &sti.prm2, 1);
+	else if (cr->cycle->descript[1] == 2)
+		get_param(cr, &sti.dir2, 1);
 	else
-		p2 = get_param(cr, 1);
-	p3 = get_param(cr, 2);
-	position = check_position(cr->position + ((p2 + p3) % IDX_MOD));
-	from_var_to_memory(cr, &p1, position, REG_SIZE);
+	{
+		get_param(cr, &sti.indir, 1);
+		from_memory_to_var(cr, &sti.prm2, check_position(cr->position +
+		sti.indir % IDX_MOD), REG_SIZE);
+	}
+	if (cr->cycle->descript[2] == 1)
+		get_param(cr, &sti.reg3, 2);
+	else
+		get_param(cr, &sti.dir3, 2);
+	sti.position = check_position(cr->position + \
+		((sti.prm2 + sti.dir2 + sti.dir3 + sti.reg3) % IDX_MOD));
+	from_var_to_memory(cr, &sti.reg1, sti.position, REG_SIZE);
 	if (cr->vm->debug)
 		ft_printf("sti ");
 }
