@@ -85,13 +85,34 @@ static void	print_byte(t_vm *vm, int byte, char ending)
 			(unsigned int)vm->area[byte], ending);
 }
 
-void	game_area_frame(t_vm *vm)
+static void	print_report(t_vm *vm)
+{
+	t_carry		*cr;
+
+	cr = vm->carriages;
+	ft_printf("\nCycles from start: %u\t\tCycles to die: %d\tTotal lives: %u", \
+		vm->cycles_from_start, vm->cycles_to_die, vm->live_counter);
+	ft_printf("\t\tLast alive champion: \"%s\"(%d / %u)\n\n", \
+		vm->processes[(vm->last_alive * -1) - 1].cmp_name, \
+		vm->last_alive, vm->last_alive_cycle);
+	while (cr)
+	{
+		if (cr->last_champ)
+			ft_printf("%s \"%s\" (%d) said \"Alive!\" %d cycles ago (%u).\t", \
+				"Champion", vm->processes[(cr->last_champ * -1) - 1].cmp_name, \
+				cr->last_champ, cr->last_live, cr->last_alive_cycle);
+		cr = cr->next;
+	}
+	ft_printf("\n\n");
+}
+
+void		game_area_frame(t_vm *vm)
 {
 	int				byte;
 
 	byte = -1;
 	ft_printf("\e[1;1H\e[2J");
-	ft_printf("\nCycles from start: %u\n", vm->cycles_from_start);
+	print_report(vm);
 	while (++byte < MEM_SIZE)
 	{
 		if (byte)
@@ -105,7 +126,7 @@ void	game_area_frame(t_vm *vm)
 		}
 		print_byte(vm, byte, '\n');
 	}
-	usleep(20000);
+	usleep(SLEEP);
 	// usleep(400000);
 	// ft_printf("\e[1;1H\e[2J");
 }

@@ -11,7 +11,12 @@ void	live(t_carry *cr)
 	champ_nbr = (int*)&dir;
 	if ((champ_nbr[0] * -1) > 0 \
 		&& (champ_nbr[0] * -1) <= (int)cr->vm->champs_count)
+	{
 		cr->vm->last_alive = dir;
+		cr->last_champ = dir;
+		cr->last_alive_cycle = cr->vm->cycles_from_start + 1;
+		cr->vm->last_alive_cycle = cr->vm->cycles_from_start + 1;
+	}
 	if (cr->vm->v)
 		cr->vm->back[cr->position] |= 200;
 	if (cr->vm->debug)

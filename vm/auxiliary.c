@@ -41,20 +41,23 @@ int		display_usage()
 	return (0);
 }
 
-void	ft_error(char *str)
+int		ft_error(char *str)
 {
 	if (!str)
 		ft_putstr("ERROR\n");
 	else
 		ft_printf("%s\n", str);
-	exit(69);
+	exit(-1);
 }
 
 int		check_position(int position)
 {
-	if (position < 0)
-		position += MEM_SIZE;
-	else if (position >= MEM_SIZE)
-		position -= MEM_SIZE;
+	while (position < 0 || position >= MEM_SIZE)
+	{
+		if (position < 0)
+			position += MEM_SIZE;
+		else if (position >= MEM_SIZE)
+			position -= MEM_SIZE;
+	}
 	return (position);
 }
