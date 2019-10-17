@@ -5,6 +5,8 @@
 # include "./libft/libft.h"
 # include "op.h"
 
+# define SLEEP 0//20000
+
 typedef struct s_vm		t_vm;
 typedef struct s_carry	t_carry;
 typedef struct s_cycle	t_cycle;
@@ -23,6 +25,8 @@ struct	s_carry
 	unsigned char		cmd_code;//current operation code
 	unsigned char		jump_len;//bytes to second instruction
 	int					last_live;//cycles from last live call
+	int					last_champ;//last alive champ nbr
+	unsigned int		last_alive_cycle;
 	unsigned int		cycles_before;//cycles before current operation
 	int					position;//carry position in game memory area
 	unsigned char		color;//carry color (champ color)
@@ -84,6 +88,7 @@ struct			s_vm
 	unsigned char		champs_count;
 	unsigned int		car_count;
 	unsigned int		last_alive;//number of last alive champion
+	unsigned int		last_alive_cycle;
 	unsigned char		*area;
 	unsigned char		*back;
 	unsigned char		*light;
@@ -179,7 +184,7 @@ void	aff(t_carry *cr);
 int				display_usage();
 void			parsing(int argc, char **argv, t_vm	*vm);
 void			vm_init(t_vm *vm);
-void			ft_error(char *str);
+int				ft_error(char *str);
 void			short_ind(unsigned char *dst, unsigned const char *src);
 void			rotate_or_not(t_carry *cr, unsigned char *dest, int src_i);
 short			indir_position(short indir, t_carry *cr);

@@ -86,13 +86,7 @@ static void	cycle(t_vm *vm)
 			if (check_operation(vm, cr, &cycle))
 				vm->command[cr->cmd_code - 1](cr);
 			if (!cycle.shift)
-			{
-				cr->position += cr->jump_len;
-				if (cr->position >= MEM_SIZE)
-					cr->position -= MEM_SIZE;
-				else if (cr->position < 0)
-					cr->position += MEM_SIZE;
-			}
+				cr->position = check_position(cr->position + cr->jump_len);
 		}
 		cr->last_live++;
 		cr = cr->next;
@@ -101,31 +95,23 @@ static void	cycle(t_vm *vm)
 
 void		game(t_vm *vm)
 {
-	// print_game_area(vm);
-	// exit(0);
-	// ft_printf("%u\n", vm->dump);
 	vm->debug = 0;
-	// if (vm->v)
-	// 	game_area_frame(vm);
 	while (vm->carriages)
 	{
 		cycle(vm);
 
-		if (vm->v)
+		if (vm->v && !vm->dump)
 			game_area_frame(vm);
 		vm->cycles_from_start++;
 		vm->ctd_counter++;
 		if (vm->ctd_counter == vm->cycles_to_die || vm->cycles_to_die <= 0)
 		{
-			// ft_printf("lala! ");
 			check_game(vm);
 			vm->ctd_counter = 0;
 		}
 		if (vm->dump && vm->cycles_from_start >= vm->dump)
 			break ;
-		// ft_printf("%u ", vm->cycles_from_start);
 	}
-	// print_game_area(vm);
 	if (vm->dump && vm->carriages)
 	{
 		if (vm->v)
