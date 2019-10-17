@@ -99,6 +99,20 @@ struct			s_vm
 };
 
 /*
+** Carriage params: ldi
+*/
+
+typedef struct	s_ldi
+{
+	int					prm1;
+	short				dir1;
+	short				dir2;
+	int					reg2;
+	int					position;
+	short 				indir;
+}				t_ldi;
+
+/*
 ** Carriage params: sti
 */
 
