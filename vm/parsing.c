@@ -114,7 +114,7 @@ static void	fill_the_code(t_process *chmp, int fd)
 
 static void	fill_the_champ(t_process *chmp, char *file_name)
 {
-	// char	*clion_file_name;
+	char	*clion_file_name;
 	int		fd;
 
 	if ((fd = open(file_name, O_RDONLY)) < 0)	//for something real
