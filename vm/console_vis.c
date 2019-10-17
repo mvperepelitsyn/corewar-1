@@ -98,12 +98,16 @@ static void	print_report(t_vm *vm)
 	while (cr)
 	{
 		if (cr->last_champ)
+		{
 			ft_printf("%s \"%s\" (%d) said \"Alive!\" %d cycles ago (%u).\t", \
 				"Champion", vm->processes[(cr->last_champ * -1) - 1].cmp_name, \
 				cr->last_champ, cr->last_live, cr->last_alive_cycle);
+			ft_printf("\tNext command: \"%s\" in %u cycles\n", \
+				g_cmd_prms[cr->cmd_code - 1].name, cr->cycles_before);
+		}
 		cr = cr->next;
 	}
-	ft_printf("\n\n");
+	ft_printf("\n");
 }
 
 void		game_area_frame(t_vm *vm)
