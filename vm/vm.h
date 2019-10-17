@@ -171,7 +171,8 @@ void			rotate_or_not(t_carry *cr, unsigned char *dest, int src_i);
 short			indir_position(short indir, t_carry *cr);
 void			from_memory_to_var(t_carry *cr, void *var, int position,
 		int size);
-void			get_param(t_carry *cr, void *param, int prm_nbr);
+void			get_param_plus(t_carry *cr, void *param, int prm_nbr);
+unsigned int	get_param(t_carry *cr, int prm_nbr);
 unsigned int	get_param3(t_carry *cr);
 void			game(t_vm *vm);
 int				check_operation(t_vm *vm, t_carry *cr, t_cycle *cycle);

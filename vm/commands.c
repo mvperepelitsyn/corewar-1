@@ -198,50 +198,74 @@ void	zjmp(t_carry *cr)
 		ft_printf("zjmp ");
 }
 
+//void	ldi(t_carry *cr)
+//{
+//	unsigned int	position;
+//	unsigned int	p1;
+//	unsigned int	p2;
+//	short 			indir;
+//
+//	if (cr->cycle->descript[0] == 3)
+//	{
+//		indir = get_param(cr, 0);
+//		from_memory_to_var(cr, &p1, check_position(cr->position +
+//		indir % IDX_MOD), REG_SIZE);
+//	}
+//	else
+//		p1 = get_param(cr, 0);
+//	p2 = get_param(cr, 1);
+//	position = check_position(cr->position + (p1 + p2) % IDX_MOD);
+//	from_memory_to_var(cr, &cr->reg[cr->cycle->regs[2]], position, REG_SIZE);
+//	if (cr->vm->debug)
+//		ft_printf("ldi ");
+//}
+
 void	ldi(t_carry *cr)
 {
-	unsigned int	position;
-	unsigned int	p1;
-	unsigned int	p2;
-	short 			indir;
+	t_sti		sti;
 
-	if (cr->cycle->descript[0] == 3)
-	{
-		indir = get_param(cr, 0);
-		from_memory_to_var(cr, &p1, check_position(cr->position +
-		indir % IDX_MOD), REG_SIZE);
-	}
+	ft_bzero(&sti, sizeof(sti));
+	if (cr->cycle->descript[0] == 1)
+		get_param_plus(cr, &sti.prm2, 0);
+	else if (cr->cycle->descript[0] == 2)
+		get_param_plus(cr, &sti.dir2, 0);
 	else
-		p1 = get_param(cr, 0);
-	p2 = get_param(cr, 1);
-	position = check_position(cr->position + (p1 + p2) % IDX_MOD);
-	from_memory_to_var(cr, &cr->reg[cr->cycle->regs[2]], position, REG_SIZE);
+	{
+		get_param_plus(cr, &sti.indir, 0);
+		from_memory_to_var(cr, &sti.prm2, check_position(cr->position +
+		sti.indir % IDX_MOD), REG_SIZE);
+	}
+	if (cr->cycle->descript[1] == 1)
+		get_param_plus(cr, &sti.reg3, 1);
+	else
+		get_param_plus(cr, &sti.dir3, 1);
+	sti.position = check_position(cr->position + \
+		((sti.prm2 + sti.dir2 + sti.dir3 + sti.reg3) % IDX_MOD));
+	from_memory_to_var(cr, &cr->reg[cr->cycle->regs[2]], sti.position, REG_SIZE);
 	if (cr->vm->debug)
-		ft_printf("ldi ");
+		ft_printf("lti ");
 }
-
-// is it correct var in sti's from_var_to_memory??
 
 void	sti(t_carry *cr)
 {
 	t_sti		sti;
 
 	ft_bzero(&sti, sizeof(sti));
-	get_param(cr, &sti.reg1, 0);
+	get_param_plus(cr, &sti.reg1, 0);
 	if (cr->cycle->descript[1] == 1)
-		get_param(cr, &sti.prm2, 1);
+		get_param_plus(cr, &sti.prm2, 1);
 	else if (cr->cycle->descript[1] == 2)
-		get_param(cr, &sti.dir2, 1);
+		get_param_plus(cr, &sti.dir2, 1);
 	else
 	{
-		get_param(cr, &sti.indir, 1);
+		get_param_plus(cr, &sti.indir, 1);
 		from_memory_to_var(cr, &sti.prm2, check_position(cr->position +
 		sti.indir % IDX_MOD), REG_SIZE);
 	}
 	if (cr->cycle->descript[2] == 1)
-		get_param(cr, &sti.reg3, 2);
+		get_param_plus(cr, &sti.reg3, 2);
 	else
-		get_param(cr, &sti.dir3, 2);
+		get_param_plus(cr, &sti.dir3, 2);
 	sti.position = check_position(cr->position + \
 		((sti.prm2 + sti.dir2 + sti.dir3 + sti.reg3) % IDX_MOD));
 	from_var_to_memory(cr, &sti.reg1, sti.position, REG_SIZE);
@@ -352,7 +376,6 @@ void	lfrk(t_carry *cr)
 
 	src = &cr->vm->area[check_position(cr->position + 1)];
 	dst = (unsigned char*)&dir;
-
 	short_ind(dst, src);
 	copy_carriage(cr, check_position(dir + cr->position));
 	if (cr->vm->debug)
