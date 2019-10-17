@@ -225,22 +225,22 @@ void	ldi(t_carry *cr)
 void	sti(t_carry *cr)
 {
 	unsigned int	p1;
-	unsigned int	p2;
-	unsigned int	p3;
-	unsigned int	position;
-	short 			indir;
+	int				p2;//sti neg + / shotr break sti_2
+	short			p3;//sti neg +
+	int				position;
+	int 			indir;
 
 	p1 = get_param(cr, 0);
 	if (cr->cycle->descript[1] == 3)
 	{
 		indir = get_param(cr, 1);
 		from_memory_to_var(cr, &p2, check_position(cr->position +
-		indir % IDX_MOD), REG_SIZE);
+		indir % IDX_MOD), DIR_SIZE);
 	}
 	else
 		p2 = get_param(cr, 1);
 	p3 = get_param(cr, 2);
-	position = check_position(cr->position + (p2 + p3) % IDX_MOD);
+	position = check_position(cr->position + ((p2 + p3) % IDX_MOD));
 	from_var_to_memory(cr, &p1, position, REG_SIZE);
 	if (cr->vm->debug)
 		ft_printf("sti ");

@@ -4,8 +4,8 @@ static void	declare_champs(t_process *p)
 {
 	int		i;
 
-	ft_printf("Introducing contestants...\n");
 	i = 0;
+	ft_printf("Introducing contestants...\n");
 	while(p[i].cmp_nbr)
 	{
 		ft_printf("* Player %hhu, weighing %llu bytes, \"%s\" (\"%s\") !\n", \
