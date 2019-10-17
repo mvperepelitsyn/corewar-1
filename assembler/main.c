@@ -6,7 +6,7 @@
 /*   By: ggerhold <ggerhold@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/16 18:20:00 by ggerhold          #+#    #+#             */
-/*   Updated: 2019/10/16 20:49:28 by ggerhold         ###   ########.fr       */
+/*   Updated: 2019/10/17 17:22:10 by ggerhold         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,7 +72,6 @@ void	ft_start_compile_sequence(char *file_name)
 		return ;
 	}
 	ft_read_file(fd, file_name);
-	ft_putendl("=============================================================");
 	close(fd);
 }
 
@@ -85,12 +84,12 @@ int		main(int argc, char *argv[])
 	if (argc < 2)
 	{
 		ft_printf("asm: FATAL ERROR: no input files\n");
-		return (-1);
+		return (1);
 	}
 	join = ft_join(argc, argv);
 	files_to_compile = ft_strsplit(join, ' ');
 	if (!(join) || !(files_to_compile))
-		return (-1);
+		return (1);
 	i = 1;
 	while (files_to_compile[i])
 		ft_start_compile_sequence(files_to_compile[i++]);

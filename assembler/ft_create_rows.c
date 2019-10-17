@@ -6,7 +6,7 @@
 /*   By: ggerhold <ggerhold@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/16 17:58:36 by ggerhold          #+#    #+#             */
-/*   Updated: 2019/10/16 17:58:38 by ggerhold         ###   ########.fr       */
+/*   Updated: 2019/10/17 17:23:15 by ggerhold         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,7 @@ t_syntax_row *row)
 	if ((TKN_TYPE == Label_arg || TKN_TYPE == Direct_label) &&
 	ft_check_label_arg(asm_data, token, labels, row))
 	{
-		ft_error_token(asm_data, ft_strdup("This label does not exists "),\
+		ft_error_token(asm_data, ft_strdup("This label does not exist "),\
 		token, 2);
 		return ;
 	}

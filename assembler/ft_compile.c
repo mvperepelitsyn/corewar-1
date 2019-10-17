@@ -6,7 +6,7 @@
 /*   By: ggerhold <ggerhold@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/16 17:57:42 by ggerhold          #+#    #+#             */
-/*   Updated: 2019/10/16 17:57:44 by ggerhold         ###   ########.fr       */
+/*   Updated: 2019/10/17 17:52:34 by ggerhold         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ void	ft_convert_to_binary(t_asm_data *asm_data, char *name)
 	i = 0;
 	if (name[i] == '.' && ft_strlen(name) > 5)
 		i++;
-	while (name[i] != '.')
+	while (ft_strlen(name + i) != 2)
 		i++;
 	temp = ft_strsub(name, 0, i);
 	str = ft_strjoin_orig(temp, ".cor");
@@ -50,7 +50,7 @@ void	ft_convert_to_binary(t_asm_data *asm_data, char *name)
 		exit(ft_printf("cant't create file %s\n", str));
 	ft_code_create(asm_data, fd);
 	close(fd);
-	ft_printf("Writing output file to %s\n", str);
+	ft_printf("Writing output program to %s\n", str);
 	free(str);
 	free(temp);
 }
