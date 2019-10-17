@@ -61,6 +61,7 @@ typedef struct	s_cmd_prms
 	unsigned char		prms_count;//4
 	unsigned short		cycles_before;//5
 	unsigned char		prm_types[3];//6
+	char				*name;//7
 }				t_cmd_prms;
 
 /*
@@ -138,22 +139,22 @@ typedef struct	s_sti
 
 static t_cmd_prms			g_cmd_prms[16] =
 {
-	{1, 4, 0, 1, 10, {T_DIR}},/*alive*/
-	{2, 4, 1, 2, 5, {T_DIR | T_IND, T_REG}},/*ld*/
-	{3, 4, 1, 2, 5, {T_REG, T_IND | T_REG}},/*st*/
-	{4, 4, 1, 3, 10, {T_REG, T_REG, T_REG}},/*add*/
-	{5, 4, 1, 3, 10, {T_REG, T_REG, T_REG}},/*sub*/
-	{6, 4, 1, 3, 6, {T_REG | T_DIR | T_IND, T_REG | T_IND | T_DIR, T_REG}},/*and*/
-	{7, 4, 1, 3, 6, {T_REG | T_IND | T_DIR, T_REG | T_IND | T_DIR, T_REG}},/*or*/
-	{8, 4, 1, 3, 6, {T_REG | T_IND | T_DIR, T_REG | T_IND | T_DIR, T_REG}},/*xor*/
-	{9, 2, 0, 1, 20, {T_DIR}},/*zjmp*/
-	{10, 2, 1, 3, 25, {T_REG | T_DIR | T_IND, T_DIR | T_REG, T_REG}},/*ldi*/
-	{11, 2, 1, 3, 25, {T_REG, T_REG | T_DIR | T_IND, T_DIR | T_REG}},/*sti*/
-	{12, 2, 0, 1, 800, {T_DIR}},/*frk*/
-	{13, 4, 1, 2, 10, {T_DIR | T_IND, T_REG}},/*lld*/
-	{14, 2, 1, 3, 50, {T_REG | T_DIR | T_IND, T_DIR | T_REG, T_REG}},/*lldi*/
-	{15, 2, 0, 1, 1000, {T_DIR}},/*lfrk*/
-	{16, 4, 1, 1, 2, {T_REG}}/*aff*/
+	{1, 4, 0, 1, 10, {T_DIR}, "live"},/*alive*/
+	{2, 4, 1, 2, 5, {T_DIR | T_IND, T_REG}, "ld"},/*ld*/
+	{3, 4, 1, 2, 5, {T_REG, T_IND | T_REG}, "st"},/*st*/
+	{4, 4, 1, 3, 10, {T_REG, T_REG, T_REG}, "add"},/*add*/
+	{5, 4, 1, 3, 10, {T_REG, T_REG, T_REG}, "sub"},/*sub*/
+	{6, 4, 1, 3, 6, {T_REG | T_DIR | T_IND, T_REG | T_IND | T_DIR, T_REG}, "and"},/*and*/
+	{7, 4, 1, 3, 6, {T_REG | T_IND | T_DIR, T_REG | T_IND | T_DIR, T_REG}, "or"},/*or*/
+	{8, 4, 1, 3, 6, {T_REG | T_IND | T_DIR, T_REG | T_IND | T_DIR, T_REG}, "xor"},/*xor*/
+	{9, 2, 0, 1, 20, {T_DIR}, "zjmp"},/*zjmp*/
+	{10, 2, 1, 3, 25, {T_REG | T_DIR | T_IND, T_DIR | T_REG, T_REG}, "ldi"},/*ldi*/
+	{11, 2, 1, 3, 25, {T_REG, T_REG | T_DIR | T_IND, T_DIR | T_REG}, "sti"},/*sti*/
+	{12, 2, 0, 1, 800, {T_DIR}, "frk"},/*frk*/
+	{13, 4, 1, 2, 10, {T_DIR | T_IND, T_REG}, "lld"},/*lld*/
+	{14, 2, 1, 3, 50, {T_REG | T_DIR | T_IND, T_DIR | T_REG, T_REG}, "lldi"},/*lldi*/
+	{15, 2, 0, 1, 1000, {T_DIR}, "lfrk"},/*lfrk*/
+	{16, 4, 1, 1, 2, {T_REG}, "aff"}/*aff*/
 };
 
 /*
