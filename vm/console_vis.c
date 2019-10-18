@@ -103,16 +103,11 @@ static void	print_report(t_vm *vm)
 				"Champion", vm->processes[(cr->last_champ * -1) - 1].cmp_name, \
 				cr->last_champ, cr->last_live, cr->last_alive_cycle);
 		}
-<<<<<<< HEAD
 		if (cr->cmd_code >= 1 && cr->cmd_code <= 16)
 			ft_printf("\tNext command: \"%s\" in %u cycles\n", \
 				g_cmd_prms[cr->cmd_code - 1].name, cr->cycles_before);
 		else
 			ft_printf("\tWrong command code: %hhu\n", cr->cmd_code);
-=======
-		ft_printf("\tNext command: \"%s\" in %u cycles\n", \
-				g_cmd_prms[cr->cmd_code - 1].name, cr->cycles_before);
->>>>>>> 554a79e6577b38451db00b561e269239571d5ae9
 		cr = cr->next;
 	}
 	ft_printf("\n");

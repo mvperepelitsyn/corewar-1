@@ -96,6 +96,11 @@ static void	cycle(t_vm *vm)
 void		game(t_vm *vm)
 {
 	vm->debug = 0;
+	if (vm->dump_flag && !vm->dump)
+	{
+		game_area_frame(vm);
+		return ;
+	}
 	while (vm->carriages)
 	{
 		cycle(vm);
