@@ -98,7 +98,10 @@ void		game(t_vm *vm)
 	vm->debug = 0;
 	if (vm->dump_flag && !vm->dump)
 	{
-		game_area_frame(vm);
+		if (vm->v)
+			game_area_frame(vm);
+		else
+			print_game_area(vm);
 		return ;
 	}
 	while (vm->carriages)
