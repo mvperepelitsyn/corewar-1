@@ -100,9 +100,9 @@ void		game(t_vm *vm)
 	{
 		cycle(vm);
 		vm->cycles_from_start++;
+		vm->ctd_counter++;
 		if (vm->v && !vm->dump)
 			game_area_frame(vm);
-		vm->ctd_counter++;
 		if (vm->ctd_counter == vm->cycles_to_die || vm->cycles_to_die <= 0)
 		{
 			check_game(vm);

@@ -8,6 +8,8 @@ void	live(t_carry *cr)
 	cr->last_live = 0;
 	cr->vm->live_counter++;
 	dir = get_param(cr, 0);
+	if (cr->vm->l_endian)
+		dir = ft_reverseint(dir);
 	champ_nbr = (int*)&dir;
 	if ((champ_nbr[0] * -1) > 0 \
 		&& (champ_nbr[0] * -1) <= (int)cr->vm->champs_count)

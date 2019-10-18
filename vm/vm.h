@@ -94,6 +94,7 @@ struct			s_vm
 	unsigned char		*back;
 	unsigned char		*light;
 	unsigned int		cycles_from_start;
+	char 				dump_flag;
 	unsigned int		dump;
 	int					cycles_to_die;
 	int					ctd_counter;//cycles to die counter
