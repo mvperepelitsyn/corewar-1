@@ -57,16 +57,18 @@ static char			*dbl_transform(t_ldouble *d)
 
 static t_ldouble	*get_double(long double d)
 {
-	__uint128_t		*n;
+//	__uint128_t		*n;
+	int				*n; // DELETE!!!
 	int				i;
 	int				l;
 	t_ldouble		*res;
 
-	n = (__uint128_t *)&d;
+//	n = (__uint128_t *)&d;
+	n = 0; // DELETE
 	if (!(res = (t_ldouble *)malloc(sizeof(t_ldouble))))
 		return (NULL);
 	res->sign = d < 0;
-	res->exponent = (((*n) << 49 >> 49) >> 64) - 16383;
+//	res->exponent = (((*n) << 49 >> 49) >> 64) - 16383;
 	i = 0;
 	while (((*n) >> i & 1) != 1 && i < 63)
 		++i;

@@ -57,7 +57,6 @@ int		print_string(char *s, t_token *tok)
 {
 	int	w;
 	int	p;
-	int	i;
 
 	w = tok->width;
 	p = tok->precision;
@@ -67,7 +66,6 @@ int		print_string(char *s, t_token *tok)
 			print_no_flag("(null)", w, p, ' ') :
 			print_with_flag("(null)", w, p, ' '));
 	}
-	i = 0;
 	if ((tok->flags & F_MINUS) != F_MINUS)
 		return (print_no_flag(s, w, p, ' '));
 	else

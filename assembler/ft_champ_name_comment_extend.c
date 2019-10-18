@@ -16,7 +16,7 @@ void	ft_current_func_divis(t_asm_data *asm_data, char *line, int i, int j)
 {
 	if (MACHINE_WAIT_NAME)
 	{
-		if (j > PROG_NAME_LENGTH)
+		if (j > PROG_NAME_LENGTH + 1)
 			ft_error_add(asm_data, ft_strdup("Name too long "), i, 2);
 		else
 			ft_strncpy(CHAMP_NAME, &line[1], j - 1);

@@ -25,8 +25,8 @@ int	print_decimal(long long int n, t_token *tok)
 		str = ft_ltoa_base((long)n, 10);
 	else if ((tok->flags & F_LL) == F_LL)
 		str = ft_ltoa_base((long long)n, 10);
-	else if ((tok->flags & F_J) == F_J)
-		str = ft_ltoa_base((intmax_t)n, 10);
+//	else if ((tok->flags & F_J) == F_J)
+//		str = ft_ltoa_base((intmax_t)n, 10);
 	else if ((tok->flags & F_Z) == F_Z)
 		str = ft_ltoa_base((size_t)n, 10);
 	else

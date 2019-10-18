@@ -14,13 +14,11 @@
 
 static char	*ft_ltoa_sizet(size_t n)
 {
-	int		i;
 	int		l;
 	char	*res;
 
 	if (n == 0)
 		return (ft_strdup("0"));
-	i = 0;
 	l = ft_nbrlen_base(n, 10);
 	res = ft_strnew(l);
 	while (n)
@@ -46,8 +44,8 @@ int			print_unsigned(unsigned long long int n, t_token *tok)
 		str = ft_ltoa_sizet((unsigned long)n);
 	else if ((tok->flags & F_LL) == F_LL)
 		str = ft_ltoa_sizet((unsigned long long)n);
-	else if ((tok->flags & F_J) == F_J)
-		str = ft_ltoa_sizet((intmax_t)n);
+//	else if ((tok->flags & F_J) == F_J)
+//		str = ft_ltoa_sizet((intmax_t)n);
 	else if ((tok->flags & F_Z) == F_Z)
 		str = ft_ltoa_sizet((size_t)n);
 	else

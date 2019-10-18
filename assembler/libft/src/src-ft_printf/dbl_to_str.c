@@ -64,7 +64,7 @@ static t_double	*get_double(double d)
 	if (!(res = (t_double *)malloc(sizeof(t_double))))
 		return (NULL);
 	res->sign = d < 0;
-	res->exponent = (((*n) << 1) >> 53) - 1023;
+//	res->exponent = (((*n) << 1) >> 53) - 1023;
 	i = 0;
 	while (((*n) >> i & 1) != 1 && i < 52)
 		++i;

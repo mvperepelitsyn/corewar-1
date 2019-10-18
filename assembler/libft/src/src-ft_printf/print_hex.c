@@ -15,13 +15,11 @@
 static char		*ft_ltoa_sizet_hex(size_t n)
 {
 	char			*hex;
-	int				i;
 	int				l;
 	char			*res;
 
 	if (n == 0)
 		return (ft_strdup("0"));
-	i = 0;
 	hex = "0123456789abcdef";
 	l = ft_nbrlen_base(n, 16);
 	res = ft_strnew(l);
@@ -43,8 +41,8 @@ static size_t	cast_to_flag(size_t n, t_token *tok)
 		return ((unsigned long)n);
 	else if ((tok->flags & F_LL) == F_LL)
 		return ((unsigned long long)n);
-	else if ((tok->flags & F_J) == F_J)
-		return ((intmax_t)n);
+//	else if ((tok->flags & F_J) == F_J)
+//		return ((intmax_t)n);
 	else if ((tok->flags & F_Z) == F_Z)
 		return ((size_t)n);
 	return ((unsigned int)n);
