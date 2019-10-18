@@ -322,7 +322,11 @@ void	lld(t_carry *cr)
 	{
 		indir = get_param(cr, 0);
 		posit = check_position(cr->position + indir);
-		from_var_to_memory(cr, &cr->reg[cr->cycle->regs[1]], posit, REG_SIZE);
+		if (STUPID)
+			from_memory_to_var(cr, &cr->reg[cr->cycle->regs[1]], posit, 2);
+		else
+			from_memory_to_var(cr, &cr->reg[cr->cycle->regs[1]], posit, \
+				REG_SIZE);
 	}
 	if (!cr->reg[cr->cycle->regs[1]])
 		cr->carry = 1;

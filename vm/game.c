@@ -99,6 +99,8 @@ void		game(t_vm *vm)
 	}
 	while (vm->carriages)
 	{
+		if (vm->cycles_from_start == 680)
+			vm->cycles_from_start = 680;
 		cycle(vm);
 		vm->cycles_from_start++;
 		vm->ctd_counter++;
