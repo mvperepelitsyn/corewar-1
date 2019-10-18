@@ -119,20 +119,20 @@ static void	fill_the_code(t_process *chmp, int fd)
 
 static void	fill_the_champ(t_process *chmp, char *file_name)
 {
-	// char	*clion_file_name;
+//	char	*clion_file_name;
 	int		fd;
 
 	if ((fd = open(file_name, O_RDONLY)) < 0)	//for something real
-	// clion_file_name = ft_strjoin("../", file_name); //only for clion
-	// if ((fd = open(clion_file_name, O_RDONLY)) < 0) //only for clion
+//	clion_file_name = ft_strjoin("../", file_name); //only for clion
+//	if ((fd = open(clion_file_name, O_RDONLY)) < 0) //only for clion
 		ft_error("There is nothing to open from champ file!");
 	check_magic_header(fd);
 	fill_the_name_champ(chmp, fd);
 	fill_the_code_size(chmp, fd);
 	fill_the_comment(chmp, fd);
 	fill_the_code(chmp, fd);
-	//
-	// ft_strdel(&clion_file_name); //only fo clion
+
+//	ft_strdel(&clion_file_name); //only fo clion
 }
 
 static void	check_num(t_process *champs, int num, char *champ_name)
@@ -167,12 +167,10 @@ static void	check_file_type(char *file_name)
 	int		i;
 	char	*tmp;
 
-	i = 0;
-	while (file_name[i] != '.')
-		i++;
-	tmp = ft_strsub(file_name, i, 4);
-	if (!ft_strequ(tmp, ".cor") || (ft_strlen(file_name) - 4 != i))
-		ft_error("Wrong type of the champion file!");
+	i = ft_strlen(file_name);
+	tmp = ft_strsub(file_name, i - 4, 4);
+	if (!ft_strequ(tmp, ".cor"))
+		ft_error("Wrong type of the champion file!\n");
 	ft_strdel(&tmp);
 }
 
