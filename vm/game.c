@@ -64,8 +64,6 @@ static void	cycle(t_vm *vm)
 	t_cycle	cycle;
 
 	cr = vm->carriages;
-	if (vm->cycles_from_start == 304)
-		vm->cycles_from_start = 304;
 	while (cr)
 	{
 		ft_bzero((void*)&cycle, sizeof(cycle));
@@ -98,17 +96,16 @@ void		game(t_vm *vm)
 	vm->debug = 0;
 	while (vm->carriages)
 	{
+		if (vm->ctd_counter == 1500)
+			vm->ctd_counter = 1500;
 		if (vm->v && !vm->dump)
-		{
 			game_area_frame(vm);
-			return ;
-		}
 		cycle(vm);
 		vm->cycles_from_start++;
+		vm->ctd_counter++;
 		if (vm->v && !vm->dump)
 			game_area_frame(vm);
-		vm->ctd_counter++;
-		if (vm->ctd_counter == vm->cycles_to_die || vm->cycles_to_die <= 0)
+		if (vm->ctd_counter >= vm->cycles_to_die || vm->cycles_to_die <= 0)
 		{
 			check_game(vm);
 			vm->ctd_counter = 0;
