@@ -24,7 +24,7 @@ void		calc_shift(t_carry *cr, t_cycle *cycle)
 			cr->jump_len++;
 		else if (cycle->descript[i] == 2)
 			cr->jump_len += (int)g_cmd_prms[cr->cmd_code - 1].dir_size;
-		else
+		else if (cycle->descript[i] == 3)
 			cr->jump_len += 2;
 		i++;
 	}

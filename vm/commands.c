@@ -276,7 +276,7 @@ static void	copy_carriage(t_carry *cr_src, short dir)
 	cr->position = dir;
 	cr->vm = cr_src->vm;
 	cr->carry = cr_src->carry;
-	cr->last_live = cr_src->last_live;
+	cr->last_live = cr_src->last_live + 1;
 	cr->color = cr_src->color;
 	cr->next = cr->vm->carriages;
 	cr->vm->carriages = cr;
