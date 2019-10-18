@@ -14,8 +14,8 @@ void	live(t_carry *cr)
 	{
 		cr->vm->last_alive = dir;
 		cr->last_champ = dir;
-		cr->last_alive_cycle = cr->vm->cycles_from_start + 1;
-		cr->vm->last_alive_cycle = cr->vm->cycles_from_start + 1;
+		cr->last_alive_cycle = cr->vm->cycles_from_start;
+		cr->vm->last_alive_cycle = cr->vm->cycles_from_start;
 	}
 	if (cr->vm->v)
 		cr->vm->back[cr->position] |= 200;

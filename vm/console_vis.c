@@ -102,12 +102,12 @@ static void	print_report(t_vm *vm)
 			ft_printf("%s \"%s\" (%d) said \"Alive!\" %d cycles ago (%u).\t", \
 				"Champion", vm->processes[(cr->last_champ * -1) - 1].cmp_name, \
 				cr->last_champ, cr->last_live, cr->last_alive_cycle);
-			if (cr->cmd_code >= 1 && cr->cmd_code <= 16)
-				ft_printf("\tNext command: \"%s\" in %u cycles\n", \
-					g_cmd_prms[cr->cmd_code - 1].name, cr->cycles_before);
-			else
-				ft_printf("\tWrong command code: %hhu\n", cr->cmd_code);
 		}
+		if (cr->cmd_code >= 1 && cr->cmd_code <= 16)
+			ft_printf("\tNext command: \"%s\" in %u cycles\n", \
+				g_cmd_prms[cr->cmd_code - 1].name, cr->cycles_before);
+		else
+			ft_printf("\tWrong command code: %hhu\n", cr->cmd_code);
 		cr = cr->next;
 	}
 	ft_printf("\n");
