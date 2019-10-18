@@ -98,11 +98,15 @@ void		game(t_vm *vm)
 	vm->debug = 0;
 	while (vm->carriages)
 	{
+		if (vm->v && !vm->dump)
+		{
+			game_area_frame(vm);
+			return ;
+		}
 		cycle(vm);
-
+		vm->cycles_from_start++;
 		if (vm->v && !vm->dump)
 			game_area_frame(vm);
-		vm->cycles_from_start++;
 		vm->ctd_counter++;
 		if (vm->ctd_counter == vm->cycles_to_die || vm->cycles_to_die <= 0)
 		{

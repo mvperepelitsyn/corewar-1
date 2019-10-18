@@ -119,12 +119,12 @@ static void	fill_the_code(t_process *chmp, int fd)
 
 static void	fill_the_champ(t_process *chmp, char *file_name)
 {
-//	char	*clion_file_name;
+	char	*clion_file_name;
 	int		fd;
 
-	if ((fd = open(file_name, O_RDONLY)) < 0)	//for something real
-//	clion_file_name = ft_strjoin("../", file_name); //only for clion
-//	if ((fd = open(clion_file_name, O_RDONLY)) < 0) //only for clion
+//	if ((fd = open(file_name, O_RDONLY)) < 0)	//for something real
+	clion_file_name = ft_strjoin("../", file_name); //only for clion
+	if ((fd = open(clion_file_name, O_RDONLY)) < 0) //only for clion
 		ft_error("There is nothing to open from champ file!");
 	check_magic_header(fd);
 	fill_the_name_champ(chmp, fd);
@@ -132,7 +132,7 @@ static void	fill_the_champ(t_process *chmp, char *file_name)
 	fill_the_comment(chmp, fd);
 	fill_the_code(chmp, fd);
 
-//	ft_strdel(&clion_file_name); //only fo clion
+	ft_strdel(&clion_file_name); //only fo clion
 }
 
 static void	check_num(t_process *champs, int num, char *champ_name)
@@ -236,6 +236,7 @@ static void	parse_champ(int argc, char **argv, t_vm *vm, int l)
 		else if (ft_strequ(argv[l], "-dump"))
 		{
 			l++;
+			vm->dump_flag = 1;
 			vm->dump = ft_atoi(argv[l]);
 			if (vm->dump != (long long int)ft_latoi(argv[l]))
 				ft_error("Invalid number after after flag -dump.");
