@@ -236,8 +236,11 @@ static void	parse_champ(int argc, char **argv, t_vm *vm, int l)
 			l++;
 			vm->dump_flag = 1;
 			vm->dump = ft_atoi(argv[l]);
-			if (vm->dump != (long long int)ft_latoi(argv[l]))
-				ft_error("Invalid number after after flag -dump.");
+			if (vm->dump != (long long int)ft_latoi(argv[l]) || vm->dump < 0)
+			{
+//				ft_printf("Error! The number %d after flat -dump!", vm->dump);
+				ft_error("Error! The Invalid number after after flag -dump.");
+			}
 		}
 		else if (ft_strequ(argv[l], "-v"))
 			vm->v = 1;

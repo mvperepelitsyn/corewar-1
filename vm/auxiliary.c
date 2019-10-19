@@ -40,6 +40,15 @@ int		display_usage()
 	ft_printf("usage:\n\there should be an explanation\n");
 	return (0);
 }
+//
+//int		ft_err_plus(char *str, long int num, char *help_str, int toggle)
+//{
+//	if (toggle == 0)
+//		ft_printf()
+//	else
+//		ft_printf("%s\n", str);
+//	exit(-1);
+//}
 
 int		ft_error(char *str)
 {
