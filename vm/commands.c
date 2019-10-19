@@ -301,11 +301,7 @@ void	frk(t_carry *cr)
 		dst[1] = src[1];
 	}
 	dir %= IDX_MOD;
-	dir += cr->position;
-	if (dir < 0)
-		dir += MEM_SIZE;
-	else if (dir >= MEM_SIZE)
-		dir -= MEM_SIZE;
+	dir = check_position(cr->position + dir);
 	copy_carriage(cr, dir);
 	if (cr->vm->debug)
 		ft_printf("frk ");

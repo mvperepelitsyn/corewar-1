@@ -5,7 +5,7 @@
 # include "./libft/libft.h"
 # include "op.h"
 
-# define STUPID 0
+# define STUPID 1
 # define SLEEP 0//20000
 
 typedef struct s_vm		t_vm;
@@ -21,7 +21,6 @@ typedef	void			(*t_command)(t_carry *cr);
 struct	s_carry
 {
 	unsigned int		car_nbr;//carry number
-	unsigned char		alive;// are you still alive? <- check it var please
 	unsigned char		carry;//flag "carry"
 	unsigned char		cmd_code;//current operation code
 	unsigned char		jump_len;//bytes to second instruction

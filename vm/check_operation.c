@@ -78,7 +78,8 @@ static int	check_params_type(t_carry *cr, t_cycle *cycle)
 				(cycle->descript[i] == 2 && \
 				!(g_cmd_prms[cr->cmd_code - 1].prm_types[i] & 2)) || \
 				(cycle->descript[i] == 3 && \
-				!(g_cmd_prms[cr->cmd_code - 1].prm_types[i] & 4)))
+				!(g_cmd_prms[cr->cmd_code - 1].prm_types[i] & 4)) || \
+				!cycle->descript[i])
 			return (0);
 		i++;
 	}
