@@ -187,6 +187,7 @@ int				display_usage();
 void			parsing(int argc, char **argv, t_vm	*vm);
 void			vm_init(t_vm *vm);
 int				ft_error(char *str);
+int				ft_err_plus(char *str, long int num, char *hlp_str, int toggle);
 void			short_ind(unsigned char *dst, unsigned const char *src);
 void			rotate_or_not(t_carry *cr, unsigned char *dest, int src_i);
 short			indir_position(short indir, t_carry *cr);

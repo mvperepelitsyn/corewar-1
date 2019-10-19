@@ -40,15 +40,17 @@ int		display_usage()
 	ft_printf("usage:\n\there should be an explanation\n");
 	return (0);
 }
-//
-//int		ft_err_plus(char *str, long int num, char *help_str, int toggle)
-//{
-//	if (toggle == 0)
-//		ft_printf()
-//	else
-//		ft_printf("%s\n", str);
-//	exit(-1);
-//}
+
+int		ft_err_plus(char *str, long int num, char *hlp_str, int toggle)
+{
+	if (toggle == 0)
+		ft_printf(str, num);
+	else if (toggle == 1)
+		ft_printf(str, hlp_str);
+	else
+		ft_putstr("ERROR!\n");
+	exit(69);
+}
 
 int		ft_error(char *str)
 {
@@ -56,7 +58,7 @@ int		ft_error(char *str)
 		ft_putstr("ERROR\n");
 	else
 		ft_printf("%s\n", str);
-	exit(-1);
+	exit(69);
 }
 
 int		check_position(int position)
