@@ -55,12 +55,19 @@ static void	check_game(t_vm *vm)
 	vm->live_counter = 0;
 }
 
+// void	debug()
+// {
+// 	//
+// }
+
 static void	cycle(t_vm *vm)
 {
 	t_carry	*cr;
 	t_cycle	cycle;
 
 	cr = vm->carriages;
+	// if (vm->cycles_from_start == 2120)
+	// 	debug();
 	while (cr)
 	{
 		ft_bzero((void*)&cycle, sizeof(cycle));
