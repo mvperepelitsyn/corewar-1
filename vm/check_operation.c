@@ -94,17 +94,17 @@ static int	check_params(t_vm *vm, t_carry *cr, t_cycle *cycle)
 {
 	unsigned char	buf;
 
-	if (!vm->area[cr->position + 1])
+	if (!vm->area[check_position(cr->position + 1)])
 		return (0);
-	buf = vm->area[cr->position + 1];
+	buf = vm->area[check_position(cr->position + 1)];
 	buf <<= 4;
 	buf >>= 6;
 	cycle->descript[2] = buf;
-	buf = vm->area[cr->position + 1];
+	buf = vm->area[check_position(cr->position + 1)];
 	buf <<= 2;
 	buf >>= 6;
 	cycle->descript[1] = buf;
-	buf = vm->area[cr->position + 1];
+	buf = vm->area[check_position(cr->position + 1)];
 	buf >>= 6;
 	cycle->descript[0] = buf;
 	if ((g_cmd_prms[cr->cmd_code - 1].prms_count < 3 && cycle->descript[2]) || \
