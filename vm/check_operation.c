@@ -9,8 +9,8 @@ void		calc_shift(t_carry *cr, t_cycle *cycle)
 	int		i;
 
 	i = 0;
-	if (g_cmd_prms[cr->cmd_code - 1].descript && !cr->vm->area[cr->position + 1])
-		return ;
+	// if (g_cmd_prms[cr->cmd_code - 1].descript && !cr->vm->area[cr->position + 1])
+	// 	return ;
 	if (g_cmd_prms[cr->cmd_code - 1].descript)
 		cr->jump_len++;
 	else

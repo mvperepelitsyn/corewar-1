@@ -55,10 +55,10 @@ static void	check_game(t_vm *vm)
 	vm->live_counter = 0;
 }
 
-// void	debug()
-// {
-// 	//
-// }
+void	debug()
+{
+	//
+}
 
 static void	cycle(t_vm *vm)
 {
@@ -66,10 +66,10 @@ static void	cycle(t_vm *vm)
 	t_cycle	cycle;
 
 	cr = vm->carriages;
-	// if (vm->cycles_from_start == 2120)
-	// 	debug();
 	while (cr)
 	{
+		if (vm->cycles_from_start == 4407 && cr->cmd_code == 15 && cr->cycles_before == 1)
+			debug();
 		ft_bzero((void*)&cycle, sizeof(cycle));
 		cr->cycle = &cycle;
 		if (!cr->cycles_before)
