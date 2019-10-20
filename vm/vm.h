@@ -6,7 +6,7 @@
 # include "op.h"
 
 # define STUPID 1
-# define SLEEP 0//20000
+# define SLEEP 20000
 
 typedef struct s_vm		t_vm;
 typedef struct s_carry	t_carry;

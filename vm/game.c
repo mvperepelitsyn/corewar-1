@@ -26,8 +26,6 @@ static void	check_game(t_vm *vm)
 	t_carry *cur;
 	t_carry *next;
 
-	// ft_printf("check game cycle: %u\t ctd_counter: %d\n", vm->cycles_from_start, \
-	// 	vm->ctd_counter);
 	prev = NULL;
 	if (vm->cycles_to_die <= 0)
 		while (vm->carriages)
@@ -55,11 +53,6 @@ static void	check_game(t_vm *vm)
 	vm->live_counter = 0;
 }
 
-void	debug()
-{
-	//
-}
-
 static void	cycle(t_vm *vm)
 {
 	t_carry	*cr;
@@ -68,8 +61,6 @@ static void	cycle(t_vm *vm)
 	cr = vm->carriages;
 	while (cr)
 	{
-		if (vm->cycles_from_start == 4407 && cr->cmd_code == 15 && cr->cycles_before == 1)
-			debug();
 		ft_bzero((void*)&cycle, sizeof(cycle));
 		cr->cycle = &cycle;
 		if (!cr->cycles_before)
