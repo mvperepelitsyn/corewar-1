@@ -57,7 +57,7 @@ void	st(t_carry *cr)
 		cr->reg[cr->cycle->regs[1]] = cr->reg[cr->cycle->regs[0]];
 	else
 	{
-		indir = get_param(cr, 1);
+		get_param_plus(cr, &indir, 1);
 		indir %= IDX_MOD;
 		from_var_to_memory(cr, &cr->reg[cr->cycle->regs[0]], \
 			check_position(cr->position + indir), REG_SIZE);
@@ -259,54 +259,6 @@ void	sti(t_carry *cr)
 		ft_printf("sti ");
 }
 
-static void	copy_carriage(t_carry *cr_src, short dir)
-{
-	t_carry	*cr;
-	int		i;
-
-	if (!(cr = ft_memalloc(sizeof(t_carry))))
-		ft_error("Malloc couldn't allocate the memory!\n");
-	i = 0;
-	while (i < 16)
-	{
-		cr->reg[i] = cr_src->reg[i];
-		i++;
-	}
-	cr->car_nbr = ++cr_src->vm->car_count;
-	cr->position = dir;
-	cr->vm = cr_src->vm;
-	cr->carry = cr_src->carry;
-	cr->last_live = cr_src->last_live + 1;
-	cr->color = cr_src->color;
-	cr->next = cr->vm->carriages;
-	cr->vm->carriages = cr;
-}
-
-void	frk(t_carry *cr)
-{
-	short			dir;
-	unsigned char	*src;
-	unsigned char	*dst;
-
-	src = &cr->vm->area[check_position(cr->position + 1)];
-	dst = (unsigned char*)&dir;
-	if (ft_islitendian())
-	{
-		dst[1] = src[0];
-		dst[0] = src[1];
-	}
-	else
-	{
-		dst[0] = src[0];
-		dst[1] = src[1];
-	}
-	dir %= IDX_MOD;
-	dir = check_position(cr->position + dir);
-	copy_carriage(cr, dir);
-	if (cr->vm->debug)
-		ft_printf("frk ");
-}
-
 void	lld(t_carry *cr)
 {
 	short 			indir;
@@ -354,16 +306,48 @@ void	lldi(t_carry *cr)
 		ft_printf("lldi ");
 }
 
+static void	copy_carriage(t_carry *cr_src, short dir)
+{
+	t_carry	*cr;
+	int		i;
+
+	if (!(cr = ft_memalloc(sizeof(t_carry))))
+		ft_error("Malloc couldn't allocate the memory!\n");
+	i = 0;
+	while (i < 16)
+	{
+		cr->reg[i] = cr_src->reg[i];
+		i++;
+	}
+	cr->car_nbr = ++cr_src->vm->car_count;
+	cr->position = dir;
+	cr->vm = cr_src->vm;
+	cr->carry = cr_src->carry;
+	cr->last_live = cr_src->last_live + 1;
+	cr->color = cr_src->color;
+	cr->next = cr->vm->carriages;
+	cr->vm->carriages = cr;
+}
+
+void	frk(t_carry *cr)
+{
+	short			dir;
+
+	get_param_plus(cr, &dir, 0);
+	dir %= IDX_MOD;
+	dir = check_position(cr->position + dir);
+	copy_carriage(cr, dir);
+	if (cr->vm->debug)
+		ft_printf("frk ");
+}
+
 void	lfrk(t_carry *cr)
 {
 	short			dir;
-	unsigned char	*src;
-	unsigned char	*dst;
 
-	src = &cr->vm->area[check_position(cr->position + 1)];
-	dst = (unsigned char*)&dir;
-	short_ind(dst, src);
-	copy_carriage(cr, check_position(dir + cr->position));
+	get_param_plus(cr, &dir, 0);
+	dir = check_position(cr->position + dir);
+	copy_carriage(cr, dir);
 	if (cr->vm->debug)
 		ft_printf("frk ");
 }
