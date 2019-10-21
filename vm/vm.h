@@ -5,7 +5,7 @@
 # include "./libft/libft.h"
 # include "op.h"
 
-# define STUPID 1
+# define STUPID 0
 # define SLEEP 20000
 
 typedef struct s_vm		t_vm;
