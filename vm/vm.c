@@ -6,10 +6,12 @@ static void	declare_champs(t_process *p)
 
 	i = 0;
 	ft_printf("Introducing contestants...\n");
-	while(p[i].cmp_nbr)
+	while (i < MAX_PLAYERS)
+//	while(p[i].cmp_nbr)
 	{
-		ft_printf("* Player %hhu, weighing %llu bytes, \"%s\" (\"%s\") !\n", \
-			p[i].cmp_nbr, p[i].code_size, p[i].cmp_name, p[i].cmp_cmnt);
+		if (p[i].cmp_nbr)
+			ft_printf("* Player %hhu, weighing %llu bytes, \"%s\" (\"%s\") !\n",
+					p[i].cmp_nbr, p[i].code_size, p[i].cmp_name, p[i].cmp_cmnt);
 		i++;
 	}
 }

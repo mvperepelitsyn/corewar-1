@@ -147,4 +147,5 @@ t_list			*ft_lstnew_addr(void *content, size_t content_size);
 int				ft_islitendian(void);
 unsigned short	ft_reverseshort(unsigned int i);
 unsigned int	ft_reverseint(unsigned int i);
+int				ft_isnumber(char *str);
 #endif

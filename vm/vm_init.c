@@ -61,6 +61,22 @@ static void	area_init(t_vm *vm)
 	}
 }
 
+static int	last_alive_champ(t_process *p)
+{
+	int		i;
+	int 	last_alive_num;
+
+	i = 0;
+	last_alive_num = 0;
+	while (i < MAX_PLAYERS)
+	{
+		if (p[i].cmp_nbr && p[i].cmp_nbr > last_alive_num)
+			last_alive_num = p[i].cmp_nbr;
+		i++;
+	}
+	return (last_alive_num);
+}
+
 void		vm_init(t_vm *vm)
 {
 	vm->command[0] = (t_command) & live;
@@ -79,7 +95,7 @@ void		vm_init(t_vm *vm)
 	vm->command[13] = (t_command) & lldi;
 	vm->command[14] = (t_command) & lfrk;
 	vm->command[15] = (t_command) & aff;
-	vm->last_alive = (-1) * vm->champs_count;
+	vm->last_alive = (-1) * last_alive_champ(vm->processes);
 	vm->cycles_to_die = CYCLE_TO_DIE;
 	vm->l_endian = (char)ft_islitendian();
 	area_init(vm);
