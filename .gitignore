@@ -83,3 +83,13 @@ Icon
 Network Trash Folder
 Temporary Items
 .apdisk
+
+# CLion
+.idea/
+CMakeLists.txt
+cmake-build-debug/
+
+# Project
+*corewar
+*asm
+*war
