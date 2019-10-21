@@ -1,4 +1,16 @@
-# include "vm.h"
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   check_operation.c                                  :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: dfrost-a <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2019/10/21 19:14:02 by dfrost-a          #+#    #+#             */
+/*   Updated: 2019/10/21 19:14:07 by dfrost-a         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+#include "vm.h"
 
 /*
 ** Calculate command bytes length:
@@ -9,8 +21,6 @@ void		calc_shift(t_carry *cr, t_cycle *cycle)
 	int		i;
 
 	i = 0;
-	// if (g_cmd_prms[cr->cmd_code - 1].descript && !cr->vm->area[cr->position + 1])
-	// 	return ;
 	if (g_cmd_prms[cr->cmd_code - 1].descript)
 		cr->jump_len++;
 	else
@@ -131,5 +141,5 @@ int			check_operation(t_vm *vm, t_carry *cr, t_cycle *cycle)
 	else
 		cr->cycle->descript[0] = 2;
 	calc_shift(cr, cycle);
-	return(1);
+	return (1);
 }

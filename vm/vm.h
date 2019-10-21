@@ -75,6 +75,16 @@ struct			s_cycle
 	int					shift;
 };
 
+/*
+** Struct for print_byte function
+*/
+
+typedef struct	s_byte_print
+{
+	unsigned char	cr_clr;
+	unsigned char	color;
+
+}				t_byte_print;
 
 /*
 ** Virtual Maschine params: vm

@@ -1,6 +1,18 @@
-# include "vm.h"
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   commands.c                                         :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: dfrost-a <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2019/10/21 18:25:43 by dfrost-a          #+#    #+#             */
+/*   Updated: 2019/10/21 18:25:47 by dfrost-a         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
-void	live(t_carry *cr)
+#include "vm.h"
+
+void		live(t_carry *cr)
 {
 	unsigned int	dir;
 	int				*champ_nbr;
@@ -28,9 +40,9 @@ void	live(t_carry *cr)
 	}
 }
 
-void	ld(t_carry *cr)
+void		ld(t_carry *cr)
 {
-	short 			indir;
+	short			indir;
 	unsigned int	posit;
 
 	if (cr->cycle->descript[0] == 2)
@@ -49,7 +61,7 @@ void	ld(t_carry *cr)
 		ft_printf("ld ");
 }
 
-void	st(t_carry *cr)
+void		st(t_carry *cr)
 {
 	short			indir;
 
@@ -66,7 +78,7 @@ void	st(t_carry *cr)
 		ft_printf("st ");
 }
 
-void	add(t_carry *cr)
+void		add(t_carry *cr)
 {
 	cr->reg[cr->cycle->regs[2]] = cr->reg[cr->cycle->regs[0]] \
 		+ cr->reg[cr->cycle->regs[1]];
@@ -78,7 +90,7 @@ void	add(t_carry *cr)
 		ft_printf("add ");
 }
 
-void	sub(t_carry *cr)
+void		sub(t_carry *cr)
 {
 	cr->reg[cr->cycle->regs[2]] = cr->reg[cr->cycle->regs[0]] \
 		- cr->reg[cr->cycle->regs[1]];
@@ -90,11 +102,11 @@ void	sub(t_carry *cr)
 		ft_printf("sub ");
 }
 
-void	and(t_carry *cr)
+void		and(t_carry *cr)
 {
 	unsigned int	prm1;
 	unsigned int	prm2;
-	short 			indir;
+	short			indir;
 
 	if (cr->cycle->descript[0] == 3)
 	{
@@ -121,11 +133,11 @@ void	and(t_carry *cr)
 		ft_printf("and ");
 }
 
-void	or(t_carry *cr)
+void		or(t_carry *cr)
 {
 	unsigned int	prm1;
 	unsigned int	prm2;
-	short 			indir;
+	short			indir;
 
 	if (cr->cycle->descript[0] == 3)
 	{
@@ -152,11 +164,11 @@ void	or(t_carry *cr)
 		ft_printf("or ");
 }
 
-void	xor(t_carry *cr)
+void		xor(t_carry *cr)
 {
 	unsigned int	prm1;
 	unsigned int	prm2;
-	short 			indir;
+	short			indir;
 
 	if (cr->cycle->descript[0] == 3)
 	{
@@ -183,8 +195,7 @@ void	xor(t_carry *cr)
 		ft_printf("xor ");
 }
 
-
-void	zjmp(t_carry *cr)
+void		zjmp(t_carry *cr)
 {
 	short			dir;
 	unsigned char	*src;
@@ -206,7 +217,7 @@ void	zjmp(t_carry *cr)
 		ft_printf("zjmp ");
 }
 
-void	ldi(t_carry *cr)
+void		ldi(t_carry *cr)
 {
 	t_ldi		ldi;
 
@@ -227,12 +238,13 @@ void	ldi(t_carry *cr)
 		get_param_plus(cr, &ldi.dir2, 1);
 	ldi.position = check_position(cr->position + \
 		((ldi.prm1 + ldi.dir1 + ldi.dir2 + ldi.reg2) % IDX_MOD));
-	from_memory_to_var(cr, &cr->reg[cr->cycle->regs[2]], ldi.position, REG_SIZE);
+	from_memory_to_var(cr, &cr->reg[cr->cycle->regs[2]], ldi.position,
+			REG_SIZE);
 	if (cr->vm->debug)
 		ft_printf("lti ");
 }
 
-void	sti(t_carry *cr)
+void		sti(t_carry *cr)
 {
 	t_sti		sti;
 
@@ -259,9 +271,9 @@ void	sti(t_carry *cr)
 		ft_printf("sti ");
 }
 
-void	lld(t_carry *cr)
+void		lld(t_carry *cr)
 {
-	short 			indir;
+	short			indir;
 	unsigned int	posit;
 
 	if (cr->cycle->descript[0] == 2)
@@ -284,12 +296,12 @@ void	lld(t_carry *cr)
 		ft_printf("lld ");
 }
 
-void	lldi(t_carry *cr)
+void		lldi(t_carry *cr)
 {
 	unsigned int	position;
 	unsigned int	p1;
 	unsigned int	p2;
-	short 			indir;
+	short			indir;
 
 	if (cr->cycle->descript[0] == 3)
 	{
@@ -329,7 +341,7 @@ static void	copy_carriage(t_carry *cr_src, short dir)
 	cr->vm->carriages = cr;
 }
 
-void	frk(t_carry *cr)
+void		frk(t_carry *cr)
 {
 	short			dir;
 
@@ -341,7 +353,7 @@ void	frk(t_carry *cr)
 		ft_printf("frk ");
 }
 
-void	lfrk(t_carry *cr)
+void		lfrk(t_carry *cr)
 {
 	short			dir;
 
@@ -352,7 +364,7 @@ void	lfrk(t_carry *cr)
 		ft_printf("frk ");
 }
 
-void	aff(t_carry *cr)
+void		aff(t_carry *cr)
 {
 	char	prt;
 

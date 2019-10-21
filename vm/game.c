@@ -1,5 +1,16 @@
-# include "vm.h"
-// #include <stdio.h>
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   game.c                                             :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: dfrost-a <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2019/10/21 20:24:16 by dfrost-a          #+#    #+#             */
+/*   Updated: 2019/10/21 20:24:18 by dfrost-a         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+#include "vm.h"
 
 static void	carriage_remover(t_vm *vm, t_carry *prev, t_carry *cur)
 {
@@ -9,8 +20,8 @@ static void	carriage_remover(t_vm *vm, t_carry *prev, t_carry *cur)
 	{
 		vm->carriages = cur->next;
 		free(cur);
-	if (vm->debug)
-		ft_printf("remove!\n");
+		if (vm->debug)
+			ft_printf("remove!\n");
 		return ;
 	}
 	ptr = cur->next;
@@ -18,6 +29,17 @@ static void	carriage_remover(t_vm *vm, t_carry *prev, t_carry *cur)
 	prev->next = ptr;
 	if (vm->debug)
 		ft_printf("remove!\n");
+}
+
+static void	help_check_game(t_vm *vm)
+{
+	if (vm->live_counter >= NBR_LIVE || vm->check_counter >= MAX_CHECKS)
+	{
+		vm->cycles_to_die -= CYCLE_DELTA;
+		vm->check_counter = 0;
+	}
+	else
+		vm->check_counter++;
 }
 
 static void	check_game(t_vm *vm)
@@ -43,14 +65,20 @@ static void	check_game(t_vm *vm)
 		prev = cur;
 		cur = cur->next;
 	}
-	if (vm->live_counter >= NBR_LIVE || vm->check_counter >= MAX_CHECKS)
-	{
-		vm->cycles_to_die -= CYCLE_DELTA;
-		vm->check_counter = 0;
-	}
-	else
-		vm->check_counter++;
+	help_check_game(vm);
 	vm->live_counter = 0;
+}
+
+static void	help_cycle(t_vm *vm, t_carry *cr, t_cycle *cycle)
+{
+	if (!cr->cycles_before)
+	{
+		cr->jump_len = 1;
+		if (check_operation(vm, cr, cycle))
+			vm->command[cr->cmd_code - 1](cr);
+		if (!(*cycle).shift)
+			cr->position = check_position(cr->position + cr->jump_len);
+	}
 }
 
 static void	cycle(t_vm *vm)
@@ -71,30 +99,14 @@ static void	cycle(t_vm *vm)
 		}
 		if (cr->cycles_before)
 			cr->cycles_before--;
-		if (!cr->cycles_before)
-		{
-			cr->jump_len = 1;
-			if (check_operation(vm, cr, &cycle))
-				vm->command[cr->cmd_code - 1](cr);
-			if (!cycle.shift)
-				cr->position = check_position(cr->position + cr->jump_len);
-		}
+		help_cycle(vm, cr, &cycle);
 		cr->last_live++;
 		cr = cr->next;
 	}
 }
 
-void		game(t_vm *vm)
+static void	help_game(t_vm *vm)
 {
-	vm->debug = 0;
-	if (vm->dump_flag && !vm->dump)
-	{
-		if (vm->v)
-			game_area_frame(vm);
-		else
-			print_game_area(vm);
-		return ;
-	}
 	while (vm->carriages)
 	{
 		if (vm->cycles_from_start == 680)
@@ -112,6 +124,20 @@ void		game(t_vm *vm)
 		if (vm->dump && vm->cycles_from_start >= vm->dump)
 			break ;
 	}
+}
+
+void		game(t_vm *vm)
+{
+	vm->debug = 0;
+	if (vm->dump_flag && !vm->dump)
+	{
+		if (vm->v)
+			game_area_frame(vm);
+		else
+			print_game_area(vm);
+		return ;
+	}
+	help_game(vm);
 	if (vm->dump && vm->carriages)
 	{
 		if (vm->v)

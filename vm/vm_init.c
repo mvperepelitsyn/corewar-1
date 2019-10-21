@@ -1,4 +1,16 @@
-# include "vm.h"
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   vm_init.c                                          :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: dfrost-a <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2019/10/21 20:42:53 by dfrost-a          #+#    #+#             */
+/*   Updated: 2019/10/21 20:42:56 by dfrost-a         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+#include "vm.h"
 
 void		carriages_init(t_vm *vm, int champ_nbr, int position)
 {
@@ -16,11 +28,12 @@ void		carriages_init(t_vm *vm, int champ_nbr, int position)
 	vm->car_count++;
 }
 
-static int alloc_back(t_vm *vm)
+static int	alloc_back(t_vm *vm)
 {
 	int		i;
 
-	if (!(vm->back = malloc(MEM_SIZE)) || !(vm->light = ft_memalloc(MEM_SIZE)))
+	if (!(vm->back = malloc(MEM_SIZE)) ||
+	!(vm->light = ft_memalloc(MEM_SIZE)))
 		return (0);
 	i = 0;
 	while (i < MEM_SIZE)
@@ -29,6 +42,14 @@ static int alloc_back(t_vm *vm)
 		i++;
 	}
 	return (1);
+}
+
+static void	help_area_init(t_vm *vm)
+{
+	if (!(vm->area = ft_memalloc(MEM_SIZE)))
+		ft_error("Malloc couldn't allocate the memory!\n");
+	if (vm->v && !alloc_back(vm))
+		ft_error("Malloc couldn't allocate the memory!\n");
 }
 
 static void	area_init(t_vm *vm)
@@ -40,10 +61,7 @@ static void	area_init(t_vm *vm)
 
 	champ_area = MEM_SIZE / vm->champs_count;
 	champ_nbr = 0;
-	if (!(vm->area = ft_memalloc(MEM_SIZE)))
-		ft_error("Malloc couldn't allocate the memory!\n");
-	if (vm->v && !alloc_back(vm))
-		ft_error("Malloc couldn't allocate the memory!\n");
+	help_area_init(vm);
 	while (champ_nbr < vm->champs_count)
 	{
 		i = champ_area * champ_nbr;
@@ -59,22 +77,6 @@ static void	area_init(t_vm *vm)
 		}
 		champ_nbr++;
 	}
-}
-
-static int	last_alive_champ(t_process *p)
-{
-	int		i;
-	int 	last_alive_num;
-
-	i = 0;
-	last_alive_num = 0;
-	while (i < MAX_PLAYERS)
-	{
-		if (p[i].cmp_nbr && p[i].cmp_nbr > last_alive_num)
-			last_alive_num = p[i].cmp_nbr;
-		i++;
-	}
-	return (last_alive_num);
 }
 
 void		vm_init(t_vm *vm)
@@ -95,7 +97,7 @@ void		vm_init(t_vm *vm)
 	vm->command[13] = (t_command) & lldi;
 	vm->command[14] = (t_command) & lfrk;
 	vm->command[15] = (t_command) & aff;
-	vm->last_alive = (-1) * last_alive_champ(vm->processes);
+	vm->last_alive = (-1) * vm->champs_count;
 	vm->cycles_to_die = CYCLE_TO_DIE;
 	vm->l_endian = (char)ft_islitendian();
 	area_init(vm);

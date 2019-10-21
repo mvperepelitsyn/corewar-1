@@ -1,4 +1,16 @@
-# include "vm.h"
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   auxiliary.c                                        :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: dfrost-a <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2019/10/21 19:16:33 by dfrost-a          #+#    #+#             */
+/*   Updated: 2019/10/21 19:16:37 by dfrost-a         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+#include "vm.h"
 
 short	indir_position(short indir, t_carry *cr)
 {
@@ -15,10 +27,10 @@ void	rotate_or_not(t_carry *cr, unsigned char *dest, int src_i)
 		dest[0] = cr->vm->area[check_position((src_i) + 1)];
 	}
 	else
-		{
-			dest[0] = cr->vm->area[src_i];
-			dest[1] = cr->vm->area[src_i + 1];
-		}
+	{
+		dest[0] = cr->vm->area[src_i];
+		dest[1] = cr->vm->area[src_i + 1];
+	}
 }
 
 void	short_ind(unsigned char *dst, unsigned const char *src)
@@ -34,7 +46,7 @@ void	short_ind(unsigned char *dst, unsigned const char *src)
 		dst[1] = src[1];
 	}
 }
-
+// TODO: i need to write an usage
 int		display_usage()
 {
 	ft_printf("usage:\n\there should be an explanation\n");
