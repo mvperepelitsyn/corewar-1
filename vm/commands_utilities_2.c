@@ -59,7 +59,7 @@ void				from_var_to_memory(t_carry *cr, void *var, int position,
 	}
 }
 
-void		print_game_area(t_vm *vm)
+void				print_game_area(t_vm *vm)
 {
 	unsigned int	byte;
 

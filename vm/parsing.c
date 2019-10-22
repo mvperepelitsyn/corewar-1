@@ -92,7 +92,8 @@ void		parsing(int argc, char **argv, t_vm *vm)
 		{
 			if (vm->processes[i].cmp_nbr > 0 &&
 			vm->processes[i].cmp_nbr > vm->champs_count)
-				ft_error(NULL);
+				ft_error("Error! The number after flag -n has to be less than"
+" the total number of champions that fighting in the battle!");
 			i++;
 		}
 	}

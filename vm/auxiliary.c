@@ -31,7 +31,7 @@ int		display_usage(void)
 	ft_printf("usage:\t./corewar [-a -dump N -v]%s%s%s%s%s", \
 		" [-n N] <champ_name.cor> [-n N] <another_champ_name.cor> <...>", \
 		"\n\t-a\t  : Prints output from \"aff\" (Default is to hide it)", \
-		"\n\t-d N\t  : Dumps memory after N cycles then exits", \
+		"\n\t-dump N\t  : Dumps memory after N cycles then exits", \
 		"\n\t-v\t  : Console visualization mode", \
 		"\n\t-n N\t  : Sets the number of the next player\n");
 	return (0);

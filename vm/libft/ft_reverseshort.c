@@ -17,7 +17,6 @@ unsigned short	ft_reverseshort(unsigned int i)
 	unsigned char	a[2];
 
 	a[0] = i & 255;
-    a[1] = (i >> 8) & 255;
-
-    return ((unsigned short)(a[0] << 8) + a[1]);
+	a[1] = (i >> 8) & 255;
+	return ((unsigned short)(a[0] << 8) + a[1]);
 }

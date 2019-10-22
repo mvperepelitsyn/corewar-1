@@ -113,5 +113,7 @@ void		how_many_champs(t_vm *vm)
 			j++;
 		i++;
 	}
+	if (j == 0)
+		ft_error("Error! There is no champions!");
 	vm->champs_count = j;
 }

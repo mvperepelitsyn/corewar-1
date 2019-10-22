@@ -29,8 +29,8 @@ static int	check_car_position(t_vm *vm, int pos, unsigned char *color)
 	return (0);
 }
 
-static void	print_byte_norma(t_vm *vm, int byte, char ending, \
-	unsigned char	color)
+static void	print_byte_norma(t_vm *vm, int byte, char ending,
+		unsigned char color)
 {
 	if (!vm->light[byte])
 	{
