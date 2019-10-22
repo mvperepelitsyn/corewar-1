@@ -6,7 +6,7 @@
 /*   By: dfrost-a <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/21 15:28:38 by dfrost-a          #+#    #+#             */
-/*   Updated: 2019/10/21 15:28:50 by dfrost-a         ###   ########.fr       */
+/*   Updated: 2019/10/22 18:09:01 by dfrost-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,7 +82,7 @@ void		parsing(int argc, char **argv, t_vm *vm)
 	int i;
 
 	i = 0;
-	if (argc > 16)
+	if (argc > 17)
 		ft_error("Error! Too many arguments");
 	else
 	{
