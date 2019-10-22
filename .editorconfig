@@ -38,6 +38,6 @@ indent_size = 2
 # Tab indentation (no size specified)
 [Makefile]
 charset = utf-8
-indent_style = space
+indent_style = tab
 indent_size = 4
 trim_trailing_whitespace = true

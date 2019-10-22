@@ -1,6 +1,6 @@
 
 
-NAME = corewar
+NAME = ../corewar
 
 HEAD = ./
 SRC = vm.c vm_init.c auxiliary.c parsing.c game.c check_operation.c commands.c \
@@ -18,20 +18,20 @@ all: $(NAME)
 
 $(NAME):  $(OBJPATH) $(OBJ)
 	@make -C $(LIBPATH)
-	gcc $(FLAGS) $(OBJ) -o $(NAME) -I $(HEAD) $(LIB)
+	@gcc $(FLAGS) $(OBJ) -o $(NAME) -I $(HEAD) $(LIB)
 
 $(OBJPATH):
-	mkdir -p $(OBJPATH)
+	@mkdir -p $(OBJPATH)
 
 $(OBJPATH)/%.o: %.c
-	gcc $(FLAGS) -c $< -o $@
+	@gcc $(FLAGS) -c $< -o $@
 
 clean:
 	@make -C $(LIBPATH) clean
-	/bin/rm -rf $(OBJPATH)
+	@/bin/rm -rf $(OBJPATH)
 
 fclean: clean
 	@make -C $(LIBPATH) fclean
-	/bin/rm -f $(NAME)
+	@/bin/rm -f $(NAME)
 
 re: fclean all
