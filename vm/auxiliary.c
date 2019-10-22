@@ -6,7 +6,7 @@
 /*   By: dfrost-a <dfrost-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/21 19:16:33 by dfrost-a          #+#    #+#             */
-/*   Updated: 2019/10/22 14:08:57 by uhand            ###   ########.fr       */
+/*   Updated: 2019/10/22 14:33:08 by uhand            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,12 @@ void	short_ind(unsigned char *dst, unsigned const char *src)
 
 int		display_usage(void)
 {
-	ft_printf("usage:\n\there should be an explanation\n");
+	ft_printf("usage:\t./corewar [-a -dump N -v]%s%s%s%s%s", \
+		" [-n N] <champ_name.cor> [-n N] <another_champ_name.cor> <...>", \
+		"\n\t-a\t  : Prints output from \"aff\" (Default is to hide it)", \
+		"\n\t-d N\t  : Dumps memory after N cycles then exits", \
+		"\n\t-v\t  : Console visualization mode", \
+		"\n\t-n N\t  : Sets the number of the next player\n");
 	return (0);
 }
 
