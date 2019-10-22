@@ -227,5 +227,13 @@ void			game_area_frame(t_vm *vm);
 void			print_game_area(t_vm *vm);
 void			from_var_to_memory(t_carry *cr, void *var, int position, \
 	int	size);
+void			cycle(t_vm *vm);
+void			fill_the_champ(t_process *chmp, char *file_name);
+void			check_magic_header(int fd, char *file_name);
+void			check_num(t_process *champs, int num, char *champ_name);
+void			check_file_and_fill(char *file_name, t_process *chmp, int num);
+void			how_many_champs(t_vm *vm);
+
+
 
 #endif
