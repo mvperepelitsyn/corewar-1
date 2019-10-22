@@ -3,35 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   auxiliary.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dfrost-a <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: dfrost-a <dfrost-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/21 19:16:33 by dfrost-a          #+#    #+#             */
-/*   Updated: 2019/10/21 19:16:37 by dfrost-a         ###   ########.fr       */
+/*   Updated: 2019/10/22 14:08:57 by uhand            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "vm.h"
-
-short	indir_position(short indir, t_carry *cr)
-{
-	indir %= IDX_MOD;
-	check_position(indir + cr->position);
-	return (indir);
-}
-
-void	rotate_or_not(t_carry *cr, unsigned char *dest, int src_i)
-{
-	if (cr->vm->l_endian)
-	{
-		dest[1] = cr->vm->area[src_i];
-		dest[0] = cr->vm->area[check_position((src_i) + 1)];
-	}
-	else
-	{
-		dest[0] = cr->vm->area[src_i];
-		dest[1] = cr->vm->area[src_i + 1];
-	}
-}
 
 void	short_ind(unsigned char *dst, unsigned const char *src)
 {
@@ -46,8 +25,8 @@ void	short_ind(unsigned char *dst, unsigned const char *src)
 		dst[1] = src[1];
 	}
 }
-// TODO: i need to write an usage
-int		display_usage()
+
+int		display_usage(void)
 {
 	ft_printf("usage:\n\there should be an explanation\n");
 	return (0);
