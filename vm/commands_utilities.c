@@ -12,91 +12,11 @@
 
 #include "vm.h"
 
-static unsigned int	help_get_param(t_carry *cr, int src_i, int i)
-{
-	unsigned char	*dest;
-	unsigned int	prm;
-
-	dest = (unsigned char *)&prm;
-	while (i < g_cmd_prms[cr->cmd_code - 1].dir_size)
-	{
-		dest[i] = cr->vm->area[check_position(src_i + i)];
-		i++;
-	}
-	if (ft_islitendian())
-		prm = ft_reverseint(prm);
-	return (prm);
-}
-
-unsigned int		get_param3(t_carry *cr)
-{
-	unsigned int	prm;
-	int				src_i;
-
-	prm = 0;
-	if (cr->cycle->descript[2] == 1)
-		prm = cr->reg[cr->cycle->descript[2]];
-	else if (cr->cycle->descript[2] == 2)
-	{
-		src_i = check_position(cr->position + 2 + 1 + g_cmd_prms[cr->cmd_code -
-1].dir_size);
-		prm = help_get_param(cr, src_i, 0);
-	}
-	return (prm);
-}
-
-static void			help_from_var_to_memory(t_carry *cr, int i,
-		int position, int size)
-{
-	if (cr->vm->v)
-	{
-		if (cr->vm->l_endian)
-		{
-			cr->vm->back[check_position(position + (size - i - 1))] =
-					cr->color - 1;
-			cr->vm->light[check_position(position + (size - i - 1))] = 50;
-		}
-		else
-		{
-			cr->vm->back[check_position(position + 1)] = cr->color - 1;
-			cr->vm->light[check_position(position + 1)] = 50;
-		}
-	}
-}
-
 /*
 ** --------------------------------------------------------------------------
 **						 Try to understand:
 ** --------------------------------------------------------------------------
 */
-
-void				from_var_to_memory(t_carry *cr, void *var, int position,
-		int size)
-{
-	unsigned char	*ptr;
-	int				i;
-
-	ptr = (unsigned char *)var;
-	i = 0;
-	if (cr->vm->l_endian)
-	{
-		while (i < size)
-		{
-			help_from_var_to_memory(cr, i, position, size);
-			cr->vm->area[check_position(position + (size - i - 1))] = ptr[i];
-			i++;
-		}
-	}
-	else
-	{
-		while (i < size)
-		{
-			help_from_var_to_memory(cr, i, position, size);
-			cr->vm->area[check_position(position + i)] = ptr[i];
-			i++;
-		}
-	}
-}
 
 void				from_memory_to_var(t_carry *cr, void *var, \
 int position, int size)

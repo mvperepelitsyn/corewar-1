@@ -87,15 +87,16 @@ struct			s_cycle
 };
 
 /*
-**	Struct for print_byte function
+** Struct for and, or and xor cmds
 */
 
-typedef struct	s_byte_print
+typedef struct	s_andorxor
 {
-	unsigned char	cr_clr;
-	unsigned char	color;
+	unsigned int	prm1;
+	unsigned int	prm2;
+	short			indir;
 
-}				t_byte_print;
+}				t_andorxor;
 
 /*
 **	Virtual Maschine params: vm
