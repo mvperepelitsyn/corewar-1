@@ -58,6 +58,5 @@ int			main(int argc, char **argv)
 	declare_champs(&vm.processes[0]);
 	vm_init(&vm);
 	game(&vm);
-//	clean_champs(&vm);
 	exit(0);
 }

@@ -69,42 +69,6 @@ static void	check_game(t_vm *vm)
 	vm->live_counter = 0;
 }
 
-static void	help_cycle(t_vm *vm, t_carry *cr, t_cycle *cycle)
-{
-	if (!cr->cycles_before)
-	{
-		cr->jump_len = 1;
-		if (check_operation(vm, cr, cycle))
-			vm->command[cr->cmd_code - 1](cr);
-		if (!(*cycle).shift)
-			cr->position = check_position(cr->position + cr->jump_len);
-	}
-}
-
-static void	cycle(t_vm *vm)
-{
-	t_carry	*cr;
-	t_cycle	cycle;
-
-	cr = vm->carriages;
-	while (cr)
-	{
-		ft_bzero((void*)&cycle, sizeof(cycle));
-		cr->cycle = &cycle;
-		if (!cr->cycles_before)
-		{
-			cr->cmd_code = vm->area[cr->position];
-			if (cr->cmd_code >= 1 && cr->cmd_code <= 16)
-				cr->cycles_before = g_cmd_prms[cr->cmd_code - 1].cycles_before;
-		}
-		if (cr->cycles_before)
-			cr->cycles_before--;
-		help_cycle(vm, cr, &cycle);
-		cr->last_live++;
-		cr = cr->next;
-	}
-}
-
 static void	help_game(t_vm *vm)
 {
 	while (vm->carriages)
