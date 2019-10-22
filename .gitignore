@@ -88,8 +88,3 @@ Temporary Items
 .idea/
 CMakeLists.txt
 cmake-build-debug/
-
-# Project
-*corewar
-*asm
-*war
