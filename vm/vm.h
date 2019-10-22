@@ -87,6 +87,18 @@ typedef struct	s_byte_print
 }				t_byte_print;
 
 /*
+** Struct for and, or and xor cmds
+*/
+
+typedef struct	s_andorxor
+{
+	unsigned int	prm1;
+	unsigned int	prm2;
+	short			indir;
+
+}				t_andorxor;
+
+/*
 ** Virtual Maschine params: vm
 */
 
