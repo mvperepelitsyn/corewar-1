@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   console_vis.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dfrost-a <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: dfrost-a <dfrost-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/21 19:58:24 by dfrost-a          #+#    #+#             */
-/*   Updated: 2019/10/21 19:58:26 by dfrost-a         ###   ########.fr       */
+/*   Updated: 2019/10/22 13:36:28 by uhand            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,51 +50,50 @@ static int	check_car_position(t_vm *vm, int pos, unsigned char *color)
 	return (0);
 }
 
-static void	help_print_byte(t_vm *vm, t_byte_print color, int byte,
-		char ending)
+static void	print_byte_norma(t_vm *vm, int byte, char ending, \
+	unsigned char	color)
 {
-	if (!check_car_position(vm, byte, &color.cr_clr))
+	if (!vm->light[byte])
 	{
-		if (!vm->light[byte])
-		{
-			if (color.color == 37)
-				ft_printf("\033[2;%hhum%02x\033[0m%c", color.color, \
-					(unsigned int)vm->area[byte], ending);
-			else
-				ft_printf("\033[%hhum%02x\033[0m%c", color.color, \
-					(unsigned int)vm->area[byte], ending);
-		}
-		else
-		{
-			ft_printf("\033[1;%hhum%02x\033[0m%c", color.color, \
+		if (color == 37)
+			ft_printf("\033[2;%hhum%02x\033[0m%c", color, \
 				(unsigned int)vm->area[byte], ending);
-			vm->light[byte]--;
-		}
+		else
+			ft_printf("\033[%hhum%02x\033[0m%c", color, \
+				(unsigned int)vm->area[byte], ending);
 	}
 	else
-		ft_printf("\033[30;%hhum%02x\033[0m%c", color.color, \
+	{
+		ft_printf("\033[1;%hhum%02x\033[0m%c", color, \
 			(unsigned int)vm->area[byte], ending);
+		vm->light[byte]--;
+	}
 }
 
 static void	print_byte(t_vm *vm, int byte, char ending)
 {
-	t_byte_print	color;
+	unsigned char	cr_clr;
+	unsigned char	color;
 
 	if (vm->back[byte] != 255 && vm->back[byte] < 4)
-		color.color = (vm->back[byte] == 2) ? 35 : vm->back[byte] + 31;
+		color = (vm->back[byte] == 2) ? 35 : vm->back[byte] + 31;
 	else if (vm->back[byte] == 255)
-		color.color = 37;
+		color = 37;
 	else
 	{
-		color.cr_clr = vm->back[byte] << 6;
-		color.cr_clr >>= 6;
-		color.cr_clr = (color.cr_clr == 2) ? 45 : color.cr_clr + 41;
-		ft_printf("\033[0;%hhum%02x\033[0m%c", color.cr_clr, \
-(unsigned int)vm->area[byte], ending);
+		cr_clr = vm->back[byte] << 6;
+		cr_clr >>= 6;
+		cr_clr = (cr_clr == 2) ? 45 : cr_clr + 41;
+		ft_printf("\033[0;%hhum%02x\033[0m%c", cr_clr, \
+			(unsigned int)vm->area[byte], ending);
 		vm->back[byte] -= 4;
 		return ;
 	}
-	help_print_byte(vm, color, byte, ending);
+	if (!check_car_position(vm, byte, &cr_clr))
+		print_byte_norma(vm, byte, ending, color);
+	else
+		ft_printf("\033[30;%hhum%02x\033[0m%c", cr_clr, \
+			(unsigned int)vm->area[byte], ending);
 }
 
 static void	print_report(t_vm *vm)

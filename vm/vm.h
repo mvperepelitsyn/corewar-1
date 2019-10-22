@@ -15,29 +15,40 @@ typedef	void			(*t_command)(t_carry *cr);
 
 
 /*
-** Carriage params: cr
+**	Carriage params: cr
+**
+**	car_nbr				- carry number
+**	carry				- flag "carry"
+**	cmd_code			- current operation code
+**	jump_len			- bytes to second instruction
+**	last_live			- cycles from last live call
+**	last_champ			- last alive champ nbr
+**	cycles_before		- cycles before current operation
+**	position			- carry position in game memory area
+**	color				- carry color (champ color)
+**	reg[16]				- registr
 */
 
 struct	s_carry
 {
-	unsigned int		car_nbr;//carry number
-	unsigned char		carry;//flag "carry"
-	unsigned char		cmd_code;//current operation code
-	unsigned char		jump_len;//bytes to second instruction
-	int					last_live;//cycles from last live call
-	int					last_champ;//last alive champ nbr
+	unsigned int		car_nbr;
+	unsigned char		carry;
+	unsigned char		cmd_code;
+	unsigned char		jump_len;
+	int					last_live;
+	int					last_champ;
 	unsigned int		last_alive_cycle;
-	unsigned int		cycles_before;//cycles before current operation
-	int					position;//carry position in game memory area
-	unsigned char		color;//carry color (champ color)
-	unsigned int		reg[16];//registr
+	unsigned int		cycles_before;
+	int					position;
+	unsigned char		color;
+	unsigned int		reg[16];
 	t_cycle				*cycle;
 	t_vm				*vm;
 	struct s_carry		*next;
 };
 
 /*
-** Process params: p
+**	Process params: p
 */
 
 typedef struct	s_process
@@ -50,22 +61,22 @@ typedef struct	s_process
 }				t_process;
 
 /*
-** Command params: cmd
+**	Command params: cmd
 */
 
 typedef struct	s_cmd_prms
 {
-	unsigned char		cmd_code;//1
-	unsigned char		dir_size;//2
-	unsigned char		descript;//3
-	unsigned char		prms_count;//4
-	unsigned short		cycles_before;//5
-	unsigned char		prm_types[3];//6
-	char				*name;//7
+	unsigned char		cmd_code;
+	unsigned char		dir_size;
+	unsigned char		descript;
+	unsigned char		prms_count;
+	unsigned short		cycles_before;
+	unsigned char		prm_types[3];
+	char				*name;
 }				t_cmd_prms;
 
 /*
-** Current cycle params: cycle
+**	Current cycle params: cycle
 */
 
 struct			s_cycle
@@ -76,7 +87,7 @@ struct			s_cycle
 };
 
 /*
-** Struct for print_byte function
+**	Struct for print_byte function
 */
 
 typedef struct	s_byte_print
@@ -87,7 +98,11 @@ typedef struct	s_byte_print
 }				t_byte_print;
 
 /*
-** Virtual Maschine params: vm
+**	Virtual Maschine params: vm
+**
+**	last_alive		- number of last alive champion
+**	ctd_counter		- cycles to die counter
+**	live_counter	- summary cycles_to_die alive counter
 */
 
 struct			s_vm
@@ -98,7 +113,7 @@ struct			s_vm
 	char				l_endian;
 	unsigned char		champs_count;
 	unsigned int		car_count;
-	unsigned int		last_alive;//number of last alive champion
+	unsigned int		last_alive;
 	unsigned int		last_alive_cycle;
 	unsigned char		*area;
 	unsigned char		*back;
@@ -107,16 +122,16 @@ struct			s_vm
 	char 				dump_flag;
 	unsigned int		dump;
 	int					cycles_to_die;
-	int					ctd_counter;//cycles to die counter
+	int					ctd_counter;
 	int					check_counter;
-	unsigned int		live_counter;//summary cycles_to_die alive counter
+	unsigned int		live_counter;
 	t_carry				*carriages;
 	t_process			processes[MAX_PLAYERS];
 	t_command			command[16];
 };
 
 /*
-** Carriage params: ldi
+**	Carriage params: ldi
 */
 
 typedef struct	s_ldi
@@ -130,7 +145,7 @@ typedef struct	s_ldi
 }				t_ldi;
 
 /*
-** Carriage params: sti
+**	Carriage params: sti
 */
 
 typedef struct	s_sti
@@ -145,31 +160,33 @@ typedef struct	s_sti
 }				t_sti;
 
 /*
-** GLOBAL Operation params:
+**	GLOBAL Operation params:
+**
+**	cmd_code, dir_size, descript, prms_count, cycles_before, prm_types[3], *name
 */
 
 static t_cmd_prms			g_cmd_prms[16] =
 {
-	{1, 4, 0, 1, 10, {T_DIR}, "live"},/*alive*/
-	{2, 4, 1, 2, 5, {T_DIR | T_IND, T_REG}, "ld"},/*ld*/
-	{3, 4, 1, 2, 5, {T_REG, T_IND | T_REG}, "st"},/*st*/
-	{4, 4, 1, 3, 10, {T_REG, T_REG, T_REG}, "add"},/*add*/
-	{5, 4, 1, 3, 10, {T_REG, T_REG, T_REG}, "sub"},/*sub*/
-	{6, 4, 1, 3, 6, {T_REG | T_DIR | T_IND, T_REG | T_IND | T_DIR, T_REG}, "and"},/*and*/
-	{7, 4, 1, 3, 6, {T_REG | T_IND | T_DIR, T_REG | T_IND | T_DIR, T_REG}, "or"},/*or*/
-	{8, 4, 1, 3, 6, {T_REG | T_IND | T_DIR, T_REG | T_IND | T_DIR, T_REG}, "xor"},/*xor*/
-	{9, 2, 0, 1, 20, {T_DIR}, "zjmp"},/*zjmp*/
-	{10, 2, 1, 3, 25, {T_REG | T_DIR | T_IND, T_DIR | T_REG, T_REG}, "ldi"},/*ldi*/
-	{11, 2, 1, 3, 25, {T_REG, T_REG | T_DIR | T_IND, T_DIR | T_REG}, "sti"},/*sti*/
-	{12, 2, 0, 1, 800, {T_DIR}, "frk"},/*frk*/
-	{13, 4, 1, 2, 10, {T_DIR | T_IND, T_REG}, "lld"},/*lld*/
-	{14, 2, 1, 3, 50, {T_REG | T_DIR | T_IND, T_DIR | T_REG, T_REG}, "lldi"},/*lldi*/
-	{15, 2, 0, 1, 1000, {T_DIR}, "lfrk"},/*lfrk*/
-	{16, 4, 1, 1, 2, {T_REG}, "aff"}/*aff*/
+	{1, 4, 0, 1, 10, {T_DIR}, "live"},
+	{2, 4, 1, 2, 5, {T_DIR | T_IND, T_REG}, "ld"},
+	{3, 4, 1, 2, 5, {T_REG, T_IND | T_REG}, "st"},
+	{4, 4, 1, 3, 10, {T_REG, T_REG, T_REG}, "add"},
+	{5, 4, 1, 3, 10, {T_REG, T_REG, T_REG}, "sub"},
+	{6, 4, 1, 3, 6, {T_REG | T_DIR | T_IND, T_REG | T_IND | T_DIR, T_REG}, "and"},
+	{7, 4, 1, 3, 6, {T_REG | T_IND | T_DIR, T_REG | T_IND | T_DIR, T_REG}, "or"},
+	{8, 4, 1, 3, 6, {T_REG | T_IND | T_DIR, T_REG | T_IND | T_DIR, T_REG}, "xor"},
+	{9, 2, 0, 1, 20, {T_DIR}, "zjmp"},
+	{10, 2, 1, 3, 25, {T_REG | T_DIR | T_IND, T_DIR | T_REG, T_REG}, "ldi"},
+	{11, 2, 1, 3, 25, {T_REG, T_REG | T_DIR | T_IND, T_DIR | T_REG}, "sti"},
+	{12, 2, 0, 1, 800, {T_DIR}, "frk"},
+	{13, 4, 1, 2, 10, {T_DIR | T_IND, T_REG}, "lld"},
+	{14, 2, 1, 3, 50, {T_REG | T_DIR | T_IND, T_DIR | T_REG, T_REG}, "lldi"},
+	{15, 2, 0, 1, 1000, {T_DIR}, "lfrk"},
+	{16, 4, 1, 1, 2, {T_REG}, "aff"}
 };
 
 /*
-** Main command's functions:
+**	Main command's functions:
 */
 
 void	live(t_carry *cr);
@@ -190,7 +207,7 @@ void	lfrk(t_carry *cr);
 void	aff(t_carry *cr);
 
 /*
-** Common functions:
+**	Common functions:
 */
 
 int				display_usage();
