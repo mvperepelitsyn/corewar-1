@@ -6,32 +6,11 @@
 /*   By: dfrost-a <dfrost-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/21 19:58:24 by dfrost-a          #+#    #+#             */
-/*   Updated: 2019/10/22 13:36:28 by uhand            ###   ########.fr       */
+/*   Updated: 2019/10/22 14:00:23 by uhand            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "vm.h"
-
-void		print_game_area(t_vm *vm)
-{
-	unsigned int	byte;
-
-	byte = 0;
-	while (byte < MEM_SIZE)
-	{
-		if (byte)
-			ft_printf("%#06x : ", byte);
-		else
-			ft_printf("0x0000 : ");
-		while (byte % 64 < 63)
-		{
-			ft_printf("%02x ", (unsigned int)vm->area[byte]);
-			byte++;
-		}
-		ft_printf("%02x \n", (unsigned int)vm->area[byte]);
-		byte++;
-	}
-}
 
 static int	check_car_position(t_vm *vm, int pos, unsigned char *color)
 {

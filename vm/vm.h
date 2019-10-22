@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   vm.h                                               :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: uhand <uhand@student.42.fr>                +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2019/10/22 14:00:40 by uhand             #+#    #+#             */
+/*   Updated: 2019/10/22 14:05:02 by uhand            ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #ifndef VM_H
 # define VM_H
 
@@ -12,7 +24,6 @@ typedef struct s_vm		t_vm;
 typedef struct s_carry	t_carry;
 typedef struct s_cycle	t_cycle;
 typedef	void			(*t_command)(t_carry *cr);
-
 
 /*
 **	Carriage params: cr
@@ -29,7 +40,7 @@ typedef	void			(*t_command)(t_carry *cr);
 **	reg[16]				- registr
 */
 
-struct	s_carry
+struct			s_carry
 {
 	unsigned int		car_nbr;
 	unsigned char		carry;
@@ -81,7 +92,7 @@ typedef struct	s_cmd_prms
 
 struct			s_cycle
 {
-	unsigned char		descript[3];//1
+	unsigned char		descript[3];
 	unsigned char		regs[3];
 	int					shift;
 };
@@ -92,9 +103,9 @@ struct			s_cycle
 
 typedef struct	s_andorxor
 {
-	unsigned int	prm1;
-	unsigned int	prm2;
-	short			indir;
+	unsigned int		prm1;
+	unsigned int		prm2;
+	short				indir;
 
 }				t_andorxor;
 
@@ -108,7 +119,7 @@ typedef struct	s_andorxor
 
 struct			s_vm
 {
-	char 				a;
+	char				a;
 	char				v;
 	char				debug;
 	char				l_endian;
@@ -120,7 +131,7 @@ struct			s_vm
 	unsigned char		*back;
 	unsigned char		*light;
 	unsigned int		cycles_from_start;
-	char 				dump_flag;
+	char				dump_flag;
 	unsigned int		dump;
 	int					cycles_to_die;
 	int					ctd_counter;
@@ -142,7 +153,7 @@ typedef struct	s_ldi
 	short				dir2;
 	int					reg2;
 	int					position;
-	short 				indir;
+	short				indir;
 }				t_ldi;
 
 /*
@@ -157,7 +168,7 @@ typedef struct	s_sti
 	short				dir3;
 	int					reg3;
 	int					position;
-	short 				indir;
+	short				indir;
 }				t_sti;
 
 /*
@@ -173,9 +184,12 @@ static t_cmd_prms			g_cmd_prms[16] =
 	{3, 4, 1, 2, 5, {T_REG, T_IND | T_REG}, "st"},
 	{4, 4, 1, 3, 10, {T_REG, T_REG, T_REG}, "add"},
 	{5, 4, 1, 3, 10, {T_REG, T_REG, T_REG}, "sub"},
-	{6, 4, 1, 3, 6, {T_REG | T_DIR | T_IND, T_REG | T_IND | T_DIR, T_REG}, "and"},
-	{7, 4, 1, 3, 6, {T_REG | T_IND | T_DIR, T_REG | T_IND | T_DIR, T_REG}, "or"},
-	{8, 4, 1, 3, 6, {T_REG | T_IND | T_DIR, T_REG | T_IND | T_DIR, T_REG}, "xor"},
+	{6, 4, 1, 3, 6, {T_REG | T_DIR | T_IND, T_REG | T_IND | T_DIR, T_REG}, \
+		"and"},
+	{7, 4, 1, 3, 6, {T_REG | T_IND | T_DIR, T_REG | T_IND | T_DIR, T_REG}, \
+		"or"},
+	{8, 4, 1, 3, 6, {T_REG | T_IND | T_DIR, T_REG | T_IND | T_DIR, T_REG}, \
+		"xor"},
 	{9, 2, 0, 1, 20, {T_DIR}, "zjmp"},
 	{10, 2, 1, 3, 25, {T_REG | T_DIR | T_IND, T_DIR | T_REG, T_REG}, "ldi"},
 	{11, 2, 1, 3, 25, {T_REG, T_REG | T_DIR | T_IND, T_DIR | T_REG}, "sti"},
@@ -190,22 +204,22 @@ static t_cmd_prms			g_cmd_prms[16] =
 **	Main command's functions:
 */
 
-void	live(t_carry *cr);
-void	ld(t_carry *cr);
-void	st(t_carry *cr);
-void	add(t_carry *cr);
-void	sub(t_carry *cr);
-void	and(t_carry *cr);
-void	or(t_carry *cr);
-void	xor(t_carry *cr);
-void	zjmp(t_carry *cr);
-void	ldi(t_carry *cr);
-void	sti(t_carry *cr);
-void	frk(t_carry *cr);
-void	lld(t_carry *cr);
-void	lldi(t_carry *cr);
-void	lfrk(t_carry *cr);
-void	aff(t_carry *cr);
+void			live(t_carry *cr);
+void			ld(t_carry *cr);
+void			st(t_carry *cr);
+void			add(t_carry *cr);
+void			sub(t_carry *cr);
+void			and(t_carry *cr);
+void			or(t_carry *cr);
+void			xor(t_carry *cr);
+void			zjmp(t_carry *cr);
+void			ldi(t_carry *cr);
+void			sti(t_carry *cr);
+void			frk(t_carry *cr);
+void			lld(t_carry *cr);
+void			lldi(t_carry *cr);
+void			lfrk(t_carry *cr);
+void			aff(t_carry *cr);
 
 /*
 **	Common functions:
