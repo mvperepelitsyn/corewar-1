@@ -113,6 +113,7 @@ static void	fill_the_code(t_process *chmp, int fd, char *file_name)
 void		fill_the_champ(t_process *chmp, char *file_name)
 {
 	int		fd;
+	char
 
 	if ((fd = open(file_name, O_RDONLY)) < 0)
 		ft_err_plus("Error! There is nothing to open from champion %s! Consider"

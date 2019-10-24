@@ -111,6 +111,21 @@ typedef struct	s_andorxor
 }				t_andorxor;
 
 /*
+** Struct for flag -v: verbose
+*/
+
+typedef struct	s_verbose
+{
+	char 	v;
+	short	v_num;
+	short	v_1;
+	short	v_2;
+	short	v_4;
+	short	v_8;
+	short	v_16;
+}				t_verbose;
+
+/*
 **	Virtual Maschine params: vm
 **
 **	last_alive		- number of last alive champion
@@ -122,10 +137,9 @@ struct			s_vm
 {
 	char				a;
 	char				vis;
-	char 				v;
 	char				debug;
 	char				l_endian;
-	int 				v_num;
+	t_verbose			verbose;
 	unsigned char		champs_count;
 	unsigned int		car_count;
 	unsigned int		last_alive;
