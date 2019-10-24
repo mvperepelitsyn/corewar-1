@@ -28,12 +28,21 @@ void	short_ind(unsigned char *dst, unsigned const char *src)
 
 int		display_usage(void)
 {
-	ft_printf("usage:\t./corewar [-a -dump N -v]%s%s%s%s%s", \
+	ft_printf("usage:\t./corewar [-a -dump N -vis -v N]%s%s%s%s%s%s%s%s%s%s%s%s"
+			, \
 		" [-n N] <champ_name.cor> [-n N] <another_champ_name.cor> <...>", \
 		"\n\t-a\t  : Prints output from \"aff\" (Default is to hide it)", \
 		"\n\t-dump N\t  : Dumps memory after N cycles then exits", \
-		"\n\t-v\t  : Console visualization mode", \
-		"\n\t-n N\t  : Sets the number of the next player\n");
+		"\n\t-vis\t  : Console visualization mode", \
+		"\n\t-v N\t  : Verbosity levels, can be added together to enable severa"
+  "l", \
+  "\n\t\t    - 0 : Show only essentials", \
+  "\n\t\t    - 1 : Show lives", \
+  "\n\t\t    - 2 : Show cycles", \
+  "\n\t\t    - 4 : Show operations (Params are NOT letteral ...)", \
+  "\n\t\t    - 8 : Show deaths", \
+  "\n\t\t    - 16 : Show PC movements (Except for jumps)", \
+  "\n\t-n N\t  : Sets the number of the next player\n");
 	return (0);
 }
 

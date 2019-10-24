@@ -56,8 +56,8 @@ static void	parse_champ(int argc, char **argv, t_vm *vm, int l)
 			l++;
 			parse_dump_flag(vm, argv, argc, l);
 		}
-		else if (ft_strequ(argv[l], "-v"))
-			vm->v = 1;
+		else if (ft_strequ(argv[l], "-vis"))
+			vm->vis = 1;
 		else if (ft_strequ(argv[l], "-a"))
 			vm->a = 1;
 		else

@@ -31,7 +31,7 @@ void		live(t_carry *cr)
 		cr->last_alive_cycle = cr->vm->cycles_from_start + 1;
 		cr->vm->last_alive_cycle = cr->vm->cycles_from_start + 1;
 	}
-	if (cr->vm->v)
+	if (cr->vm->vis)
 		cr->vm->back[cr->position] |= 200;
 	if (cr->vm->debug)
 	{

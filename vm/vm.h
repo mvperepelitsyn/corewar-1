@@ -121,9 +121,11 @@ typedef struct	s_andorxor
 struct			s_vm
 {
 	char				a;
-	char				v;
+	char				vis;
+	char 				v;
 	char				debug;
 	char				l_endian;
+	int 				v_num;
 	unsigned char		champs_count;
 	unsigned int		car_count;
 	unsigned int		last_alive;

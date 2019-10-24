@@ -78,7 +78,7 @@ static void	help_game(t_vm *vm)
 		cycle(vm);
 		vm->cycles_from_start++;
 		vm->ctd_counter++;
-		if (vm->v && !vm->dump)
+		if (vm->vis && !vm->dump)
 			game_area_frame(vm);
 		if (vm->ctd_counter >= vm->cycles_to_die || vm->cycles_to_die <= 0)
 		{
@@ -95,7 +95,7 @@ void		game(t_vm *vm)
 	vm->debug = 0;
 	if (vm->dump_flag && !vm->dump)
 	{
-		if (vm->v)
+		if (vm->vis)
 			game_area_frame(vm);
 		else
 			print_game_area(vm);
@@ -104,7 +104,7 @@ void		game(t_vm *vm)
 	help_game(vm);
 	if (vm->dump && vm->carriages)
 	{
-		if (vm->v)
+		if (vm->vis)
 			game_area_frame(vm);
 		else
 			print_game_area(vm);
