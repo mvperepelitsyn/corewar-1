@@ -70,7 +70,7 @@ void				print_game_area(t_vm *vm)
 			ft_printf("%#06x : ", byte);
 		else
 			ft_printf("0x0000 : ");
-		while (byte % 64 < 63)
+		while (byte % OCTET < (OCTET - 1))
 		{
 			ft_printf("%02x ", (unsigned int)vm->area[byte]);
 			byte++;

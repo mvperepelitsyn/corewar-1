@@ -6,7 +6,7 @@
 /*   By: uhand <uhand@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/22 14:00:40 by uhand             #+#    #+#             */
-/*   Updated: 2019/10/22 14:05:02 by uhand            ###   ########.fr       */
+/*   Updated: 2019/10/23 19:53:58 by dfrost-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@
 
 # define STUPID 0
 # define SLEEP 20000
+# define OCTET 32
 
 typedef struct s_vm		t_vm;
 typedef struct s_carry	t_carry;
