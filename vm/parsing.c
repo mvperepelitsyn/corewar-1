@@ -67,7 +67,7 @@ static void set_the_verbose(t_vm *vm)
 	}
 }
 
-static void parse_verbos_flag(char **argv, int argc, int *l, t_vm *vm)
+static void parse_verbose_flag(char **argv, int argc, int *l, t_vm *vm)
 {
 	int num;
 
@@ -85,7 +85,7 @@ static void parse_verbos_flag(char **argv, int argc, int *l, t_vm *vm)
 	if (num > 0 && num <= 31)
 	{
 		vm->verbose.v = 1;
-		vm->verbose.v = num;
+		vm->verbose.v_num = num;
 		set_the_verbose(vm);
 	}
 }
@@ -111,7 +111,7 @@ static void	parse_champ(int argc, char **argv, t_vm *vm, int l)
 		else if (ft_strequ(argv[l], "-vis"))
 			vm->vis = 1;
 		else if (ft_strequ(argv[l], "-v"))
-			parse_verbos_flag(argv, argc, &l, vm);
+			parse_verbose_flag(argv, argc, &l, vm);
 		else if (ft_strequ(argv[l], "-a"))
 			vm->a = 1;
 		else

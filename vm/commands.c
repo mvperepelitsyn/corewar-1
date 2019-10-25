@@ -33,6 +33,9 @@ void		live(t_carry *cr)
 	}
 	if (cr->vm->vis)
 		cr->vm->back[cr->position] |= 200;
+	if (cr->vm->verbose.v && cr->vm->verbose.v_1)
+		ft_printf("Player %d (%s) is said to be alive\n", cr->vm->last_alive *
+		-1, cr->vm->processes[cr->vm->last_alive * -1 - 1].cmp_name);
 	if (cr->vm->debug)
 	{
 		ft_printf("%d ", champ_nbr[0]);
