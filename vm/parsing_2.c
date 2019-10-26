@@ -114,7 +114,7 @@ void		fill_the_champ(t_process *chmp, char *file_name)
 {
 	int		fd;
 //	char	*clion_file;
-
+//
 //	clion_file = ft_strjoin("../", file_name);
 //	if ((fd = open(clion_file, O_RDONLY)) < 0)
 	if ((fd = open(file_name, O_RDONLY)) < 0)
