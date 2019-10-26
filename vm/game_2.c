@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   game_2.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dfrost-a <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: dfrost-a <dfrost-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/22 13:53:32 by dfrost-a          #+#    #+#             */
-/*   Updated: 2019/10/22 13:53:34 by dfrost-a         ###   ########.fr       */
+/*   Updated: 2019/10/26 20:06:26 by uhand            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,11 @@ static void	help_cycle(t_vm *vm, t_carry *cr, t_cycle *cycle)
 	}
 }
 
+// static void		debug()
+// {
+// 	//
+// }
+
 void		cycle(t_vm *vm)
 {
 	t_carry	*cr;
@@ -34,6 +39,8 @@ void		cycle(t_vm *vm)
 	{
 		ft_bzero((void*)&cycle, sizeof(cycle));
 		cr->cycle = &cycle;
+		// if ()
+		// 	debug();
 		if (!cr->cycles_before)
 		{
 			cr->cmd_code = vm->area[cr->position];
