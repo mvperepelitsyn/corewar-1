@@ -12,19 +12,19 @@
 
 #include "vm.h"
 
-void	short_ind(unsigned char *dst, unsigned const char *src)
-{
-	if (ft_islitendian())
-	{
-		dst[1] = src[0];
-		dst[0] = src[1];
-	}
-	else
-	{
-		dst[0] = src[0];
-		dst[1] = src[1];
-	}
-}
+//void	short_ind(unsigned char *dst, unsigned const char *src)
+//{
+//	if (ft_islitendian())
+//	{
+//		dst[1] = src[0];
+//		dst[0] = src[1];
+//	}
+//	else
+//	{
+//		dst[0] = src[0];
+//		dst[1] = src[1];
+//	}
+//}
 
 int		display_usage(void)
 {
