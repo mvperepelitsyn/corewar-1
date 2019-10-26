@@ -37,6 +37,8 @@ static void	help_check_game(t_vm *vm)
 	{
 		vm->cycles_to_die -= CYCLE_DELTA;
 		vm->check_counter = 0;
+		if (vm->verbose.v && vm->verbose.v_2)
+			ft_printf("Cycle to die now is %d\n", vm->cycles_to_die);
 	}
 	else
 		vm->check_counter++;
@@ -73,10 +75,12 @@ static void	help_game(t_vm *vm)
 {
 	while (vm->carriages)
 	{
-		if (vm->cycles_from_start == 680)
-			vm->cycles_from_start = 680;
+		if (vm->cycles_from_start == 30218)
+			vm->cycles_from_start = 30218;
 		cycle(vm);
 		vm->cycles_from_start++;
+		if (vm->verbose.v && vm->verbose.v_2)
+			ft_printf("It is now cycle %d\n", vm->cycles_from_start);
 		vm->ctd_counter++;
 		if (vm->vis && !vm->dump)
 			game_area_frame(vm);
