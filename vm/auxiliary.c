@@ -43,6 +43,8 @@ int		ft_err_plus(char *str, long int num, char *hlp_str, int toggle)
 		ft_printf(str, num);
 	else if (toggle == 1)
 		ft_printf(str, hlp_str);
+	else if (toggle == 2)
+		ft_printf(str, hlp_str, num);
 	else
 		ft_putstr("ERROR!\n");
 	exit(69);

@@ -44,17 +44,21 @@ void		check_num(t_process *champs, int num, char *champ_name)
 	int i;
 
 	i = 0;
+	if (!champ_name)
+		ft_error("Error! There is no champ! What the heck is that?! That's actu"
+"ally illegal! Today's without ticket, but be careful next time!");
 	if (num > MAX_PLAYERS)
-		ft_err_plus("Error! Wrong number for the champion %s! The number is big"
-"ger than MAX_PLAYERS! Come down to Earth and change it!\n", 0, champ_name, 1);
+		ft_err_plus("Error! Wrong number for the champion %s! The number %d is "
+"bigger than MAX_PLAYERS! Come down to Earth and change it!\n", num, champ_name,
+2);
 	if (num < 1)
-		ft_err_plus("Error! Wrong number for the champion %s! The number is too"
-					" small! Don't be silly, change it!\n", 0, champ_name, 1);
+		ft_err_plus("Error! Wrong number for the champion %s! The number %d is "
+"too small! Don't be silly, change it!\n", num, champ_name, 2);
 	while (i < MAX_PLAYERS)
 	{
 		if (champs[i].cmp_nbr == num)
-			ft_err_plus("Error! Wrong number for the champion %s! The number is"
-" a duplicate! Be more creative next time, silly!\n", 0, champ_name, 1);
+			ft_err_plus("Error! Wrong number for the champion %s! The number %d"
+" is a duplicate! Be more creative next time, silly!\n", num, champ_name, 2);
 		i++;
 	}
 }
@@ -114,6 +118,6 @@ void		how_many_champs(t_vm *vm)
 		i++;
 	}
 	if (j == 0)
-		ft_error("Error! There is no champions!");
+		ft_error("Error! There are no champions!");
 	vm->champs_count = j;
 }

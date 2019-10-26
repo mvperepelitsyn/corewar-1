@@ -6,30 +6,36 @@
 /*   By: dfrost-a <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/21 15:28:38 by dfrost-a          #+#    #+#             */
-/*   Updated: 2019/10/21 15:28:50 by dfrost-a         ###   ########.fr       */
+/*   Updated: 2019/10/22 18:09:01 by dfrost-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "vm.h"
 
-static void	parse_dump_flag(t_vm *vm, char **argv, int l)
+static void	parse_dump_flag(t_vm *vm, char **argv, int argc, int l)
 {
+	if (l >= argc)
+		ft_error("Error! There is no number, no argument after flag -dump! Watc"
+"h out! Next time it'll be a ticket for you!");
 	if (!ft_isnumber(argv[l]))
 		ft_err_plus("Error! After flag -dump supposed to be a number, this is "
-"\"%s\" not a number!\n", 0, argv[l], 1);
+"\"%s\", it's not a number!\n", 0, argv[l], 1);
 	vm->dump_flag = 1;
 	vm->dump = ft_atoi(argv[l]);
 	if (vm->dump != (long long int)ft_latoi(argv[l]))
-		ft_err_plus("Error! The number %d after flag -dump is invalid!\n",
-vm->dump, NULL, 0);
+		ft_err_plus("Error! The number %s after flag -dump is invalid!\n", 0,
+				argv[l], 1);
 }
 
-static void	check_num_for_n_flag(char **argv, int *l)
+static void	check_num_for_n_flag(char **argv, int argc, int *l)
 {
 	*l = *l + 1;
+	if (*l >= argc)
+		ft_error("Error! There is no number, no argument after flag -n! Watch o"
+"ut! Next time it'll be a ticket for you!");
 	if (!ft_isnumber(argv[*l]))
 		ft_err_plus("Error! After flag -n supposed to be a number, this is "
-"\"%s\" not a number!\n", 0, argv[*l], 1);
+"\"%s\", it's not a number!\n", 0, argv[*l], 1);
 }
 
 static void	parse_champ(int argc, char **argv, t_vm *vm, int l)
@@ -40,7 +46,7 @@ static void	parse_champ(int argc, char **argv, t_vm *vm, int l)
 	{
 		if (ft_strequ(argv[l], "-n"))
 		{
-			check_num_for_n_flag(argv, &l);
+			check_num_for_n_flag(argv, argc, &l);
 			check_num(vm->processes, num = ft_atoi(argv[l]), argv[l + 1]);
 			l++;
 			check_file_and_fill(argv[l], vm->processes, num);
@@ -48,7 +54,7 @@ static void	parse_champ(int argc, char **argv, t_vm *vm, int l)
 		else if (ft_strequ(argv[l], "-dump"))
 		{
 			l++;
-			parse_dump_flag(vm, argv, l);
+			parse_dump_flag(vm, argv, argc, l);
 		}
 		else if (ft_strequ(argv[l], "-v"))
 			vm->v = 1;
@@ -82,7 +88,7 @@ void		parsing(int argc, char **argv, t_vm *vm)
 	int i;
 
 	i = 0;
-	if (argc > 16)
+	if (argc > 17)
 		ft_error("Error! Too many arguments");
 	else
 	{
