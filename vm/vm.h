@@ -6,7 +6,7 @@
 /*   By: uhand <uhand@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/22 14:00:40 by uhand             #+#    #+#             */
-/*   Updated: 2019/10/23 19:53:58 by dfrost-a         ###   ########.fr       */
+/*   Updated: 2019/10/25 16:08:32 by dfrost-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,9 +17,9 @@
 # include "./libft/libft.h"
 # include "op.h"
 
-# define STUPID 0
+# define STUPID 1
 # define SLEEP 20000
-# define OCTET 32
+# define OCTET 64
 
 typedef struct s_vm		t_vm;
 typedef struct s_carry	t_carry;
@@ -111,6 +111,21 @@ typedef struct	s_andorxor
 }				t_andorxor;
 
 /*
+** Struct for flag -v: verbose
+*/
+
+typedef struct	s_verbose
+{
+	char 	v;
+	short	v_num;
+	short	v_1;
+	short	v_2;
+	short	v_4;
+	short	v_8;
+	short	v_16;
+}				t_verbose;
+
+/*
 **	Virtual Maschine params: vm
 **
 **	last_alive		- number of last alive champion
@@ -121,9 +136,10 @@ typedef struct	s_andorxor
 struct			s_vm
 {
 	char				a;
-	char				v;
+	char				vis;
 	char				debug;
 	char				l_endian;
+	t_verbose			verbose;
 	unsigned char		champs_count;
 	unsigned int		car_count;
 	unsigned int		last_alive;

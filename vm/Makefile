@@ -1,6 +1,6 @@
 
 
-NAME = ../corewar
+NAME = corewar
 
 HEAD = ./
 SRC = vm.c vm_init.c auxiliary.c parsing.c game.c check_operation.c commands.c \

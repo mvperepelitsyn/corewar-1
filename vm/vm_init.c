@@ -48,7 +48,7 @@ static void	help_area_init(t_vm *vm)
 {
 	if (!(vm->area = ft_memalloc(MEM_SIZE)))
 		ft_error("Malloc couldn't allocate the memory!\n");
-	if (vm->v && !alloc_back(vm))
+	if (vm->vis && !alloc_back(vm))
 		ft_error("Malloc couldn't allocate the memory!\n");
 }
 
@@ -70,7 +70,7 @@ static void	area_init(t_vm *vm)
 		while (j < vm->processes[champ_nbr].code_size)
 		{
 			vm->area[i] = vm->processes[champ_nbr].code[j];
-			if (vm->v)
+			if (vm->vis)
 				vm->back[i] = (unsigned char)champ_nbr;
 			i++;
 			j++;

@@ -6,7 +6,7 @@
 /*   By: dfrost-a <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/22 14:12:02 by dfrost-a          #+#    #+#             */
-/*   Updated: 2019/10/22 14:12:04 by dfrost-a         ###   ########.fr       */
+/*   Updated: 2019/10/25 16:06:31 by dfrost-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -113,7 +113,10 @@ static void	fill_the_code(t_process *chmp, int fd, char *file_name)
 void		fill_the_champ(t_process *chmp, char *file_name)
 {
 	int		fd;
-
+//	char	*clion_file;
+//
+//	clion_file = ft_strjoin("../", file_name);
+//	if ((fd = open(clion_file, O_RDONLY)) < 0)
 	if ((fd = open(file_name, O_RDONLY)) < 0)
 		ft_err_plus("Error! There is nothing to open from champion %s! Consider"
 " to create your champion at very least!\n", 0, file_name, 1);

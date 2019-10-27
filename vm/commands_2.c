@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   commands_2.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dfrost-a <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: dfrost-a <dfrost-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/22 13:19:06 by dfrost-a          #+#    #+#             */
-/*   Updated: 2019/10/22 13:19:09 by dfrost-a         ###   ########.fr       */
+/*   Updated: 2019/10/27 15:18:13 by uhand            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,20 +56,13 @@ void		sub(t_carry *cr)
 void		zjmp(t_carry *cr)
 {
 	short			dir;
-	unsigned char	*src;
-	unsigned char	*dst;
 
 	if (!cr->carry)
 		return ;
-	dst = (unsigned char*)&dir;
-	src = (unsigned char*)&cr->vm->area[check_position(cr->position + 1)];
-	short_ind(dst, src);
+	from_memory_to_var(cr, &dir, check_position(cr->position + 1), \
+g_cmd_prms[cr->cmd_code - 1].dir_size);
 	dir %= IDX_MOD;
-	cr->position += dir;
-	if (cr->position < 0)
-		cr->position += MEM_SIZE;
-	else if (cr->position >= MEM_SIZE)
-		cr->position -= MEM_SIZE;
+	cr->position = check_position(cr->position + dir);
 	cr->cycle->shift = 1;
 	if (cr->vm->debug)
 		ft_printf("zjmp ");

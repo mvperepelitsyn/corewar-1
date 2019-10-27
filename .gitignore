@@ -88,3 +88,9 @@ Temporary Items
 .idea/
 CMakeLists.txt
 cmake-build-debug/
+
+# Project files
+*.cor
+corewar
+champ_cw
+res_cw

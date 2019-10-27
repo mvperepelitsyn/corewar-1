@@ -15,7 +15,7 @@
 static void			help_from_var_to_memory(t_carry *cr, int i,
 		int position, int size)
 {
-	if (cr->vm->v)
+	if (cr->vm->vis)
 	{
 		if (cr->vm->l_endian)
 		{

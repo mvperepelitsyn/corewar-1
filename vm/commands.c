@@ -20,8 +20,6 @@ void		live(t_carry *cr)
 	cr->last_live = 0;
 	cr->vm->live_counter++;
 	dir = get_param(cr, 0);
-	if (cr->vm->l_endian)
-		dir = ft_reverseint(dir);
 	champ_nbr = (int*)&dir;
 	if ((champ_nbr[0] * -1) > 0 \
 		&& (champ_nbr[0] * -1) <= (int)cr->vm->champs_count)
@@ -31,8 +29,11 @@ void		live(t_carry *cr)
 		cr->last_alive_cycle = cr->vm->cycles_from_start + 1;
 		cr->vm->last_alive_cycle = cr->vm->cycles_from_start + 1;
 	}
-	if (cr->vm->v)
+	if (cr->vm->vis)
 		cr->vm->back[cr->position] |= 200;
+	if (cr->vm->verbose.v && cr->vm->verbose.v_1)
+		ft_printf("Player %d (%s) is said to be alive\n", cr->vm->last_alive *
+		-1, cr->vm->processes[cr->vm->last_alive * -1 - 1].cmp_name);
 	if (cr->vm->debug)
 	{
 		ft_printf("%d ", champ_nbr[0]);
