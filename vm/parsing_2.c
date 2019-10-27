@@ -18,7 +18,7 @@ static void	fill_the_name_champ(t_process *chmp, int fd, char *file_name)
 	char			*name_null;
 
 	if (!(champ_name = (unsigned char *)ft_memalloc(sizeof(unsigned char) *
-			PROG_NAME_LENGTH)))
+			PROG_NAME_LENGTH + 1)))
 		ft_error("Error! Malloc couldn't allocate the memory!");
 	if (read(fd, champ_name, PROG_NAME_LENGTH) < 0)
 		ft_err_plus("Error! There is no name in %s file!\n", 0, file_name, 1);
@@ -125,4 +125,6 @@ void		fill_the_champ(t_process *chmp, char *file_name)
 	fill_the_code_size(chmp, fd, file_name);
 	fill_the_comment(chmp, fd, file_name);
 	fill_the_code(chmp, fd, file_name);
+
+//	ft_strdel(&clion_file);
 }
