@@ -6,25 +6,11 @@
 /*   By: dfrost-a <dfrost-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/21 19:16:33 by dfrost-a          #+#    #+#             */
-/*   Updated: 2019/10/22 14:33:08 by uhand            ###   ########.fr       */
+/*   Updated: 2019/10/27 15:18:18 by uhand            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "vm.h"
-
-//void	short_ind(unsigned char *dst, unsigned const char *src)
-//{
-//	if (ft_islitendian())
-//	{
-//		dst[1] = src[0];
-//		dst[0] = src[1];
-//	}
-//	else
-//	{
-//		dst[0] = src[0];
-//		dst[1] = src[1];
-//	}
-//}
 
 int		display_usage(void)
 {

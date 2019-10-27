@@ -6,7 +6,7 @@
 /*   By: dfrost-a <dfrost-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/22 13:19:06 by dfrost-a          #+#    #+#             */
-/*   Updated: 2019/10/26 20:20:05 by uhand            ###   ########.fr       */
+/*   Updated: 2019/10/27 15:18:13 by uhand            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,9 +60,9 @@ void		zjmp(t_carry *cr)
 	if (!cr->carry)
 		return ;
 	from_memory_to_var(cr, &dir, check_position(cr->position + 1), \
-		g_cmd_prms[cr->cmd_code - 1].dir_size);
+g_cmd_prms[cr->cmd_code - 1].dir_size);
 	dir %= IDX_MOD;
-	check_position(cr->position + dir);
+	cr->position = check_position(cr->position + dir);
 	cr->cycle->shift = 1;
 	if (cr->vm->debug)
 		ft_printf("zjmp ");
