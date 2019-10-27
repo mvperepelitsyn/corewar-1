@@ -37,6 +37,9 @@ void		and(t_carry *cr)
 		cr->carry = 1;
 	else
 		cr->carry = 0;
+	if (cr->vm->verbose.v && cr->vm->verbose.v_4)
+		ft_printf("P    %d | and %d %d r%d\n", cr->car_nbr, aox.prm1, aox.prm2,
+				cr->cycle->regs[2] + 1);
 	if (cr->vm->debug)
 		ft_printf("and ");
 }
@@ -66,6 +69,9 @@ void		or(t_carry *cr)
 		cr->carry = 1;
 	else
 		cr->carry = 0;
+	if (cr->vm->verbose.v && cr->vm->verbose.v_4)
+		ft_printf("P    %d | or %d %d r%d\n", cr->car_nbr, aox.prm1, aox.prm2,
+				  cr->cycle->regs[2] + 1);
 	if (cr->vm->debug)
 		ft_printf("or ");
 }
@@ -95,6 +101,9 @@ void		xor(t_carry *cr)
 		cr->carry = 1;
 	else
 		cr->carry = 0;
+	if (cr->vm->verbose.v && cr->vm->verbose.v_4)
+		ft_printf("P    %d | xor %d %d r%d\n", cr->car_nbr, aox.prm1, aox.prm2,
+				  cr->cycle->regs[2] + 1);
 	if (cr->vm->debug)
 		ft_printf("xor ");
 }

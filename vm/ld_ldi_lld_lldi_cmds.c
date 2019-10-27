@@ -29,6 +29,9 @@ void		ld(t_carry *cr)
 		cr->carry = 1;
 	else
 		cr->carry = 0;
+	if (cr->vm->verbose.v && cr->vm->verbose.v_4)
+		ft_printf("P    %d | ld %d r%d\n", cr->car_nbr, cr->reg[cr->cycle->
+		regs[1]], cr->cycle->regs[1] + 1);
 	if (cr->vm->debug)
 		ft_printf("ld ");
 }
