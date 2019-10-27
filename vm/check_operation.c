@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   check_operation.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dfrost-a <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: dfrost-a <dfrost-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/21 19:14:02 by dfrost-a          #+#    #+#             */
-/*   Updated: 2019/10/21 19:14:07 by dfrost-a         ###   ########.fr       */
+/*   Updated: 2019/10/27 19:33:25 by uhand            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -117,12 +117,12 @@ static int	check_params(t_vm *vm, t_carry *cr, t_cycle *cycle)
 	buf = vm->area[check_position(cr->position + 1)];
 	buf >>= 6;
 	cycle->descript[0] = buf;
-	if ((g_cmd_prms[cr->cmd_code - 1].prms_count < 3 && cycle->descript[2]) || \
-			(g_cmd_prms[cr->cmd_code - 1].prms_count < 2 && cycle->descript[1]))
-		return (0);
-	buf = vm->area[check_position(cr->position + 1)];
-	if ((buf <<= 6) > 0)
-		return (0);
+	// if ((g_cmd_prms[cr->cmd_code - 1].prms_count < 3 && cycle->descript[2]) || \
+	// 		(g_cmd_prms[cr->cmd_code - 1].prms_count < 2 && cycle->descript[1]))
+	// 	return (0);
+	// buf = vm->area[check_position(cr->position + 1)];
+	// if ((buf <<= 6) > 0)
+	// 	return (0);
 	return (check_params_type(cr, cycle));
 }
 

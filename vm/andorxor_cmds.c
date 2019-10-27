@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   andorxor_cmds.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dfrost-a <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: dfrost-a <dfrost-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/22 12:49:20 by dfrost-a          #+#    #+#             */
-/*   Updated: 2019/10/22 12:49:23 by dfrost-a         ###   ########.fr       */
+/*   Updated: 2019/10/27 18:41:10 by uhand            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,20 +18,20 @@ void		and(t_carry *cr)
 
 	if (cr->cycle->descript[0] == 3)
 	{
-		aox.indir = get_param(cr, 0);
+		get_param_plus(cr, &aox.indir, 0);
 		from_memory_to_var(cr, &aox.prm1, check_position(cr->position +
 		aox.indir % IDX_MOD), REG_SIZE);
 	}
 	else
-		aox.prm1 = get_param(cr, 0);
+		get_param_plus(cr, &aox.prm1, 0);
 	if (cr->cycle->descript[1] == 3)
 	{
-		aox.indir = get_param(cr, 1);
+		get_param_plus(cr, &aox.prm1, 1);
 		from_memory_to_var(cr, &aox.prm2, check_position(cr->position +
 		aox.indir % IDX_MOD), REG_SIZE);
 	}
 	else
-		aox.prm2 = get_param(cr, 1);
+		get_param_plus(cr, &aox.prm2, 1);
 	cr->reg[cr->cycle->regs[2]] = aox.prm1 & aox.prm2;
 	if (!cr->reg[cr->cycle->regs[2]])
 		cr->carry = 1;

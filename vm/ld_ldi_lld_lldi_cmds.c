@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ldldilldlldi_cmds.c                                :+:      :+:    :+:   */
+/*   ld_ldi_lld_lldi_cmds.c                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dfrost-a <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: dfrost-a <dfrost-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/22 13:06:54 by dfrost-a          #+#    #+#             */
-/*   Updated: 2019/10/22 13:06:56 by dfrost-a         ###   ########.fr       */
+/*   Updated: 2019/10/27 19:13:36 by uhand            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ void		ld(t_carry *cr)
 		cr->reg[cr->cycle->regs[1]] = get_param(cr, 0);
 	else
 	{
-		indir = get_param(cr, 0);
+		get_param_plus(cr, &indir, 0);
 		posit = check_position(cr->position + indir % IDX_MOD);
 		from_memory_to_var(cr, &cr->reg[cr->cycle->regs[1]], posit, REG_SIZE);
 	}

@@ -6,7 +6,7 @@
 /*   By: dfrost-a <dfrost-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/21 19:16:33 by dfrost-a          #+#    #+#             */
-/*   Updated: 2019/10/27 15:18:18 by uhand            ###   ########.fr       */
+/*   Updated: 2019/10/27 17:37:53 by uhand            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,12 +56,10 @@ int		ft_error(char *str)
 
 int		check_position(int position)
 {
-	while (position < 0 || position >= MEM_SIZE)
-	{
-		if (position < 0)
-			position += MEM_SIZE;
-		else if (position >= MEM_SIZE)
-			position -= MEM_SIZE;
-	}
+	position %= MEM_SIZE;
+	if (position < 0)
+		position += MEM_SIZE;
+	else if (position >= MEM_SIZE)
+		position -= MEM_SIZE;
 	return (position);
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   commands.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dfrost-a <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: dfrost-a <dfrost-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/21 18:25:43 by dfrost-a          #+#    #+#             */
-/*   Updated: 2019/10/21 18:25:47 by dfrost-a         ###   ########.fr       */
+/*   Updated: 2019/10/27 18:28:44 by uhand            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,11 +89,11 @@ void		lfrk(t_carry *cr)
 
 void		aff(t_carry *cr)
 {
-	char	prt;
+	char	prm;
 
-	prt = (char)(cr->reg[cr->cycle->regs[0]]);
+	prm = (char)(cr->reg[cr->cycle->regs[0]]);
 	if (cr->vm->a)
-		write(1, &prt, 1);
+		write(1, &prm, 1);
 	if (cr->vm->debug)
 		ft_printf("aff ");
 }
