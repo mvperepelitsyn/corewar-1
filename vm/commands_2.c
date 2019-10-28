@@ -11,27 +11,31 @@
 /* ************************************************************************** */
 
 #include "vm.h"
-
-void		st(t_carry *cr)
-{
-	short			indir;
-	short 			indir_hlp;
-
-	if (cr->cycle->descript[1] == 1)
-		cr->reg[cr->cycle->regs[1]] = cr->reg[cr->cycle->regs[0]];
-	else
-	{
-		get_param_plus(cr, &indir_hlp, 1);
-		indir = indir_hlp % IDX_MOD;
-		from_var_to_memory(cr, &cr->reg[cr->cycle->regs[0]], \
-			check_position(cr->position + indir), REG_SIZE);
-	}
-	if (cr->vm->verbose.v && cr->vm->verbose.v_4)
-		ft_printf("P    %d | st r%d %d\n", cr->car_nbr, cr->cycle->regs[0] + 1,
-				indir_hlp);
-	if (cr->vm->debug)
-		ft_printf("st ");
-}
+//TODO: SOMETHING IS GOING COMPLETELY WRONG WITH THIS SHIT
+//		in case if we got a register
+//void		st(t_carry *cr)
+//{
+//	short			indir;
+//	short 			indir_hlp;
+//
+//	indir_hlp = 0;
+//	if (cr->cycle->descript[1] == 1)
+//		get_param_plus(cr, &cr->reg[cr->cycle->regs[1]], 1);
+////		cr->reg[cr->cycle->regs[1]] = cr->reg[cr->cycle->regs[0]];
+//	else
+//	{
+//		get_param_plus(cr, &indir_hlp, 1);
+//		indir = indir_hlp % IDX_MOD;
+//		from_var_to_memory(cr, &cr->reg[cr->cycle->regs[0]], \
+//			check_position(cr->position + indir), REG_SIZE);
+//	}
+//	if (cr->vm->verbose.v && cr->vm->verbose.v_4)
+//		ft_printf("P    %d | st r%d %d\n", cr->car_nbr, cr->cycle->regs[0] + 1,
+//				indir_hlp + ((cr->cycle->descript[1] == 1) ? cr->reg[cr->cycle->
+//				regs[1]] : 0));
+//	if (cr->vm->debug)
+//		ft_printf("st ");
+//}
 
 void		add(t_carry *cr)
 {
