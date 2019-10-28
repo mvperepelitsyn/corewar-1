@@ -15,19 +15,20 @@
 void		st(t_carry *cr)
 {
 	short			indir;
+	short 			indir_hlp;
 
 	if (cr->cycle->descript[1] == 1)
 		cr->reg[cr->cycle->regs[1]] = cr->reg[cr->cycle->regs[0]];
 	else
 	{
-		get_param_plus(cr, &indir, 1);
-		indir %= IDX_MOD;
+		get_param_plus(cr, &indir_hlp, 1);
+		indir = indir_hlp % IDX_MOD;
 		from_var_to_memory(cr, &cr->reg[cr->cycle->regs[0]], \
 			check_position(cr->position + indir), REG_SIZE);
 	}
 	if (cr->vm->verbose.v && cr->vm->verbose.v_4)
 		ft_printf("P    %d | st r%d %d\n", cr->car_nbr, cr->cycle->regs[0] + 1,
-				indir);
+				indir_hlp);
 	if (cr->vm->debug)
 		ft_printf("st ");
 }
@@ -40,6 +41,9 @@ void		add(t_carry *cr)
 		cr->carry = 1;
 	else
 		cr->carry = 0;
+	if (cr->vm->verbose.v && cr->vm->verbose.v_4)
+		ft_printf("P    %d | add r%d r%d r%d\n", cr->car_nbr, cr->cycle->regs[0]
+		+ 1, cr->cycle->regs[1] + 1, cr->cycle->regs[2] + 1);
 	if (cr->vm->debug)
 		ft_printf("add ");
 }
@@ -52,6 +56,9 @@ void		sub(t_carry *cr)
 		cr->carry = 1;
 	else
 		cr->carry = 0;
+	if (cr->vm->verbose.v && cr->vm->verbose.v_4)
+		ft_printf("P    %d | sub r%d r%d r%d\n", cr->car_nbr, cr->cycle->regs[0]
+		+ 1, cr->cycle->regs[1] + 1, cr->cycle->regs[2] + 1);
 	if (cr->vm->debug)
 		ft_printf("sub ");
 }
@@ -62,8 +69,10 @@ void		zjmp(t_carry *cr)
 
 	if (!cr->carry)
 	{
+		from_memory_to_var(cr, &dir, check_position(cr->position + 1), \
+g_cmd_prms[cr->cmd_code - 1].dir_size);
 		if (cr->vm->verbose.v && cr->vm->verbose.v_4)
-			ft_printf("P    %d | zjmp %d %s\n", cr->car_nbr, 0, "FAILED");
+			ft_printf("P    %d | zjmp %d %s\n", cr->car_nbr, dir, "FAILED");
 		return;
 	}
 	from_memory_to_var(cr, &dir, check_position(cr->position + 1), \
