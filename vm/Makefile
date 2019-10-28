@@ -10,7 +10,7 @@ commands_2.c commands_utilities_2.c game_2.c parsing_2.c parsing_3.c
 OBJ = $(addprefix $(OBJPATH)/,$(SRC:.c=.o))
 OBJPATH = ./objects
 
-FLAGS = -Wall -Wextra -Werror
+FLAGS = -g -Wall -Wextra -Werror
 LIB = -L ./libft -lft
 LIBPATH = ./libft
 

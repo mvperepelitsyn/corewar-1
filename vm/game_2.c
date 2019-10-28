@@ -6,7 +6,7 @@
 /*   By: dfrost-a <dfrost-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/22 13:53:32 by dfrost-a          #+#    #+#             */
-/*   Updated: 2019/10/26 20:06:26 by uhand            ###   ########.fr       */
+/*   Updated: 2019/10/28 18:03:39 by uhand            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ void		cycle(t_vm *vm)
 	{
 		ft_bzero((void*)&cycle, sizeof(cycle));
 		cr->cycle = &cycle;
-		// if ()
+		// if (vm->cycles_from_start == 26493)
 		// 	debug();
 		if (!cr->cycles_before)
 		{

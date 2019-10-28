@@ -6,7 +6,7 @@
 /*   By: dfrost-a <dfrost-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/21 19:58:24 by dfrost-a          #+#    #+#             */
-/*   Updated: 2019/10/22 14:00:23 by uhand            ###   ########.fr       */
+/*   Updated: 2019/10/28 17:46:25 by uhand            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -110,6 +110,7 @@ void		game_area_frame(t_vm *vm)
 
 	byte = -1;
 	ft_printf("\e[1;1H\e[2J");
+	// system("clear");
 	print_report(vm);
 	while (++byte < MEM_SIZE)
 	{
