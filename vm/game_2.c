@@ -39,8 +39,6 @@ void		cycle(t_vm *vm)
 	{
 		ft_bzero((void*)&cycle, sizeof(cycle));
 		cr->cycle = &cycle;
-		// if ()
-		// 	debug();
 		if (!cr->cycles_before)
 		{
 			cr->cmd_code = vm->area[cr->position];

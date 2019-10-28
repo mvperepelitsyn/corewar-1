@@ -40,31 +40,16 @@ static void	check_num_for_n_flag(char **argv, int argc, int *l)
 
 static void set_the_verbose(t_vm *vm)
 {
-	if (vm->verbose.v_num >= 16)
-	{
+	if (vm->verbose.v_num & 16)
 		vm->verbose.v_16 = 1;
-		vm->verbose.v_num = vm->verbose.v_num - 16;
-	}
-	if (vm->verbose.v_num >= 8)
-	{
+	if (vm->verbose.v_num & 8)
 		vm->verbose.v_8 = 1;
-		vm->verbose.v_num = vm->verbose.v_num - 8;
-	}
-	if (vm->verbose.v_num >= 4)
-	{
+	if (vm->verbose.v_num & 4)
 		vm->verbose.v_4 = 1;
-		vm->verbose.v_num = vm->verbose.v_num - 4;
-	}
-	if (vm->verbose.v_num >= 2)
-	{
+	if (vm->verbose.v_num & 2)
 		vm->verbose.v_2 = 1;
-		vm->verbose.v_num = vm->verbose.v_num - 2;
-	}
-	if (vm->verbose.v_num >= 1)
-	{
+	if (vm->verbose.v_num & 1)
 		vm->verbose.v_1 = 1;
-		vm->verbose.v_num = vm->verbose.v_num - 1;
-	}
 }
 
 static void parse_verbose_flag(char **argv, int argc, int *l, t_vm *vm)
@@ -72,6 +57,7 @@ static void parse_verbose_flag(char **argv, int argc, int *l, t_vm *vm)
 	int num;
 
 	*l = *l + 1;
+	ft_bzero(&vm->verbose, sizeof(t_verbose));
 	if (*l >= argc)
 		ft_error("Error! There is no number, no argument after flag -v! Watch "
 		   "out! Next time it'll be a ticket for you!");

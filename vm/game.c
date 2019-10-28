@@ -75,12 +75,15 @@ static void	help_game(t_vm *vm)
 {
 	while (vm->carriages)
 	{
-		if (vm->cycles_from_start == 30218)
-			vm->cycles_from_start = 30218;
+		if (vm->cycles_from_start == 699)
+			vm->cycles_from_start = 699;
+//		vm->cycles_from_start++;
+		if (vm->verbose.v && vm->verbose.v_2)
+			ft_printf("It is now cycle %d\n", vm->cycles_from_start + 1);
 		cycle(vm);
 		vm->cycles_from_start++;
-		if (vm->verbose.v && vm->verbose.v_2)
-			ft_printf("It is now cycle %d\n", vm->cycles_from_start);
+//		if (vm->verbose.v && vm->verbose.v_2)
+//			ft_printf("It is now cycle %d\n", vm->cycles_from_start);
 		vm->ctd_counter++;
 		if (vm->vis && !vm->dump)
 			game_area_frame(vm);

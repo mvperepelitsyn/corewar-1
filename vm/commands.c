@@ -37,8 +37,7 @@ void		live(t_carry *cr)
 			ft_printf("Player %d (%s) is said to be alive\n", cr->vm->last_alive
 			* -1, cr->vm->processes[cr->vm->last_alive * -1 - 1].cmp_name);
 		if (cr->vm->verbose.v_4)
-			ft_printf("P    %d | live -%d\n", cr->car_nbr, cr->vm->last_alive *
-			-1);
+			ft_printf("P    %d | live %d\n", cr->car_nbr, dir);
 	}
 	if (cr->vm->debug)
 	{
@@ -76,8 +75,8 @@ void		frk(t_carry *cr)
 	short 			dir_hlp;
 
 	get_param_plus(cr, &dir_hlp, 0);
-	dir_hlp %= IDX_MOD;
-	dir = check_position(cr->position + dir_hlp);
+	dir = dir_hlp % IDX_MOD;
+	dir = check_position(cr->position + dir);
 	copy_carriage(cr, dir);
 	if (cr->vm->verbose.v && cr->vm->verbose.v_4)
 		ft_printf("P    %d | fork %d (%d)\n", cr->car_nbr, dir_hlp, dir);
