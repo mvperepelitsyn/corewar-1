@@ -6,7 +6,7 @@
 /*   By: ggerhold <ggerhold@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/16 18:07:27 by ggerhold          #+#    #+#             */
-/*   Updated: 2019/10/16 18:07:29 by ggerhold         ###   ########.fr       */
+/*   Updated: 2019/10/29 16:36:59 by ggerhold         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,4 +50,10 @@ void	ft_row_wrapper(t_syntax_row *row)
 {
 	ROW_WAIT_SEP = 1;
 	ROW_CNT_ARG++;
+}
+
+void	ft_fill_asm_synt_row(t_asm_data *asm_data)
+{
+	ASM_SYNTAX_ROW = ft_lstnew(NULL, (sizeof(t_syntax_row)));
+	ASM_SYNTAX_ROW->content = ft_syn_row_init();
 }
