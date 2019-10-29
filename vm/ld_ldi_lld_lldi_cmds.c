@@ -61,10 +61,9 @@ void		ldi(t_carry *cr)
 			REG_SIZE);
 	if (cr->vm->verbose.v && cr->vm->verbose.v_4)
 		ft_printf("P    %d | ldi %d %d r%d\n       | -> load from %d + %d = %d "
-			"(with pc and mod %d)\n", cr->car_nbr, ldi.prm1 + ldi.dir1 + ldi.
-			indir, ldi.dir2 + ldi.reg2, cr->cycle->regs[2] + 1, ldi.prm1 + ldi.
-			dir1 + ldi.indir, ldi.dir2 + ldi.reg2, ldi.prm1 + ldi.dir1 + ldi.
-			indir + ldi.dir2 + ldi.reg2, ldi.position);
+			"(with pc and mod %d)\n", cr->car_nbr, ldi.prm1 + ldi.dir1, ldi.dir2
+			+ ldi.reg2, cr->cycle->regs[2] + 1, ldi.prm1 + ldi.dir1, ldi.dir2 +
+			ldi.reg2, ldi.prm1 + ldi.dir1 + ldi.dir2 + ldi.reg2, ldi.position);
 	if (cr->vm->debug)
 		ft_printf("ldi ");
 }

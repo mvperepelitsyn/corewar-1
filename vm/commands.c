@@ -21,6 +21,8 @@ void		live(t_carry *cr)
 	cr->vm->live_counter++;
 	dir = get_param(cr, 0);
 	champ_nbr = (int *) &dir;
+	if (cr->vm->verbose.v_4)
+		ft_printf("P    %d | live %d\n", cr->car_nbr, dir);
 	if ((champ_nbr[0] * -1) > 0 \
  && (champ_nbr[0] * -1) <= (int) cr->vm->champs_count)
 	{
@@ -29,17 +31,20 @@ void		live(t_carry *cr)
 		cr->last_champ = dir;
 		cr->last_alive_cycle = cr->vm->cycles_from_start + 1;
 		cr->vm->last_alive_cycle = cr->vm->cycles_from_start + 1;
-	}
-	if (cr->vm->vis)
-		cr->vm->back[cr->position] |= 200;
-	if (cr->vm->verbose.v)
-	{
 		if (cr->vm->verbose.v_1)
 			ft_printf("Player %d (%s) is said to be alive\n", cr->vm->last_alive
 			* -1, cr->vm->processes[cr->vm->last_alive * -1 - 1].cmp_name);
-		if (cr->vm->verbose.v_4)
-			ft_printf("P    %d | live %d\n", cr->car_nbr, dir);
 	}
+	if (cr->vm->vis)
+		cr->vm->back[cr->position] |= 200;
+//	if (cr->vm->verbose.v)
+//	{
+//		if (cr->vm->verbose.v_4)
+//			ft_printf("P    %d | live %d\n", cr->car_nbr, dir);
+//		if (cr->vm->verbose.v_1)
+//			ft_printf("Player %d (%s) is said to be alive\n", cr->vm->last_alive
+//			* -1, cr->vm->processes[cr->vm->last_alive * -1 - 1].cmp_name);
+//	}
 	if (cr->vm->debug)
 	{
 		ft_printf("%d ", champ_nbr[0]);
@@ -77,8 +82,8 @@ void		frk(t_carry *cr)
 
 	get_param_plus(cr, &dir_hlp, 0);
 	dir = dir_hlp % IDX_MOD;
-	dir = check_position(cr->position + dir);
-	copy_carriage(cr, dir);
+	dir = cr->position + dir;
+	copy_carriage(cr, check_position(dir));
 	if (cr->vm->verbose.v && cr->vm->verbose.v_4)
 		ft_printf("P    %d | fork %d (%d)\n", cr->car_nbr, dir_hlp, dir);
 	if (cr->vm->debug)
@@ -104,7 +109,7 @@ void		aff(t_carry *cr)
 
 	prt = (char)(cr->reg[cr->cycle->regs[0]]);
 	if (cr->vm->a)
-		write(1, &prt, 1);
+		ft_printf("Aff: %c\n", prt);
 	if (cr->vm->debug)
 		ft_printf("aff ");
 }

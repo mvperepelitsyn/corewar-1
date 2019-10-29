@@ -14,20 +14,39 @@
 
 static void	help_cycle(t_vm *vm, t_carry *cr, t_cycle *cycle)
 {
+	int 	h_ps;
+
+	h_ps = 0;
 	if (!cr->cycles_before)
 	{
 		cr->jump_len = 1;
 		if (check_operation(vm, cr, cycle))
 			vm->command[cr->cmd_code - 1](cr);
 		if (!(*cycle).shift)
-			cr->position = check_position(cr->position + cr->jump_len);
+		{
+			h_ps = check_position(cr->position + cr->jump_len);
+			if (vm->verbose.v && vm->verbose.v_16 && cr->jump_len > 1)//vm->area[cr->position])
+			{
+				if (cr->position == 0 && h_ps != 0)
+					ft_printf("ADV %d (0x0000 -> %#06x) ", cr->jump_len, h_ps);
+				else if (cr->position != 0 && h_ps == 0)
+					ft_printf("ADV %d (%#06x -> 0x0000) ", cr->jump_len, cr->
+					position);
+				else
+					ft_printf("ADV %d (%#06x -> %#06x) ", cr->jump_len, cr->
+					position, h_ps);
+				while (cr->position < h_ps)
+				{
+					ft_printf("%02x ", (unsigned int)vm->area[check_position(
+							cr->position)]);
+					cr->position++;
+				}
+				ft_putchar('\n');
+			}
+			cr->position = h_ps;
+		}
 	}
 }
-
-// static void		debug()
-// {
-// 	//
-// }
 
 void		cycle(t_vm *vm)
 {
