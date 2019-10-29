@@ -1,0 +1,98 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   commands.c                                         :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: dfrost-a <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2019/10/21 18:25:43 by dfrost-a          #+#    #+#             */
+/*   Updated: 2019/10/21 18:25:47 by dfrost-a         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+#include "vm.h"
+
+void		live(t_carry *cr)
+{
+	unsigned int	dir;
+	int				*champ_nbr;
+
+	cr->last_live = 0;
+	cr->vm->live_counter++;
+	dir = get_param(cr, 0);
+	if (cr->vm->l_endian)
+		dir = ft_reverseint(dir);
+	champ_nbr = (int*)&dir;
+	if ((champ_nbr[0] * -1) > 0 \
+		&& (champ_nbr[0] * -1) <= (int)cr->vm->champs_count)
+	{
+		cr->vm->last_alive = dir;
+		cr->last_champ = dir;
+		cr->last_alive_cycle = cr->vm->cycles_from_start + 1;
+		cr->vm->last_alive_cycle = cr->vm->cycles_from_start + 1;
+	}
+	if (cr->vm->v)
+		cr->vm->back[cr->position] |= 200;
+	if (cr->vm->debug)
+	{
+		ft_printf("%d ", champ_nbr[0]);
+		ft_printf("alive %d! ", cr->vm->last_alive);
+	}
+}
+
+static void	copy_carriage(t_carry *cr_src, short dir)
+{
+	t_carry	*cr;
+	int		i;
+
+	if (!(cr = ft_memalloc(sizeof(t_carry))))
+		ft_error("Malloc couldn't allocate the memory!\n");
+	i = 0;
+	while (i < 16)
+	{
+		cr->reg[i] = cr_src->reg[i];
+		i++;
+	}
+	cr->car_nbr = ++cr_src->vm->car_count;
+	cr->position = dir;
+	cr->vm = cr_src->vm;
+	cr->carry = cr_src->carry;
+	cr->last_live = cr_src->last_live + 1;
+	cr->color = cr_src->color;
+	cr->next = cr->vm->carriages;
+	cr->vm->carriages = cr;
+}
+
+void		frk(t_carry *cr)
+{
+	short			dir;
+
+	get_param_plus(cr, &dir, 0);
+	dir %= IDX_MOD;
+	dir = check_position(cr->position + dir);
+	copy_carriage(cr, dir);
+	if (cr->vm->debug)
+		ft_printf("frk ");
+}
+
+void		lfrk(t_carry *cr)
+{
+	short			dir;
+
+	get_param_plus(cr, &dir, 0);
+	dir = check_position(cr->position + dir);
+	copy_carriage(cr, dir);
+	if (cr->vm->debug)
+		ft_printf("frk ");
+}
+
+void		aff(t_carry *cr)
+{
+	char	prt;
+
+	prt = (char)(cr->reg[cr->cycle->regs[0]]);
+	if (cr->vm->a)
+		write(1, &prt, 1);
+	if (cr->vm->debug)
+		ft_printf("aff ");
+}
