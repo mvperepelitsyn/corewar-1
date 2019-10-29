@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ldldilldlldi_cmds.c                                :+:      :+:    :+:   */
+/*   ld_ldi_lld_lldi_cmds.c                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dfrost-a <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: dfrost-a <dfrost-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/22 13:06:54 by dfrost-a          #+#    #+#             */
-/*   Updated: 2019/10/22 13:06:56 by dfrost-a         ###   ########.fr       */
+/*   Updated: 2019/10/29 19:02:06 by uhand            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ void		ld(t_carry *cr)
 	else
 		cr->carry = 0;
 	if (cr->vm->verbose.v && cr->vm->verbose.v_4)
-		ft_printf("P    %d | ld %d r%d\n", cr->car_nbr, cr->reg[cr->cycle->
+		ft_printf("P%5d | ld %d r%d\n", cr->car_nbr, cr->reg[cr->cycle->
 		regs[1]], cr->cycle->regs[1] + 1);
 	if (cr->vm->debug)
 		ft_printf("ld ");
@@ -60,7 +60,7 @@ void		ldi(t_carry *cr)
 	from_memory_to_var(cr, &cr->reg[cr->cycle->regs[2]], ldi.position,
 			REG_SIZE);
 	if (cr->vm->verbose.v && cr->vm->verbose.v_4)
-		ft_printf("P    %d | ldi %d %d r%d\n       | -> load from %d + %d = %d "
+		ft_printf("P%5d | ldi %d %d r%d\n       | -> load from %d + %d = %d "
 			"(with pc and mod %d)\n", cr->car_nbr, ldi.prm1 + ldi.dir1, ldi.dir2
 			+ ldi.reg2, cr->cycle->regs[2] + 1, ldi.prm1 + ldi.dir1, ldi.dir2 +
 			ldi.reg2, ldi.prm1 + ldi.dir1 + ldi.dir2 + ldi.reg2, ldi.position);
@@ -86,7 +86,7 @@ void		lld(t_carry *cr)
 				REG_SIZE);
 	}
 	if (cr->vm->verbose.v && cr->vm->verbose.v_4)
-		ft_printf("P    %d | lld %d r%d\n", cr->car_nbr, cr->reg[cr->cycle->
+		ft_printf("P%5d | lld %d r%d\n", cr->car_nbr, cr->reg[cr->cycle->
 				regs[1]], cr->cycle->regs[1] + 1);
 	if (!cr->reg[cr->cycle->regs[1]])
 		cr->carry = 1;
@@ -120,7 +120,7 @@ void		lldi(t_carry *cr)
 	from_memory_to_var(cr, &cr->reg[cr->cycle->regs[2]], ldi.position,
 			REG_SIZE);
 	if (cr->vm->verbose.v && cr->vm->verbose.v_4)
-		ft_printf("P    %d | lldi %d %d r%d\n       | -> load from %d + %d = %d"
+		ft_printf("P%5d | lldi %d %d r%d\n       | -> load from %d + %d = %d"
 			" (with pc and mod %d)\n", cr->car_nbr, ldi.prm1 + ldi.dir1, ldi.
 			dir2 + ldi.reg2, cr->cycle->regs[2] + 1, ldi.prm1 + ldi.dir1,
 			ldi.dir2 + ldi.reg2, ldi.prm1 + ldi.dir1 + ldi.dir2 + ldi.reg2, ldi.

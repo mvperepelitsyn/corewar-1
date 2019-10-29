@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   vm_init.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dfrost-a <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: dfrost-a <dfrost-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/21 20:42:53 by dfrost-a          #+#    #+#             */
-/*   Updated: 2019/10/21 20:42:56 by dfrost-a         ###   ########.fr       */
+/*   Updated: 2019/10/29 19:57:59 by uhand            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,7 @@ void		carriages_init(t_vm *vm, int champ_nbr, int position)
 	cr->color = champ_nbr;
 	cr->position = position;
 	cr->vm = vm;
+	cr->carry = 1;//;oirteg;oi35htg5;goh3tyg;oh3;g3oh
 	cr->next = vm->carriages;
 	vm->carriages = cr;
 	vm->car_count++;

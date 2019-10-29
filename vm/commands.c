@@ -6,7 +6,7 @@
 /*   By: dfrost-a <dfrost-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/21 18:25:43 by dfrost-a          #+#    #+#             */
-/*   Updated: 2019/10/28 21:09:26 by uhand            ###   ########.fr       */
+/*   Updated: 2019/10/29 19:00:40 by uhand            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ void		live(t_carry *cr)
 	dir = get_param(cr, 0);
 	champ_nbr = (int *) &dir;
 	if (cr->vm->verbose.v_4)
-		ft_printf("P    %d | live %d\n", cr->car_nbr, dir);
+		ft_printf("P%5d | live %d\n", cr->car_nbr, dir);
 	if ((champ_nbr[0] * -1) > 0 \
  && (champ_nbr[0] * -1) <= (int) cr->vm->champs_count)
 	{
@@ -85,7 +85,7 @@ void		frk(t_carry *cr)
 	dir = cr->position + dir;
 	copy_carriage(cr, check_position(dir));
 	if (cr->vm->verbose.v && cr->vm->verbose.v_4)
-		ft_printf("P    %d | fork %d (%d)\n", cr->car_nbr, dir_hlp, dir);
+		ft_printf("P%5d | fork %d (%d)\n", cr->car_nbr, dir_hlp, dir);
 	if (cr->vm->debug)
 		ft_printf("frk ");
 }
@@ -93,12 +93,13 @@ void		frk(t_carry *cr)
 void		lfrk(t_carry *cr)
 {
 	short			dir;
+	short			dir_hlp;
 
-	get_param_plus(cr, &dir, 0);
-	dir = check_position(cr->position + dir);
-	copy_carriage(cr, dir);
+	get_param_plus(cr, &dir_hlp, 0);
+	dir = cr->position + dir_hlp;
+	copy_carriage(cr, check_position(dir));
 	if (cr->vm->verbose.v && cr->vm->verbose.v_4)
-		ft_printf("P    %d | lfork -%d (%d)\n", cr->car_nbr, cr->cmd_code, dir);
+		ft_printf("P%5d | lfork %d (%d)\n", cr->car_nbr, dir_hlp, dir);
 	if (cr->vm->debug)
 		ft_printf("frk ");
 }
