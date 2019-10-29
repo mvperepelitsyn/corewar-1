@@ -6,7 +6,7 @@
 /*   By: thansen <thansen@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/16 17:54:59 by ggerhold          #+#    #+#             */
-/*   Updated: 2019/10/27 18:29:40 by thansen          ###   ########.fr       */
+/*   Updated: 2019/10/29 17:02:13 by thansen          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ int		ft_get_name_or_comment(t_asm_data *asm_data, char *line, int i, int k)
 			: (CHAMP_NAME = ft_strjoin(CHAMP_NAME, ft_strdup(&line[temp + 1])));
 			MACHINE_DOUBLE_QUOTES = 1;
 			return (j + ft_strlen(&line[temp]));
-		}
+		}	
 		ft_current_func_divis(asm_data, line, i + k, j);
 	}
 	else
@@ -115,13 +115,18 @@ char	*ft_lexer_champ_data(t_asm_data *asm_data, char *line, int j)
 	int		line_len;
 
 	if ((line_len = ft_strlen(line)) == 0)
+	{
+		MACHINE_WAIT_NAME ? (CHAMP_NAME = ft_strjoin(CHAMP_NAME, "\n")) : 0;
+		MACHINE_WAIT_COMMENT ? (CHAMP_COMMENT = ft_strjoin(CHAMP_COMMENT, "\n")) : 0;
 		return (line);
+	}
 	i = 0;
 	while (i < line_len)
 	{
 		while (line[i] && (line[i] == ' ' || line[i] == '\t'))
 			i++;
-		if (line[i] == COMMENT_CHAR || line[i] == ANOTHER_COMMENT_CHAR)
+		if ((line[i] == COMMENT_CHAR || line[i] == ANOTHER_COMMENT_CHAR)  \
+						&& !MACHINE_WAIT_NAME && !MACHINE_WAIT_COMMENT)
 			return (line);
 		if (MACHINE_DOUBLE_QUOTES)
 			i = ft_add_text_in_quotes(asm_data, line, 0);

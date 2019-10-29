@@ -6,12 +6,12 @@
 #    By: thansen <thansen@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/10/16 18:13:41 by ggerhold          #+#    #+#              #
-#    Updated: 2019/10/27 18:11:05 by thansen          ###   ########.fr        #
+#    Updated: 2019/10/29 13:31:32 by thansen          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 CC= gcc -ggdb
-CC_FLAGS= -Wall -Wextra -Werror -g#remove the flag
+CC_FLAGS= -Wall -Wextra -Werror -g #remove the flag
 NAME_ASM = ../asm
 LIB_DIR = ./libft/includes
 HEADERDIR = ../

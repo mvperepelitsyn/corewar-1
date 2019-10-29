@@ -6,7 +6,7 @@
 /*   By: thansen <thansen@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/16 18:20:00 by ggerhold          #+#    #+#             */
-/*   Updated: 2019/10/27 16:41:13 by thansen          ###   ########.fr       */
+/*   Updated: 2019/10/29 17:02:38 by thansen          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,9 +44,7 @@ void	ft_read_file(int fd, char *file_name)
 			j += (line[j] == ' ') ? 1 : 4;
 		MACHINE_NEW_LINE = 0;
 		(MACHINE_NAME_COMMENT >= 3) ? free(ft_lexer_champ_code(asm_data, ft_strdup(line), j)) : 0;
-//		ft_strtrim(line), j)) : 0;
 		(MACHINE_NAME_COMMENT < 3) ? free(ft_lexer_champ_data(asm_data, ft_strdup(line), j)) : 0;
-//		ft_strtrim(line), j)) : 0;
 		asm_data->count_symbols += ft_strlen(line);
 		free(line);
 		ASM_NUM_ROW++;
