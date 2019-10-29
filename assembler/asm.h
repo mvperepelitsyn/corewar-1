@@ -6,7 +6,7 @@
 /*   By: ggerhold <ggerhold@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/16 18:14:30 by ggerhold          #+#    #+#             */
-/*   Updated: 2019/10/22 16:14:46 by ggerhold         ###   ########.fr       */
+/*   Updated: 2019/10/29 16:38:15 by ggerhold         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -273,6 +273,7 @@ char				*ft_add_label(t_asm_data *asm_data, t_syntax_row *row,\
 int j, int fd);
 void				ft_add_space_or_newline(int fd, int *i);
 void				ft_row_wrapper(t_syntax_row *row);
+void				ft_fill_asm_synt_row(t_asm_data *asm_data);
 void				ft_write_arg_text(int fd, int size, char *hex, int *i);
 void				ft_clear_memory(t_asm_data *asm_data);
 void				ft_clear_label_temp(t_asm_data *asm_data);

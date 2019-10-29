@@ -6,7 +6,7 @@
 /*   By: ggerhold <ggerhold@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/16 17:54:24 by ggerhold          #+#    #+#             */
-/*   Updated: 2019/10/16 17:54:29 by ggerhold         ###   ########.fr       */
+/*   Updated: 2019/10/29 13:38:17 by ggerhold         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ void	ft_current_func_divis(t_asm_data *asm_data, char *line, int i, int j)
 {
 	if (MACHINE_WAIT_NAME)
 	{
-		if (j > PROG_NAME_LENGTH)
+		if (j > PROG_NAME_LENGTH + 1)
 			ft_error_add(asm_data, ft_strdup("Name too long "), i, 2);
 		else
 			ft_strncpy(CHAMP_NAME, &line[1], j - 1);

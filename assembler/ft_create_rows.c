@@ -6,7 +6,7 @@
 /*   By: ggerhold <ggerhold@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/16 17:58:36 by ggerhold          #+#    #+#             */
-/*   Updated: 2019/10/17 17:23:15 by ggerhold         ###   ########.fr       */
+/*   Updated: 2019/10/29 16:36:55 by ggerhold         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -122,7 +122,7 @@ void	ft_fill_strings(t_asm_data *asm_data, t_token *token, t_list *labels)
 		return ;
 	}
 	if (!ASM_SYNTAX_ROW)
-		ASM_SYNTAX_ROW = ft_lstnew(NULL, (sizeof(t_syntax_row)));
+		ft_fill_asm_synt_row(asm_data);
 	synt_row = ASM_SYNTAX_ROW;
 	while (synt_row->next)
 		synt_row = synt_row->next;
