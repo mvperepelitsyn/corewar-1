@@ -22,7 +22,7 @@ void		live(t_carry *cr)
 	dir = get_param(cr, 0);
 	champ_nbr = (int *) &dir;
 	if (cr->vm->verbose.v_4)
-		ft_printf("P    %d | live %d\n", cr->car_nbr, dir);
+		ft_printf("P%5d | live %d\n", cr->car_nbr, dir);
 	if ((champ_nbr[0] * -1) > 0 \
  && (champ_nbr[0] * -1) <= (int) cr->vm->champs_count)
 	{
@@ -36,14 +36,6 @@ void		live(t_carry *cr)
 	}
 	if (cr->vm->vis)
 		cr->vm->back[cr->position] |= 200;
-//	if (cr->vm->verbose.v)
-//	{
-//		if (cr->vm->verbose.v_4)
-//			ft_printf("P    %d | live %d\n", cr->car_nbr, dir);
-//		if (cr->vm->verbose.v_1)
-//			ft_printf("Player %d (%s) is said to be alive\n", cr->vm->last_alive
-//			* -1, cr->vm->processes[cr->vm->last_alive * -1 - 1].cmp_name);
-//	}
 	if (cr->vm->debug)
 	{
 		ft_printf("%d ", champ_nbr[0]);
@@ -84,7 +76,7 @@ void		frk(t_carry *cr)
 	dir = cr->position + dir;
 	copy_carriage(cr, check_position(dir));
 	if (cr->vm->verbose.v && cr->vm->verbose.v_4)
-		ft_printf("P    %d | fork %d (%d)\n", cr->car_nbr, dir_hlp, dir);
+		ft_printf("P%5d | fork %d (%d)\n", cr->car_nbr, dir_hlp, dir);
 	if (cr->vm->debug)
 		ft_printf("frk ");
 }
@@ -98,7 +90,7 @@ void		lfrk(t_carry *cr)
 	dir = cr->position + dir_hlp;
 	copy_carriage(cr, check_position(dir));
 	if (cr->vm->verbose.v && cr->vm->verbose.v_4)
-		ft_printf("P    %d | lfork %d (%d)\n", cr->car_nbr, dir_hlp, dir);
+		ft_printf("P%5d | lfork %d (%d)\n", cr->car_nbr, dir_hlp, dir);
 	if (cr->vm->debug)
 		ft_printf("frk ");
 }

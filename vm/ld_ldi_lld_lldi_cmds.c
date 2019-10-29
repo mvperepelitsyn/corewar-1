@@ -30,7 +30,7 @@ void		ld(t_carry *cr)
 	else
 		cr->carry = 0;
 	if (cr->vm->verbose.v && cr->vm->verbose.v_4)
-		ft_printf("P    %d | ld %d r%d\n", cr->car_nbr, cr->reg[cr->cycle->
+		ft_printf("P%5d | ld %d r%d\n", cr->car_nbr, cr->reg[cr->cycle->
 		regs[1]], cr->cycle->regs[1] + 1);
 	if (cr->vm->debug)
 		ft_printf("ld ");
@@ -60,7 +60,7 @@ void		ldi(t_carry *cr)
 	from_memory_to_var(cr, &cr->reg[cr->cycle->regs[2]], check_position(ldi.
 	position), REG_SIZE);
 	if (cr->vm->verbose.v && cr->vm->verbose.v_4)
-		ft_printf("P    %d | ldi %d %d r%d\n       | -> load from %d + %d = %d "
+		ft_printf("P%5d | ldi %d %d r%d\n       | -> load from %d + %d = %d "
 			"(with pc and mod %d)\n", cr->car_nbr, ldi.prm1 + ldi.dir1, ldi.dir2
 			+ ldi.reg2, cr->cycle->regs[2] + 1, ldi.prm1 + ldi.dir1, ldi.dir2 +
 			ldi.reg2, ldi.prm1 + ldi.dir1 + ldi.dir2 + ldi.reg2, ldi.position);
@@ -80,18 +80,19 @@ void		lld(t_carry *cr)
 		indir = get_param(cr, 0);
 		posit = check_position(cr->position + indir);
 		if (STUPID)
-			from_memory_to_var(cr, &cr->reg[cr->cycle->regs[1]], posit, 2);
+			from_memory_to_var(cr, &cr->reg[cr->cycle->regs[1]], check_position(
+					posit), 2);
 		else
-			from_memory_to_var(cr, &cr->reg[cr->cycle->regs[1]], posit, \
-				REG_SIZE);
+			from_memory_to_var(cr, &cr->reg[cr->cycle->regs[1]],
+					check_position(posit), REG_SIZE);
 	}
-	if (cr->vm->verbose.v && cr->vm->verbose.v_4)
-		ft_printf("P    %d | lld %d r%d\n", cr->car_nbr, cr->reg[cr->cycle->
-				regs[1]], cr->cycle->regs[1] + 1);
 	if (!cr->reg[cr->cycle->regs[1]])
 		cr->carry = 1;
 	else
 		cr->carry = 0;
+	if (cr->vm->verbose.v && cr->vm->verbose.v_4)
+		ft_printf("P%5d | lld %d r%d\n", cr->car_nbr, cr->reg[cr->cycle->
+		regs[1]], cr->cycle->regs[1] + 1);
 	if (cr->vm->debug)
 		ft_printf("lld ");
 }
@@ -120,11 +121,15 @@ void		lldi(t_carry *cr)
 	from_memory_to_var(cr, &cr->reg[cr->cycle->regs[2]], ldi.position,
 			REG_SIZE);
 	if (cr->vm->verbose.v && cr->vm->verbose.v_4)
-		ft_printf("P    %d | lldi %d %d r%d\n       | -> load from %d + %d = %d"
-			" (with pc and mod %d)\n", cr->car_nbr, ldi.prm1 + ldi.dir1, ldi.
+		ft_printf("P%5d | lldi %d %d r%d\n       | -> load from %d + %d = %d"
+			" (with pc %d)\n", cr->car_nbr, ldi.prm1 + ldi.dir1, ldi.
 			dir2 + ldi.reg2, cr->cycle->regs[2] + 1, ldi.prm1 + ldi.dir1,
 			ldi.dir2 + ldi.reg2, ldi.prm1 + ldi.dir1 + ldi.dir2 + ldi.reg2, ldi.
 			position);
+	if (!cr->reg[cr->cycle->regs[2]])
+		cr->carry = 1;
+	else
+		cr->carry = 0;
 	if (cr->vm->debug)
 		ft_printf("lldi ");
 }
