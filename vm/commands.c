@@ -92,12 +92,13 @@ void		frk(t_carry *cr)
 void		lfrk(t_carry *cr)
 {
 	short			dir;
+	short			dir_hlp;
 
-	get_param_plus(cr, &dir, 0);
-	dir = check_position(cr->position + dir);
-	copy_carriage(cr, dir);
+	get_param_plus(cr, &dir_hlp, 0);
+	dir = cr->position + dir_hlp;
+	copy_carriage(cr, check_position(dir));
 	if (cr->vm->verbose.v && cr->vm->verbose.v_4)
-		ft_printf("P    %d | lfork -%d (%d)\n", cr->car_nbr, cr->cmd_code, dir);
+		ft_printf("P    %d | lfork %d (%d)\n", cr->car_nbr, dir_hlp, dir);
 	if (cr->vm->debug)
 		ft_printf("frk ");
 }

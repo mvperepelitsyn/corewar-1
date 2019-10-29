@@ -55,10 +55,10 @@ void		ldi(t_carry *cr)
 		get_param_plus(cr, &ldi.reg2, 1);
 	else
 		get_param_plus(cr, &ldi.dir2, 1);
-	ldi.position = check_position(cr->position + \
-		((ldi.prm1 + ldi.dir1 + ldi.dir2 + ldi.reg2) % IDX_MOD));
-	from_memory_to_var(cr, &cr->reg[cr->cycle->regs[2]], ldi.position,
-			REG_SIZE);
+	ldi.position = cr->position + ((ldi.prm1 + ldi.dir1 + ldi.dir2 + ldi.reg2) %
+			IDX_MOD);
+	from_memory_to_var(cr, &cr->reg[cr->cycle->regs[2]], check_position(ldi.
+	position), REG_SIZE);
 	if (cr->vm->verbose.v && cr->vm->verbose.v_4)
 		ft_printf("P    %d | ldi %d %d r%d\n       | -> load from %d + %d = %d "
 			"(with pc and mod %d)\n", cr->car_nbr, ldi.prm1 + ldi.dir1, ldi.dir2
