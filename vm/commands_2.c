@@ -68,7 +68,8 @@ void		sub(t_carry *cr)
 
 void		zjmp(t_carry *cr)
 {
-	short			dir;
+	short	dir;
+	short	dir_hlp;
 
 	if (!cr->carry)
 	{
@@ -78,9 +79,9 @@ g_cmd_prms[cr->cmd_code - 1].dir_size);
 			ft_printf("P%5d | zjmp %d %s\n", cr->car_nbr, dir, "FAILED");
 		return;
 	}
-	from_memory_to_var(cr, &dir, check_position(cr->position + 1), \
+	from_memory_to_var(cr, &dir_hlp, check_position(cr->position + 1), \
 g_cmd_prms[cr->cmd_code - 1].dir_size);
-	dir %= IDX_MOD;
+	dir = dir_hlp % IDX_MOD;
 	cr->position = check_position(cr->position + dir);
 	cr->cycle->shift = 1;
 	if (cr->vm->verbose.v && cr->vm->verbose.v_4)
