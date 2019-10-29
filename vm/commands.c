@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   commands.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dfrost-a <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: dfrost-a <dfrost-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/21 18:25:43 by dfrost-a          #+#    #+#             */
-/*   Updated: 2019/10/21 18:25:47 by dfrost-a         ###   ########.fr       */
+/*   Updated: 2019/10/28 21:09:26 by uhand            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,7 @@ void		live(t_carry *cr)
 	if ((champ_nbr[0] * -1) > 0 \
  && (champ_nbr[0] * -1) <= (int) cr->vm->champs_count)
 	{
+		// cr->vm->live_counter++;//
 		cr->vm->last_alive = dir;
 		cr->last_champ = dir;
 		cr->last_alive_cycle = cr->vm->cycles_from_start + 1;

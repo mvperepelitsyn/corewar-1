@@ -6,7 +6,7 @@
 /*   By: dfrost-a <dfrost-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/21 19:58:24 by dfrost-a          #+#    #+#             */
-/*   Updated: 2019/10/28 17:46:25 by uhand            ###   ########.fr       */
+/*   Updated: 2019/10/29 15:38:59 by uhand            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,6 +78,7 @@ static void	print_byte(t_vm *vm, int byte, char ending)
 static void	print_report(t_vm *vm)
 {
 	t_carry		*cr;
+	int			i;
 
 	cr = vm->carriages;
 	ft_printf("\nCycles from start: %u\t\tCycles to die: %d\tTotal lives: %u", \
@@ -85,14 +86,13 @@ static void	print_report(t_vm *vm)
 	ft_printf("\t\tLast alive champion: \"%s\"(%d / %u)\n\n", \
 		vm->processes[(vm->last_alive * -1) - 1].cmp_name, \
 		vm->last_alive, vm->last_alive_cycle);
+	i = 0;
 	while (cr)
 	{
 		if (cr->last_champ)
-		{
-			ft_printf("%s \"%s\" (%d) said \"Alive!\" %d cycles ago (%u).\t", \
-				"Champion", vm->processes[(cr->last_champ * -1) - 1].cmp_name, \
+			ft_printf("%s \"Champion\" (%d) said \"Alive!\" %d cycles ago (%u)."
+				"\t", vm->processes[(cr->last_champ * -1) - 1].cmp_name, \
 				cr->last_champ, cr->last_live, cr->last_alive_cycle);
-		}
 		if (cr->cmd_code >= 1 && cr->cmd_code <= 16 \
 				&& !(vm->dump_flag && !vm->dump))
 			ft_printf("\tNext command: \"%s\" in %u cycles\n", \
@@ -100,8 +100,9 @@ static void	print_report(t_vm *vm)
 		else if (!(vm->dump_flag && !vm->dump))
 			ft_printf("\tWrong command code: %hhu\n", cr->cmd_code);
 		cr = cr->next;
+		i++;
 	}
-	ft_printf("\n");
+	ft_printf("\nProcesses : %d\n\n", i);
 }
 
 void		game_area_frame(t_vm *vm)
