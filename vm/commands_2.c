@@ -85,7 +85,7 @@ g_cmd_prms[cr->cmd_code - 1].dir_size);
 	cr->position = check_position(cr->position + dir);
 	cr->cycle->shift = 1;
 	if (cr->vm->verbose.v && cr->vm->verbose.v_4)
-		ft_printf("P%5d | zjmp %d %s\n", cr->car_nbr, dir, "OK");
+		ft_printf("P%5d | zjmp %d %s\n", cr->car_nbr, dir_hlp, "OK");
 	if (cr->vm->debug)
 		ft_printf("zjmp ");
 }
