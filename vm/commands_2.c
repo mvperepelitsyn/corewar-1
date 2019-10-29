@@ -29,9 +29,10 @@ void		st(t_carry *cr)
 			check_position(cr->position + indir), REG_SIZE);
 	}
 	if (cr->vm->verbose.v && cr->vm->verbose.v_4)
-		ft_printf("P%5d | st r%d %d\n", cr->car_nbr, cr->cycle->regs[0] + 1,
-				indir_hlp + ((cr->cycle->descript[1] == 1) ? cr->cycle->
-				regs[1] + 1 : 0));
+		ft_printf("P%*d | st r%d %d\n", ((ft_hw_mn_orders(cr->car_nbr) < 5) ? 5
+		: ft_hw_mn_orders(cr->car_nbr) + 1), cr->car_nbr, cr->cycle->regs[0] +
+		1, indir_hlp + ((cr->cycle->descript[1] == 1) ? cr->cycle->regs[1] + 1 :
+		0));
 	if (cr->vm->debug)
 		ft_printf("st ");
 }
@@ -45,8 +46,9 @@ void		add(t_carry *cr)
 	else
 		cr->carry = 0;
 	if (cr->vm->verbose.v && cr->vm->verbose.v_4)
-		ft_printf("P%5d | add r%d r%d r%d\n", cr->car_nbr, cr->cycle->regs[0]
-		+ 1, cr->cycle->regs[1] + 1, cr->cycle->regs[2] + 1);
+		ft_printf("P%*d | add r%d r%d r%d\n", ((ft_hw_mn_orders(cr->car_nbr) <
+		5) ? 5 : ft_hw_mn_orders(cr->car_nbr) + 1), cr->car_nbr, cr->cycle->
+		regs[0] + 1, cr->cycle->regs[1] + 1, cr->cycle->regs[2] + 1);
 	if (cr->vm->debug)
 		ft_printf("add ");
 }
@@ -60,8 +62,9 @@ void		sub(t_carry *cr)
 	else
 		cr->carry = 0;
 	if (cr->vm->verbose.v && cr->vm->verbose.v_4)
-		ft_printf("P%5d | sub r%d r%d r%d\n", cr->car_nbr, cr->cycle->regs[0]
-		+ 1, cr->cycle->regs[1] + 1, cr->cycle->regs[2] + 1);
+		ft_printf("P%*d | sub r%d r%d r%d\n", ((ft_hw_mn_orders(cr->car_nbr) <
+		5) ? 5 : ft_hw_mn_orders(cr->car_nbr) + 1), cr->car_nbr, cr->cycle->
+		regs[0] + 1, cr->cycle->regs[1] + 1, cr->cycle->regs[2] + 1);
 	if (cr->vm->debug)
 		ft_printf("sub ");
 }

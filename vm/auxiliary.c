@@ -12,6 +12,19 @@
 
 #include "vm.h"
 
+int		ft_hw_mn_orders(long long int num)
+{
+	int i;
+
+	i = 0;
+	while (num)
+	{
+		num = num / 10;
+		i++;
+	}
+	return (i);
+}
+
 int		display_usage(void)
 {
 	ft_printf("usage:\t./corewar [-a -dump N -vis -v N]%s%s%s%s%s%s%s%s%s%s%s%s"

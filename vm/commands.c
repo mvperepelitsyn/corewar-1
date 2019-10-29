@@ -22,7 +22,8 @@ void		live(t_carry *cr)
 	dir = get_param(cr, 0);
 	champ_nbr = (int *) &dir;
 	if (cr->vm->verbose.v_4)
-		ft_printf("P%5d | live %d\n", cr->car_nbr, dir);
+		ft_printf("P%*d | live %d\n", ((ft_hw_mn_orders(cr->car_nbr) < 5) ? 5 :
+		ft_hw_mn_orders(cr->car_nbr) + 1), cr->car_nbr, dir);
 	if ((champ_nbr[0] * -1) > 0 \
  && (champ_nbr[0] * -1) <= (int) cr->vm->champs_count)
 	{
@@ -77,7 +78,8 @@ void		frk(t_carry *cr)
 	dir = cr->position + dir;
 	copy_carriage(cr, check_position(dir));
 	if (cr->vm->verbose.v && cr->vm->verbose.v_4)
-		ft_printf("P%5d | fork %d (%d)\n", cr->car_nbr, dir_hlp, dir);
+		ft_printf("P%*d | fork %d (%d)\n", ((ft_hw_mn_orders(cr->car_nbr) < 5) ?
+		5 : ft_hw_mn_orders(cr->car_nbr) + 1), cr->car_nbr, dir_hlp, dir);
 	if (cr->vm->debug)
 		ft_printf("frk ");
 }
@@ -91,7 +93,8 @@ void		lfrk(t_carry *cr)
 	dir = cr->position + dir_hlp;
 	copy_carriage(cr, check_position(dir));
 	if (cr->vm->verbose.v && cr->vm->verbose.v_4)
-		ft_printf("P%5d | lfork %d (%d)\n", cr->car_nbr, dir_hlp, dir);
+		ft_printf("P%*d | lfork %d (%d)\n", ((ft_hw_mn_orders(cr->car_nbr) < 5)
+		? 5 : ft_hw_mn_orders(cr->car_nbr) + 1), cr->car_nbr, dir_hlp, dir);
 	if (cr->vm->debug)
 		ft_printf("frk ");
 }
