@@ -24,7 +24,7 @@ static void	help_cycle(t_vm *vm, t_carry *cr, t_cycle *cycle)
 			vm->command[cr->cmd_code - 1](cr);
 		if (!(*cycle).shift)
 		{
-			h_ps = check_position(cr->position + cr->jump_len);
+			h_ps = cr->position + cr->jump_len;
 			if (vm->verbose.v && vm->verbose.v_16 && cr->jump_len > 1)//vm->area[cr->position])
 			{
 				if (cr->position == 0 && h_ps != 0)
@@ -35,15 +35,17 @@ static void	help_cycle(t_vm *vm, t_carry *cr, t_cycle *cycle)
 				else
 					ft_printf("ADV %d (%#06x -> %#06x) ", cr->jump_len, cr->
 					position, h_ps);
-				while (cr->position < h_ps)
+				h_ps = check_position(h_ps);
+				while (cr->position != h_ps)
 				{
 					ft_printf("%02x ", (unsigned int)vm->area[check_position(
 							cr->position)]);
-					cr->position++;
+					cr->position = check_position(cr->position + 1);
 				}
 				ft_putchar('\n');
 			}
-			cr->position = h_ps;
+			else
+				cr->position = check_position(h_ps);
 		}
 	}
 }
