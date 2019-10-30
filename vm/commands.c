@@ -6,7 +6,7 @@
 /*   By: dfrost-a <dfrost-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/21 18:25:43 by dfrost-a          #+#    #+#             */
-/*   Updated: 2019/10/30 13:58:34 by uhand            ###   ########.fr       */
+/*   Updated: 2019/10/30 17:15:57 by uhand            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@ void		live(t_carry *cr)
 
 	cr->last_live = 0;
 	cr->vm->live_counter++;
+	cr->ctd_live_counter++;
 	dir = get_param(cr, 0);
 	champ_nbr = (int *) &dir;
 	cr->last_alive_cycle = cr->vm->cycles_from_start + 1;
@@ -62,6 +63,7 @@ static void	copy_carriage(t_carry *cr_src, short dir)
 	cr->position = dir;
 	cr->vm = cr_src->vm;
 	cr->carry = cr_src->carry;
+	cr->ctd_live_counter = cr_src->ctd_live_counter;
 	cr->last_live = cr_src->last_live + 1;
 	cr->color = cr_src->color;
 	cr->next = cr->vm->carriages;

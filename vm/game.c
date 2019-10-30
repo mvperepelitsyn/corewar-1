@@ -6,7 +6,7 @@
 /*   By: dfrost-a <dfrost-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/21 20:24:16 by dfrost-a          #+#    #+#             */
-/*   Updated: 2019/10/30 14:29:03 by uhand            ###   ########.fr       */
+/*   Updated: 2019/10/30 17:17:02 by uhand            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,12 +64,14 @@ static void	check_game(t_vm *vm)
 	while (cur)
 	{
 		next = cur->next;
-		if (cur->last_live >= vm->cycles_to_die)
+		if (!cur->ctd_live_counter/*cur->last_live //(vm->cycles_from_start  - cur->last_alive_cycle)// >= vm->cycles_to_die*/)
 		{
 			carriage_remover(vm, prev, cur);
 			cur = next;
 			continue ;
 		}
+		else
+			cur->ctd_live_counter = 0;
 		prev = cur;
 		cur = cur->next;
 	}
