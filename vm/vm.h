@@ -6,7 +6,7 @@
 /*   By: uhand <uhand@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/22 14:00:40 by uhand             #+#    #+#             */
-/*   Updated: 2019/10/29 22:16:49 by uhand            ###   ########.fr       */
+/*   Updated: 2019/10/30 16:57:16 by uhand            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,6 +48,7 @@ struct			s_carry
 	unsigned char		cmd_code;
 	unsigned char		jump_len;
 	int					last_live;
+	unsigned int		ctd_live_counter;
 	int					last_champ;
 	unsigned int		last_alive_cycle;
 	unsigned int		cycles_before;
