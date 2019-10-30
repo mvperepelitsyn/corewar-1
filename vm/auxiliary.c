@@ -6,7 +6,7 @@
 /*   By: dfrost-a <dfrost-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/21 19:16:33 by dfrost-a          #+#    #+#             */
-/*   Updated: 2019/10/27 15:18:18 by uhand            ###   ########.fr       */
+/*   Updated: 2019/10/30 18:35:11 by uhand            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,14 +34,14 @@ int		display_usage(void)
 		"\n\t-dump N\t  : Dumps memory after N cycles then exits", \
 		"\n\t-vis\t  : Console visualization mode", \
 		"\n\t-v N\t  : Verbosity levels, can be added together to enable severa"
-"l", \
-"\n\t\t    - 0 : Show only essentials", \
-"\n\t\t    - 1 : Show lives", \
-"\n\t\t    - 2 : Show cycles", \
-"\n\t\t    - 4 : Show operations (Params are NOT litteral ...)", \
-"\n\t\t    - 8 : Show deaths", \
-"\n\t\t    - 16 : Show PC movements (Except for jumps)", \
-"\n\t-n N\t  : Sets the number of the next player\n");
+		"l", \
+		"\n\t\t    - 0 : Show only essentials", \
+		"\n\t\t    - 1 : Show lives", \
+		"\n\t\t    - 2 : Show cycles", \
+		"\n\t\t    - 4 : Show operations (Params are NOT litteral ...)", \
+		"\n\t\t    - 8 : Show deaths", \
+		"\n\t\t    - 16 : Show PC movements (Except for jumps)", \
+		"\n\t-n N\t  : Sets the number of the next player\n");
 	return (0);
 }
 

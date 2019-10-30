@@ -6,7 +6,7 @@
 /*   By: dfrost-a <dfrost-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/21 19:58:24 by dfrost-a          #+#    #+#             */
-/*   Updated: 2019/10/30 13:55:00 by uhand            ###   ########.fr       */
+/*   Updated: 2019/10/30 18:39:33 by uhand            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,25 +83,13 @@ static void	print_report(t_vm *vm)
 	cr = vm->carriages;
 	ft_printf("\nCycles from start: %u\t\tCycles to die: %d\tTotal lives: %u", \
 		vm->cycles_from_start, vm->cycles_to_die, vm->live_counter);
-	ft_printf("\t\tLast alive champion: \"%s\"(%d / %u)\n\n", vm->processes[(
-vm->last_alive * -1) - 1].cmp_name, vm->last_alive, vm->last_alive_cycle);
+	ft_printf("\t\tLast alive champion: \"%s\"(%d / %u)\n\n", \
+		vm->processes[(vm->last_alive * -1) - 1].cmp_name, vm->last_alive, \
+		vm->last_alive_cycle);
 	i = 0;
 	while (cr)
 	{
-		ft_printf("%5d: ", cr->car_nbr);
-		if (cr->last_champ)
-			ft_printf("%s \"Champion\" (%d) said \"Alive!\" %d cycles ago (%u)."
-				"\t",  vm->processes[(cr->last_champ * -1) - 1].cmp_name, \
-				cr->last_champ, cr->last_live, cr->last_alive_cycle);
-		else
-			ft_printf("UNKNOWN\t\t\t  said \"Alive!\" %d cycles ago (%u).\t", \
-				cr->last_live, cr->last_alive_cycle);
-		if (cr->cmd_code >= 1 && cr->cmd_code <= 16 \
-				&& !(vm->dump_flag && !vm->dump))
-			ft_printf("\tNext command: \"%s\" in %u cycles\n", \
-				g_cmd_prms[cr->cmd_code - 1].name, cr->cycles_before);
-		else if (!(vm->dump_flag && !vm->dump))
-			ft_printf("\tWrong command code: %hhu\n", cr->cmd_code);
+		report_norm(vm, cr);
 		cr = cr->next;
 		i++;
 	}
@@ -113,8 +101,7 @@ void		game_area_frame(t_vm *vm)
 	int				byte;
 
 	byte = -1;
-	ft_printf("\e[1;1H\e[2J");
-	// system("clear");
+	ft_printf("\e[1;1H");
 	print_report(vm);
 	while (++byte < MEM_SIZE)
 	{

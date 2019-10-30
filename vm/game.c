@@ -6,7 +6,7 @@
 /*   By: dfrost-a <dfrost-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/21 20:24:16 by dfrost-a          #+#    #+#             */
-/*   Updated: 2019/10/30 17:17:02 by uhand            ###   ########.fr       */
+/*   Updated: 2019/10/30 18:04:35 by uhand            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,6 +104,8 @@ static void	help_game(t_vm *vm)
 void		game(t_vm *vm)
 {
 	vm->debug = 0;
+	if (vm->vis)
+		ft_printf("\e[1;1H\e[2J");
 	if (vm->dump_flag && !vm->dump)
 	{
 		if (vm->vis)
