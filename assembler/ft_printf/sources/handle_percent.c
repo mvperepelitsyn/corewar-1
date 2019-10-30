@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   handle_percent.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vbrazhni <vbrazhni@student.unit.ua>        +#+  +:+       +#+        */
+/*   By: ggerhold <ggerhold@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/11/03 00:17:40 by vbrazhni          #+#    #+#             */
-/*   Updated: 2018/11/03 00:17:41 by vbrazhni         ###   ########.fr       */
+/*   Created: 2019/10/30 16:26:45 by ggerhold          #+#    #+#             */
+/*   Updated: 2019/10/30 16:26:49 by ggerhold         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 

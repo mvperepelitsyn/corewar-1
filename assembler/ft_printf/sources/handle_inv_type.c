@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   handle_inv_type.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vbrazhni <vbrazhni@student.unit.ua>        +#+  +:+       +#+        */
+/*   By: ggerhold <ggerhold@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/11/04 16:43:16 by vbrazhni          #+#    #+#             */
-/*   Updated: 2018/11/04 16:43:17 by vbrazhni         ###   ########.fr       */
+/*   Created: 2019/10/30 16:27:03 by ggerhold          #+#    #+#             */
+/*   Updated: 2019/10/30 16:27:03 by ggerhold         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 

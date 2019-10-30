@@ -6,7 +6,7 @@
 #    By: thansen <thansen@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2016/11/01 20:07:00 by rnugroho          #+#    #+#              #
-#    Updated: 2019/10/30 16:26:40 by thansen          ###   ########.fr        #
+#    Updated: 2019/10/30 17:34:11 by thansen          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -28,15 +28,11 @@ PURPLE:="\033[1;36m"
 WHITE:="\033[1;37m"
 EOC:="\033[0;0m"
 # ==================
-TALLY:=.tally
 
 all: tests
 
 clean:
 	@rm -f out1 out2
-
-clean_tally:
-	@rm -f $(TALLY)
 
 # ----- TEST UNIT ASM ------
 T_ASM_DIR_ERROR = tests/asm/error/
@@ -44,8 +40,8 @@ T_ASM_FILES_ERROR:=$(shell cd $(T_ASM_DIR_ERROR); ls  | egrep '^$(T_FILE_ERROR).
 
 test_asm_error :
 	@if [[ $$(./$(ASM_PATH) $(T_ASM_DIR_ERROR)$(X) $(SILENT) ) < 0 ]] ; \
-		then echo $(GREEN) " - [OK] $(T_ASM_DIR_ERROR)$(X)" $(EOC) && echo "OK" >> $(TALLY); \
-		else echo $(RED) " - [KO] $(T_ASM_DIR_ERROR)$(X)" $(EOC) && echo "KO" >> $(TALLY); \
+		then echo $(GREEN) " - [OK] $(T_ASM_DIR_ERROR)$(X)" $(EOC); \
+		else echo $(RED) " - [KO] $(T_ASM_DIR_ERROR)$(X)" $(EOC); \
 	fi
 
 tests_asm_error:
@@ -68,18 +64,20 @@ test_asm_bin:
 tests_asm_bin:
 	@echo $(CYAN) " - Test Binary Files" $(EOC)
 	@$(foreach x, $(T_ASM_FILES_BIN), $(MAKE) X=$x test_asm_bin;)
+	@find . -name '*.cor' -delete
 
 test_asm_valid :
 	@./$(ASM_PATH) $(T_ASM_DIR_VALID)$(X) > out1 2>> out1; true
 	@./binaries/asm $(T_ASM_DIR_VALID)$(X) > out2; true
 	@if diff out1 out2 $(SILENT); \
-		then echo $(GREEN) " - [OK] $(T_ASM_DIR_VALID)$(X)" $(EOC) && echo "OK" >> $(TALLY); \
-		else echo $(RED) " - [KO] $(T_ASM_DIR_VALID)$(X)" $(EOC) && echo "KO" >> $(TALLY); \
+		then echo $(GREEN) " - [OK] $(T_ASM_DIR_VALID)$(X)" $(EOC); \
+		else echo $(RED) " - [KO] $(T_ASM_DIR_VALID)$(X)" $(EOC); \
 	fi
 
 tests_asm_valid:
 	@echo $(CYAN) " - Test Valid Cases" $(EOC)
 	@$(foreach x, $(T_ASM_FILES_VALID), $(MAKE) X=$x test_asm_valid;)
+	@find . -name '*.cor' -delete
 
 tests_asm_v: tests_asm_valid tests_asm_error tests_asm_bin
 
@@ -111,8 +109,8 @@ test_vm_op :
 	@./$(VM_PATH) $(OPT_V) $(T_VM_DIR)$(X).cor > out1 2>> out1; true
 	@./binaries/corewar $(OPT_V) $(T_VM_DIR)$(X).cor > out2; true
 	@if diff out1 out2 $(SILENT); \
-		then echo $(GREEN) " - [OK] $(T_VM_DIR)$(X)" $(EOC) && echo "OK" >> $(TALLY); \
-		else echo $(RED) " - [KO] $(T_VM_DIR)$(X)" $(EOC) && echo "KO" >> $(TALLY); \
+		then echo $(GREEN) " - [OK] $(T_VM_DIR)$(X)" $(EOC); \
+		else echo $(RED) " - [KO] $(T_VM_DIR)$(X)" $(EOC); \
 	fi
 
 tests_vm_op:
@@ -132,8 +130,8 @@ test_vm_op_champ :
 	@./$(VM_PATH) $(OPT_V) $(T_VM_DIR)$(X).cor > $(T_VM_DIR)$(X).out1 2>> $(T_VM_DIR)$(X).out1; true
 	@./binaries/corewar $(OPT_V) $(T_VM_DIR)$(X).cor > $(T_VM_DIR)$(X).out2; true
 	@if diff $(T_VM_DIR)$(X).out1 $(T_VM_DIR)$(X).out2 $(SILENT); \
-		then echo $(GREEN) " - [OK] $(T_VM_DIR)$(X)" $(EOC) && rm $(T_VM_DIR)$(X).out1 $(T_VM_DIR)$(X).out2 && echo "OK" >> $(TALLY); \
-		else echo $(RED) " - [KO] $(T_VM_DIR)$(X)" $(EOC) && echo "KO" >> $(TALLY) && diff $(T_VM_DIR)$(X).out1 $(T_VM_DIR)$(X).out2 | head -20; \
+		then echo $(GREEN) " - [OK] $(T_VM_DIR)$(X)" $(EOC) && rm $(T_VM_DIR)$(X).out1 $(T_VM_DIR)$(X).out2; \
+		else echo $(RED) " - [KO] $(T_VM_DIR)$(X)" $(EOC) && diff $(T_VM_DIR)$(X).out1 $(T_VM_DIR)$(X).out2 | head -20; \
 	fi
 
 tests_vm_op_champs:
@@ -149,8 +147,8 @@ test_vm_dump :
 	@./$(VM_PATH) $(OPT_DUMP) $(DUMP) $(T_VM_DIR)$(X).cor > out1 2>> out1; true
 	@./binaries/corewar -d $(DUMP) $(T_VM_DIR)$(X).cor > out2; true
 	@if diff out1 out2 $(SILENT); \
-		then echo $(GREEN) " - [OK] $(T_VM_DIR)$(X)" $(EOC) && echo "OK" >> $(TALLY); \
-		else echo $(RED) " - [KO] $(T_VM_DIR)$(X)" $(EOC) && echo "KO" >> $(TALLY); \
+		then echo $(GREEN) " - [OK] $(T_VM_DIR)$(X)" $(EOC); \
+		else echo $(RED) " - [KO] $(T_VM_DIR)$(X)" $(EOC); \
 	fi
 
 tests_vm_dump:
@@ -186,8 +184,8 @@ test_vm_battle :
 	@./$(VM_PATH) -v30 $(T_VM_DIR_B)$(X).cor $(T_VM_DIR_B)$(X)X.cor > out1 2>> out1; true
 	@./binaries/corewar $(OPT_V) $(T_VM_DIR_B)$(X).cor $(T_VM_DIR_B)$(X)X.cor > out2; true
 	@if diff out1 out2 $(SILENT); \
-		then echo $(GREEN) " - [OK] $(T_VM_DIR_B)$(X)" $(EOC) && echo "OK" >> $(TALLY); \
-		else echo $(RED) " - [KO] $(T_VM_DIR_B)$(X)" $(EOC) && echo "KO" >> $(TALLY); \
+		then echo $(GREEN) " - [OK] $(T_VM_DIR_B)$(X)" $(EOC); \
+		else echo $(RED) " - [KO] $(T_VM_DIR_B)$(X)" $(EOC); \
 	fi
 
 tests_vm_battle:
@@ -202,8 +200,8 @@ test_vm_dump_overflow :
 	@./$(VM_PATH) $(OPT_DUMP) $(DUMP) $(T_VM_DIR)$(X).cor $(T_VM_DIR)$(X).cor $(T_VM_DIR)$(X).cor $(T_VM_DIR)$(X).cor > out1 2>> out1; true
 	@./binaries/corewar -d $(DUMP) $(T_VM_DIR)$(X).cor $(T_VM_DIR)$(X).cor $(T_VM_DIR)$(X).cor $(T_VM_DIR)$(X).cor > out2; true
 	@if diff out1 out2 $(SILENT); \
-		then echo $(GREEN) " - [OK] $(T_VM_DIR)$(X)" $(EOC) && echo "OK" >> $(TALLY); \
-		else echo $(RED) " - [KO] $(T_VM_DIR)$(X)" $(EOC) && echo "KO" >> $(TALLY); \
+		then echo $(GREEN) " - [OK] $(T_VM_DIR)$(X)" $(EOC); \
+		else echo $(RED) " - [KO] $(T_VM_DIR)$(X)" $(EOC); \
 	fi
 
 tests_vm_dump_overflow:
@@ -219,8 +217,8 @@ test_vm_op_overflow :
 	@./$(VM_PATH) $(OPT_V) $(T_VM_DIR)$(X).cor $(T_VM_DIR)$(X).cor $(T_VM_DIR)$(X).cor $(T_VM_DIR)$(X).cor > out1 2>> out1; true
 	@./binaries/corewar $(OPT_V) $(T_VM_DIR)$(X).cor $(T_VM_DIR)$(X).cor $(T_VM_DIR)$(X).cor $(T_VM_DIR)$(X).cor > out2; true
 	@if diff out1 out2 $(SILENT); \
-		then echo $(GREEN) " - [OK] $(T_VM_DIR)$(X)" $(EOC) && echo "OK" >> $(TALLY); \
-		else echo $(RED) " - [KO] $(T_VM_DIR)$(X)" $(EOC) && echo "KO" >> $(TALLY); \
+		then echo $(GREEN) " - [OK] $(T_VM_DIR)$(X)" $(EOC); \
+		else echo $(RED) " - [KO] $(T_VM_DIR)$(X)" $(EOC); \
 	fi
 
 tests_vm_op_overflow:
@@ -233,8 +231,8 @@ T_VM_FILES_ERROR:=$(shell cd $(T_VM_DIR_ERROR); ls | egrep '^[^X]+$$' | rev | cu
 test_vm_error :
 	@./binaries/asm $(T_VM_DIR_ERROR)$(X).s > /dev/null; true
 	@if [[ $$(./$(VM_PATH) $(T_VM_DIR_ERROR)$(X).cor $(SILENT) ) < 0 ]] ; \
-		then echo $(GREEN) " - [OK] $(T_VM_DIR_ERROR)$(X)" $(EOC) && echo "OK" >> $(TALLY); \
-		else echo $(RED) " - [KO] $(T_VM_DIR_ERROR)$(X)" $(EOC) && echo "KO" >> $(TALLY); \
+		then echo $(GREEN) " - [OK] $(T_VM_DIR_ERROR)$(X)" $(EOC); \
+		else echo $(RED) " - [KO] $(T_VM_DIR_ERROR)$(X)" $(EOC); \
 	fi
 
 tests_vm_error:
@@ -249,23 +247,6 @@ tests_vm:
 	@$(MAKE) tests_vm_battle
 	@$(MAKE) tests_vm_dump_overflow
 	@$(MAKE) tests_vm_op_overflow
-
-SCORE=`grep "OK" $(TALLY) | wc -l`
-
-TOTAL=`grep "K" $(TALLY) | wc -l`
-
-tests: clean_tally tests_asm tests_vm
-	@if [[ $(SCORE) = $(TOTAL) ]] ; \
-		then echo $(GREEN) ; \
-	fi
-	@if [[ $(SCORE) -lt $(TOTAL) ]] ; \
-		then echo $(CYAN) ; \
-	fi
-	@if [[ $(SCORE) -lt $$(($(TOTAL) / 2)) ]] ; \
-		then echo $(RED) ; \
-	fi
-	@echo " " - [$(SCORE) / $(TOTAL) ] $(EOC)
-	@rm -f $(TALLY)
 
 tests_leaks: tests_asm_leak tests_vm_leak
 
