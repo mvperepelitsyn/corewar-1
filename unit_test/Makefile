@@ -6,14 +6,14 @@
 #    By: thansen <thansen@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2016/11/01 20:07:00 by rnugroho          #+#    #+#              #
-#    Updated: 2019/10/27 14:00:56 by thansen          ###   ########.fr        #
+#    Updated: 2019/10/30 16:26:40 by thansen          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 # ----- Config -----
 
 ASM_PATH:=../asm
-VM_PATH:=./corewar-project/corewar
+VM_PATH:=../corewar
 
 OPT_V:=-v 30
 OPT_A:=-a
