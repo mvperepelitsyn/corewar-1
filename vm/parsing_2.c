@@ -113,19 +113,13 @@ static void	fill_the_code(t_process *chmp, int fd, char *file_name)
 void		fill_the_champ(t_process *chmp, char *file_name)
 {
 	int		fd;
-	char	*clion_file;
 
-	clion_file = ft_strjoin("../", file_name);
-	if ((fd = open(clion_file, O_RDONLY)) < 0)
-		if ((fd = open(file_name, O_RDONLY)) < 0)
-			ft_err_plus("Error! There is nothing to open from champion %s! Cons"
-			   "ider to create your champion at very least!\n", 0, file_name,
-			   1);
+	if ((fd = open(file_name, O_RDONLY)) < 0)
+		ft_err_plus("Error! There is nothing to open from champion %s! Consider"
+" to create your champion at very least!\n", 0, file_name, 1);
 	check_magic_header(fd, file_name);
 	fill_the_name_champ(chmp, fd, file_name);
 	fill_the_code_size(chmp, fd, file_name);
 	fill_the_comment(chmp, fd, file_name);
 	fill_the_code(chmp, fd, file_name);
-
-	ft_strdel(&clion_file);
 }

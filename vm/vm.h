@@ -172,6 +172,7 @@ typedef struct	s_ldi
 	int					reg2;
 	int					position;
 	short				indir;
+	unsigned int		lld_pst;
 }				t_ldi;
 
 /*

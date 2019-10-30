@@ -12,6 +12,43 @@
 
 #include "vm.h"
 
+void static print_ldetc(t_carry *cr, t_ldi *ldi, short sw)
+{
+	unsigned int print;
+
+	print = 0;
+	if (sw == 1)
+	{
+		ft_printf("P%*d | ldi %d %d r%d\n       | -> load from %d + %d = %d (wi"
+				  "th pc and mod %d)\n", ((ft_hw_mn_orders(cr->car_nbr) < 5) ? 5
+				  : ft_hw_mn_orders(cr->car_nbr) + 1), cr->car_nbr,
+				  ldi->prm1 + ldi->dir1, ldi->dir2 + ldi->reg2,
+				  cr->cycle->regs[2] + 1, ldi->prm1 + ldi->dir1,
+				  ldi->dir2 + ldi->reg2,
+				  ldi->prm1 + ldi->dir1 + ldi->dir2 + ldi->reg2, ldi->position);
+	}
+	if (sw == 2)
+	{
+		from_memory_to_var(cr, &print, check_position(ldi->lld_pst), REG_SIZE);
+		ft_printf("P%*d | lld %d r%d\n",
+				((ft_hw_mn_orders(cr->car_nbr) < 5) ? 5 :
+				ft_hw_mn_orders(cr->car_nbr) + 1), cr->car_nbr,
+				(cr->cycle->descript[0] == 2) ? cr->reg[cr->cycle->regs[1]] :
+				print, cr->cycle->regs[1] + 1);
+	}
+	if (sw == 3)
+	{
+		ft_printf("P%*d | lldi %d %d r%d\n       | -> load from %d + %d = %d (w"
+				  "ith pc %d)\n",
+				  ((ft_hw_mn_orders(cr->car_nbr) < 5) ? 5 :
+				  ft_hw_mn_orders(cr->car_nbr) + 1), cr->car_nbr,
+				  ldi->prm1 + ldi->dir1, ldi->dir2 + ldi->reg2,
+				  cr->cycle->regs[2] + 1, ldi->prm1 + ldi->dir1,
+				  ldi->dir2 + ldi->reg2,
+				  ldi->prm1 + ldi->dir1 + ldi->dir2 + ldi->reg2, ldi->position);
+	}
+}
+
 void		ld(t_carry *cr)
 {
 	short			indir;
@@ -30,9 +67,12 @@ void		ld(t_carry *cr)
 	else
 		cr->carry = 0;
 	if (cr->vm->verbose.v && cr->vm->verbose.v_4)
-		ft_printf("P%*d | ld %d r%d\n", ((ft_hw_mn_orders(cr->car_nbr) < 5) ? 5
-		: ft_hw_mn_orders(cr->car_nbr) + 1), cr->car_nbr, cr->reg[cr->cycle->
-		regs[1]], cr->cycle->regs[1] + 1);
+	{
+		ft_printf("P%*d | ld %d r%d\n",
+				((ft_hw_mn_orders(cr->car_nbr) < 5) ? 5 :
+				ft_hw_mn_orders(cr->car_nbr) + 1), cr->car_nbr,
+				cr->reg[cr->cycle->regs[1]], cr->cycle->regs[1] + 1);
+	}
 	if (cr->vm->debug)
 		ft_printf("ld ");
 }
@@ -61,50 +101,33 @@ void		ldi(t_carry *cr)
 	from_memory_to_var(cr, &cr->reg[cr->cycle->regs[2]], check_position(ldi.
 	position), REG_SIZE);
 	if (cr->vm->verbose.v && cr->vm->verbose.v_4)
-		ft_printf("P%*d | ldi %d %d r%d\n       | -> load from %d + %d = %d "
-			"(with pc and mod %d)\n", ((ft_hw_mn_orders(cr->car_nbr) < 5) ? 5 :
-			ft_hw_mn_orders(cr->car_nbr) + 1), cr->car_nbr, ldi.prm1 + ldi.dir1,
-			ldi.dir2 + ldi.reg2, cr->cycle->regs[2] + 1, ldi.prm1 + ldi.dir1,
-			ldi.dir2 + ldi.reg2, ldi.prm1 + ldi.dir1 + ldi.dir2 + ldi.reg2,
-			ldi.position);
-	if (cr->vm->debug)
-		ft_printf("ldi ");
+		print_ldetc(cr, &ldi, 1);
 }
 
 void		lld(t_carry *cr)
 {
-	short			indir;
-	unsigned int	posit;
-	unsigned int	print;
+	t_ldi	ldi;
 
-	print = 0;
+	ft_bzero(&ldi, sizeof(ldi));
 	if (cr->cycle->descript[0] == 2)
 		cr->reg[cr->cycle->regs[1]] = get_param(cr, 0);
 	else
 	{
-		indir = get_param(cr, 0);
-		posit = check_position(cr->position + indir);
+		ldi.indir = get_param(cr, 0);
+		ldi.lld_pst = check_position(cr->position + ldi.indir);
 		if (STUPID)
 			from_memory_to_var(cr, &cr->reg[cr->cycle->regs[1]], check_position(
-					posit), 2);
+					ldi.lld_pst), 2);
 		else
 			from_memory_to_var(cr, &cr->reg[cr->cycle->regs[1]],
-					check_position(posit), REG_SIZE);
+					check_position(ldi.lld_pst), REG_SIZE);
 	}
 	if (!cr->reg[cr->cycle->regs[1]])
 		cr->carry = 1;
 	else
 		cr->carry = 0;
 	if (cr->vm->verbose.v && cr->vm->verbose.v_4)
-	{
-		from_memory_to_var(cr, &print, check_position(posit), REG_SIZE);
-		ft_printf("P%*d | lld %d r%d\n", ((ft_hw_mn_orders(cr->car_nbr) < 5) ? 5
-		: ft_hw_mn_orders(cr->car_nbr) + 1), cr->car_nbr, (cr->cycle->
-		descript[0] == 2) ? cr->reg[cr->cycle->regs[1]] : print, cr->cycle->
-		regs[1] + 1);
-	}
-	if (cr->vm->debug)
-		ft_printf("lld ");
+		print_ldetc(cr, &ldi, 2);
 }
 
 void		lldi(t_carry *cr)
@@ -131,16 +154,9 @@ void		lldi(t_carry *cr)
 	from_memory_to_var(cr, &cr->reg[cr->cycle->regs[2]], ldi.position,
 			REG_SIZE);
 	if (cr->vm->verbose.v && cr->vm->verbose.v_4)
-		ft_printf("P%*d | lldi %d %d r%d\n       | -> load from %d + %d = %d"
-			" (with pc %d)\n", ((ft_hw_mn_orders(cr->car_nbr) < 5) ? 5 :
-			ft_hw_mn_orders(cr->car_nbr) + 1), cr->car_nbr, ldi.prm1 + ldi.dir1,
-			ldi.dir2 + ldi.reg2, cr->cycle->regs[2] + 1, ldi.prm1 + ldi.dir1,
-			ldi.dir2 + ldi.reg2, ldi.prm1 + ldi.dir1 + ldi.dir2 + ldi.reg2, ldi.
-			position);
+		print_ldetc(cr, &ldi, 3);
 	if (!cr->reg[cr->cycle->regs[2]])
 		cr->carry = 1;
 	else
 		cr->carry = 0;
-	if (cr->vm->debug)
-		ft_printf("lldi ");
 }
