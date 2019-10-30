@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   strcatwchar_ptr.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vbrazhni <vbrazhni@student.unit.ua>        +#+  +:+       +#+        */
+/*   By: ggerhold <ggerhold@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/11/03 01:17:03 by vbrazhni          #+#    #+#             */
-/*   Updated: 2018/11/03 01:17:03 by vbrazhni         ###   ########.fr       */
+/*   Created: 2019/10/30 16:26:17 by ggerhold          #+#    #+#             */
+/*   Updated: 2019/10/30 16:26:18 by ggerhold         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 

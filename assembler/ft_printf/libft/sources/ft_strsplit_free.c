@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strsplit_free.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vbrazhni <vbrazhni@student.unit.ua>        +#+  +:+       +#+        */
+/*   By: ggerhold <ggerhold@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/09/30 19:38:35 by vbrazhni          #+#    #+#             */
-/*   Updated: 2018/09/30 19:38:36 by vbrazhni         ###   ########.fr       */
+/*   Created: 2019/10/30 16:20:38 by ggerhold          #+#    #+#             */
+/*   Updated: 2019/10/30 16:20:39 by ggerhold         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
