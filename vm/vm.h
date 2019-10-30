@@ -276,5 +276,6 @@ int				ft_hw_mn_orders(long long int num);
 void			report_norm(t_vm *vm, t_carry *cr);
 void			parse_verbose_flag(char **argv, int argc, int *l, t_vm *vm);
 void			parse_flag_n(int argc, char **argv, t_vm *vm, int *l);
+void			print_lldi(t_carry *cr, t_ldi *ldi);
 
 #endif

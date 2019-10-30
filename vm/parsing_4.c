@@ -71,3 +71,19 @@ void		parse_verbose_flag(char **argv, int argc, int *l, t_vm *vm)
 		set_the_verbose(vm);
 	}
 }
+
+void		print_lldi(t_carry *cr, t_ldi *ldi)
+{
+	if (cr->vm->verbose.v && cr->vm->verbose.v_4)
+	{
+		ft_printf("P%*d | lldi %d %d r%d\n       | -> load from %d + %d = %d (w"
+"ith pc %d)\n", ((ft_hw_mn_orders(cr->car_nbr) < 5) ? 5 : ft_hw_mn_orders(cr->
+car_nbr) + 1), cr->car_nbr, ldi->prm1 + ldi->dir1, ldi->dir2 + ldi->reg2, cr->
+cycle->regs[2] + 1, ldi->prm1 + ldi->dir1, ldi->dir2 + ldi->reg2,
+ldi->prm1 + ldi->dir1 + ldi->dir2 + ldi->reg2, ldi->position);
+	}
+	if (!cr->reg[cr->cycle->regs[2]])
+		cr->carry = 1;
+	else
+		cr->carry = 0;
+}

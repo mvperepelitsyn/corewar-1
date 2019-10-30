@@ -12,7 +12,7 @@
 
 #include "vm.h"
 
-void static print_ldetc(t_carry *cr, t_ldi *ldi, short sw)
+static void	print_ldetc(t_carry *cr, t_ldi *ldi, short sw)
 {
 	unsigned int print;
 
@@ -20,32 +20,18 @@ void static print_ldetc(t_carry *cr, t_ldi *ldi, short sw)
 	if (sw == 1)
 	{
 		ft_printf("P%*d | ldi %d %d r%d\n       | -> load from %d + %d = %d (wi"
-				  "th pc and mod %d)\n", ((ft_hw_mn_orders(cr->car_nbr) < 5) ? 5
-				  : ft_hw_mn_orders(cr->car_nbr) + 1), cr->car_nbr,
-				  ldi->prm1 + ldi->dir1, ldi->dir2 + ldi->reg2,
-				  cr->cycle->regs[2] + 1, ldi->prm1 + ldi->dir1,
-				  ldi->dir2 + ldi->reg2,
-				  ldi->prm1 + ldi->dir1 + ldi->dir2 + ldi->reg2, ldi->position);
+"th pc and mod %d)\n", ((ft_hw_mn_orders(cr->car_nbr) < 5) ? 5 :
+ft_hw_mn_orders(cr->car_nbr) + 1), cr->car_nbr, ldi->prm1 + ldi->dir1, ldi->
+dir2 + ldi->reg2, cr->cycle->regs[2] + 1, ldi->prm1 + ldi->dir1, ldi->dir2 +
+ldi->reg2, ldi->prm1 + ldi->dir1 + ldi->dir2 + ldi->reg2, ldi->position);
 	}
 	if (sw == 2)
 	{
 		from_memory_to_var(cr, &print, check_position(ldi->lld_pst), REG_SIZE);
-		ft_printf("P%*d | lld %d r%d\n",
-				((ft_hw_mn_orders(cr->car_nbr) < 5) ? 5 :
-				ft_hw_mn_orders(cr->car_nbr) + 1), cr->car_nbr,
-				(cr->cycle->descript[0] == 2) ? cr->reg[cr->cycle->regs[1]] :
-				print, cr->cycle->regs[1] + 1);
-	}
-	if (sw == 3)
-	{
-		ft_printf("P%*d | lldi %d %d r%d\n       | -> load from %d + %d = %d (w"
-				  "ith pc %d)\n",
-				  ((ft_hw_mn_orders(cr->car_nbr) < 5) ? 5 :
-				  ft_hw_mn_orders(cr->car_nbr) + 1), cr->car_nbr,
-				  ldi->prm1 + ldi->dir1, ldi->dir2 + ldi->reg2,
-				  cr->cycle->regs[2] + 1, ldi->prm1 + ldi->dir1,
-				  ldi->dir2 + ldi->reg2,
-				  ldi->prm1 + ldi->dir1 + ldi->dir2 + ldi->reg2, ldi->position);
+		ft_printf("P%*d | lld %d r%d\n", ((ft_hw_mn_orders(cr->car_nbr) < 5) ?
+		5 : ft_hw_mn_orders(cr->car_nbr) + 1), cr->car_nbr, (cr->cycle->
+		descript[0] == 2) ? cr->reg[cr->cycle->regs[1]] : print,
+				cr->cycle->regs[1] + 1);
 	}
 }
 
@@ -153,10 +139,5 @@ void		lldi(t_carry *cr)
 		((ldi.prm1 + ldi.dir1 + ldi.dir2 + ldi.reg2)));
 	from_memory_to_var(cr, &cr->reg[cr->cycle->regs[2]], ldi.position,
 			REG_SIZE);
-	if (cr->vm->verbose.v && cr->vm->verbose.v_4)
-		print_ldetc(cr, &ldi, 3);
-	if (!cr->reg[cr->cycle->regs[2]])
-		cr->carry = 1;
-	else
-		cr->carry = 0;
+	print_lldi(cr, &ldi);
 }
