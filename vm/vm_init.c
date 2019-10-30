@@ -23,7 +23,6 @@ void		carriages_init(t_vm *vm, int champ_nbr, int position)
 	cr->color = champ_nbr;
 	cr->position = position;
 	cr->vm = vm;
-	// cr->carry = 1;//;oirteg;oi35htg5;goh3tyg;oh3;g3oh
 	cr->next = vm->carriages;
 	vm->carriages = cr;
 	vm->car_count++;

@@ -17,8 +17,13 @@
 # include "./libft/libft.h"
 # include "op.h"
 
+<<<<<<< HEAD
+# define STUPID 0
+# define SLEEP 20000
+=======
 # define STUPID 1
 # define SLEEP 0
+>>>>>>> 32c00a5719735eb343971b31a24f8897f78921d3
 # define OCTET 64
 
 typedef struct s_vm		t_vm;
@@ -172,6 +177,7 @@ typedef struct	s_ldi
 	int					reg2;
 	int					position;
 	short				indir;
+	unsigned int		lld_pst;
 }				t_ldi;
 
 /*

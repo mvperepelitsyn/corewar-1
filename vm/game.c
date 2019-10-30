@@ -21,7 +21,8 @@ static void	carriage_remover(t_vm *vm, t_carry *prev, t_carry *cur)
 		vm->carriages = cur->next;
 		if (vm->verbose.v && vm->verbose.v_8)
 			ft_printf("Process %d hasn't lived for %d cycles (CTD %d)\n",
-					cur->car_nbr, cur->last_live, vm->cycles_to_die);
+					cur->car_nbr, vm->cycles_from_start - cur->last_alive_cycle,
+					vm->cycles_to_die);
 		free(cur);
 		if (vm->debug)
 			ft_printf("remove!\n");
@@ -30,7 +31,8 @@ static void	carriage_remover(t_vm *vm, t_carry *prev, t_carry *cur)
 	ptr = cur->next;
 	if (vm->verbose.v && vm->verbose.v_8)
 		ft_printf("Process %d hasn't lived for %d cycles (CTD %d)\n",
-				cur->car_nbr, cur->last_live, vm->cycles_to_die);
+				cur->car_nbr, vm->cycles_from_start - cur->last_alive_cycle,
+				vm->cycles_to_die);
 	free(cur);
 	prev->next = ptr;
 	if (vm->debug)
@@ -47,7 +49,6 @@ static void	help_check_game(t_vm *vm)
 		if (vm->verbose.v && vm->verbose.v_2)
 			ft_printf("Cycle to die is now %d\n", vm->cycles_to_die);
 	}
-	// vm->check_counter++;
 }
 
 static void	check_game(t_vm *vm)
@@ -64,7 +65,7 @@ static void	check_game(t_vm *vm)
 	while (cur)
 	{
 		next = cur->next;
-		if (!cur->ctd_live_counter/*cur->last_live //(vm->cycles_from_start  - cur->last_alive_cycle)// >= vm->cycles_to_die*/)
+		if (!cur->ctd_live_counter)
 		{
 			carriage_remover(vm, prev, cur);
 			cur = next;

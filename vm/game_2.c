@@ -53,11 +53,6 @@ static void	help_cycle(t_vm *vm, t_carry *cr, t_cycle *cycle)
 	}
 }
 
-void		debug()
-{
-	//
-}
-
 void		cycle(t_vm *vm)
 {
 	t_carry	*cr;
@@ -69,8 +64,6 @@ void		cycle(t_vm *vm)
 		ft_bzero((void*)&cycle, sizeof(cycle));
 		cr->last_live++;
 		cr->cycle = &cycle;
-		if (vm->cycles_from_start == 15360)
-			debug();
 		if (!cr->cycles_before)
 		{
 			cr->cmd_code = vm->area[cr->position];
@@ -80,7 +73,6 @@ void		cycle(t_vm *vm)
 		if (cr->cycles_before)
 			cr->cycles_before--;
 		help_cycle(vm, cr, &cycle);
-		// cr->last_live++;
 		cr = cr->next;
 	}
 }
