@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: thansen <thansen@student.42.fr>            +#+  +:+       +#+         #
+#    By: ggerhold <ggerhold@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/10/29 21:37:44 by thansen           #+#    #+#              #
-#    Updated: 2019/10/30 15:23:02 by thansen          ###   ########.fr        #
+#    Updated: 2019/10/30 16:00:15 by ggerhold         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -37,8 +37,7 @@ ASM_HEADERS_LIST = \
 	op.h\
 	asm.h\
 	asm_error.h\
-	asm_asm.h\
-	asm_disasm.h
+	asm_asm.h
 ASM_HEADERS = $(addprefix $(HEADERS_DIRECTORY), $(ASM_HEADERS_LIST))
 
 # Sources
