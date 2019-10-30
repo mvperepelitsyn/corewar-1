@@ -1,24 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   asm.c                                              :+:      :+:    :+:   */
+/*   skip.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: thansen <thansen@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/10/29 22:50:27 by thansen           #+#    #+#             */
-/*   Updated: 2019/10/29 22:50:28 by thansen          ###   ########.fr       */
+/*   Created: 2019/10/30 16:10:38 by thansen           #+#    #+#             */
+/*   Updated: 2019/10/30 16:10:39 by thansen          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "asm.h"
-#include <errno.h>
+#include "asm_asm.h"
 
-int		main(int argc, char **argv)
+void	skip_whitespaces(t_parser *parser, const char *row)
 {
-	errno = 0;
-	if (argc == 2 && is_filename(*(argv + 1), ".s"))
-		assemble(*(argv + 1));
-	else
-		print_help();
-	return (0);
+	while (is_whitespace(row[parser->column]))
+		parser->column++;
+}
+
+void	skip_comment(t_parser *parser, const char *row)
+{
+	if (row[parser->column] == COMMENT_CHAR
+		|| row[parser->column] == ALT_COMMENT_CHAR)
+		while (row[parser->column] && row[parser->column] != '\n')
+			parser->column++;
 }

@@ -1,21 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   print.c                                            :+:      :+:    :+:   */
+/*   error_info.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vbrazhni <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: thansen <thansen@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/12/05 23:08:40 by vbrazhni          #+#    #+#             */
-/*   Updated: 2018/12/14 11:06:44 by vbrazhni         ###   ########.fr       */
+/*   Created: 2019/10/30 16:07:51 by thansen           #+#    #+#             */
+/*   Updated: 2019/10/30 16:07:53 by thansen          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "asm_asm.h"
 #include "ft_printf.h"
 
-void	print_help(void)
+void	name_error(void)
 {
-	ft_printf("Usage: ./asm (champion.s|champion.cor)\n");
-	ft_printf("    champion.s   — from assemble to bytecode\n");
-	ft_printf("    champion.cor — from bytecode to assemble\n");
+	ft_dprintf(2, "Champion name too long (Max length %u)\n", PROG_NAME_LENGTH);
+	exit(1);
+}
+
+void	comment_error(void)
+{
+	ft_dprintf(2, "Champion comment too long (Max length %u)\n",
+																COMMENT_LENGTH);
+	exit(1);
 }

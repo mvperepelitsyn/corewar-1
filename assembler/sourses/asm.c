@@ -1,43 +1,24 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   asm.h                                              :+:      :+:    :+:   */
+/*   asm.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: thansen <thansen@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/10/30 16:12:05 by thansen           #+#    #+#             */
-/*   Updated: 2019/10/30 16:12:53 by thansen          ###   ########.fr       */
+/*   Created: 2019/10/30 16:07:25 by thansen           #+#    #+#             */
+/*   Updated: 2019/10/30 16:07:27 by thansen          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef ASM_H
+#include "asm.h"
+#include <errno.h>
 
-# define ASM_H
-
-# include "libft.h"
-
-void	assemble(char *filename);
-
-void	disassemble(char *filename);
-
-/*
-** Filename
-*/
-
-t_bool	is_filename(const char *filename, const char *ext);
-
-char	*replace_extension(char *filename, char *old, char *new);
-
-/*
-** Print
-*/
-
-void	print_help(void);
-
-/*
-** Utils
-*/
-
-void	terminate(char *s);
-
-#endif
+int		main(int argc, char **argv)
+{
+	errno = 0;
+	if (argc == 2 && is_filename(*(argv + 1), ".s"))
+		assemble(*(argv + 1));
+	else
+		print_help();
+	return (0);
+}
