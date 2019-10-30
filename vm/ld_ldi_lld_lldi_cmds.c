@@ -75,7 +75,9 @@ void		lld(t_carry *cr)
 {
 	short			indir;
 	unsigned int	posit;
+	unsigned int	print;
 
+	print = 0;
 	if (cr->cycle->descript[0] == 2)
 		cr->reg[cr->cycle->regs[1]] = get_param(cr, 0);
 	else
@@ -94,9 +96,13 @@ void		lld(t_carry *cr)
 	else
 		cr->carry = 0;
 	if (cr->vm->verbose.v && cr->vm->verbose.v_4)
+	{
+		from_memory_to_var(cr, &print, check_position(posit), REG_SIZE);
 		ft_printf("P%*d | lld %d r%d\n", ((ft_hw_mn_orders(cr->car_nbr) < 5) ? 5
-		: ft_hw_mn_orders(cr->car_nbr) + 1), cr->car_nbr, cr->reg[cr->cycle->
-		regs[1]], cr->cycle->regs[1] + 1);
+		: ft_hw_mn_orders(cr->car_nbr) + 1), cr->car_nbr, (cr->cycle->
+		descript[0] == 2) ? cr->reg[cr->cycle->regs[1]] : print, cr->cycle->
+		regs[1] + 1);
+	}
 	if (cr->vm->debug)
 		ft_printf("lld ");
 }
