@@ -6,7 +6,7 @@
 /*   By: dfrost-a <dfrost-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/22 13:53:32 by dfrost-a          #+#    #+#             */
-/*   Updated: 2019/10/28 18:07:45 by uhand            ###   ########.fr       */
+/*   Updated: 2019/10/30 14:37:56 by uhand            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,6 +50,11 @@ static void	help_cycle(t_vm *vm, t_carry *cr, t_cycle *cycle)
 	}
 }
 
+void		debug()
+{
+	//
+}
+
 void		cycle(t_vm *vm)
 {
 	t_carry	*cr;
@@ -59,9 +64,10 @@ void		cycle(t_vm *vm)
 	while (cr)
 	{
 		ft_bzero((void*)&cycle, sizeof(cycle));
+		cr->last_live++;
 		cr->cycle = &cycle;
-		// if (vm->cycles_from_start == 26493)
-		// 	debug();
+		if (vm->cycles_from_start == 15360)
+			debug();
 		if (!cr->cycles_before)
 		{
 			cr->cmd_code = vm->area[cr->position];
@@ -71,7 +77,7 @@ void		cycle(t_vm *vm)
 		if (cr->cycles_before)
 			cr->cycles_before--;
 		help_cycle(vm, cr, &cycle);
-		cr->last_live++;
+		// cr->last_live++;
 		cr = cr->next;
 	}
 }

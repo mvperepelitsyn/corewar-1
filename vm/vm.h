@@ -6,7 +6,7 @@
 /*   By: uhand <uhand@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/22 14:00:40 by uhand             #+#    #+#             */
-/*   Updated: 2019/10/25 16:08:32 by dfrost-a         ###   ########.fr       */
+/*   Updated: 2019/10/29 22:16:49 by uhand            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@
 # include "./libft/libft.h"
 # include "op.h"
 
-# define STUPID 0
+# define STUPID 1
 # define SLEEP 20000
 # define OCTET 64
 

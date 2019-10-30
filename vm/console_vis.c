@@ -6,7 +6,7 @@
 /*   By: dfrost-a <dfrost-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/21 19:58:24 by dfrost-a          #+#    #+#             */
-/*   Updated: 2019/10/29 15:38:59 by uhand            ###   ########.fr       */
+/*   Updated: 2019/10/30 13:55:00 by uhand            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,10 +89,14 @@ static void	print_report(t_vm *vm)
 	i = 0;
 	while (cr)
 	{
+		ft_printf("%5d: ", cr->car_nbr);
 		if (cr->last_champ)
 			ft_printf("%s \"Champion\" (%d) said \"Alive!\" %d cycles ago (%u)."
-				"\t", vm->processes[(cr->last_champ * -1) - 1].cmp_name, \
+				"\t",  vm->processes[(cr->last_champ * -1) - 1].cmp_name, \
 				cr->last_champ, cr->last_live, cr->last_alive_cycle);
+		else
+			ft_printf("UNKNOWN\t\t\t  said \"Alive!\" %d cycles ago (%u).\t", \
+				cr->last_live, cr->last_alive_cycle);
 		if (cr->cmd_code >= 1 && cr->cmd_code <= 16 \
 				&& !(vm->dump_flag && !vm->dump))
 			ft_printf("\tNext command: \"%s\" in %u cycles\n", \
