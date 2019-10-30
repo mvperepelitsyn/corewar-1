@@ -16,6 +16,7 @@ void		and(t_carry *cr)
 {
 	t_andorxor	aox;
 
+	ft_bzero(&aox, sizeof(aox));
 	if (cr->cycle->descript[0] == 3)
 	{
 		aox.indir = get_param(cr, 0);
@@ -38,8 +39,9 @@ void		and(t_carry *cr)
 	else
 		cr->carry = 0;
 	if (cr->vm->verbose.v && cr->vm->verbose.v_4)
-		ft_printf("P%5d | and %d %d r%d\n", cr->car_nbr, aox.prm1, aox.prm2,
-				cr->cycle->regs[2] + 1);
+		ft_printf("P%*d | and %d %d r%d\n", ((ft_hw_mn_orders(cr->car_nbr) < 5)
+		? 5 : ft_hw_mn_orders(cr->car_nbr) + 1), cr->car_nbr, aox.prm1, aox.
+		prm2, cr->cycle->regs[2] + 1);
 	if (cr->vm->debug)
 		ft_printf("and ");
 }
@@ -48,6 +50,7 @@ void		or(t_carry *cr)
 {
 	t_andorxor	aox;
 
+	ft_bzero(&aox, sizeof(aox));
 	if (cr->cycle->descript[0] == 3)
 	{
 		aox.indir = get_param(cr, 0);
@@ -70,7 +73,8 @@ void		or(t_carry *cr)
 	else
 		cr->carry = 0;
 	if (cr->vm->verbose.v && cr->vm->verbose.v_4)
-		ft_printf("P%5d | or %d %d r%d\n", cr->car_nbr, aox.prm1, aox.prm2,
+		ft_printf("P%*d | or %d %d r%d\n", ((ft_hw_mn_orders(cr->car_nbr) < 5) ?
+		5 : ft_hw_mn_orders(cr->car_nbr) + 1), cr->car_nbr, aox.prm1, aox.prm2,
 				  cr->cycle->regs[2] + 1);
 	if (cr->vm->debug)
 		ft_printf("or ");
@@ -80,6 +84,7 @@ void		xor(t_carry *cr)
 {
 	t_andorxor		aox;
 
+	ft_bzero(&aox, sizeof(aox));
 	if (cr->cycle->descript[0] == 3)
 	{
 		aox.indir = get_param(cr, 0);
@@ -102,8 +107,9 @@ void		xor(t_carry *cr)
 	else
 		cr->carry = 0;
 	if (cr->vm->verbose.v && cr->vm->verbose.v_4)
-		ft_printf("P%5d | xor %d %d r%d\n", cr->car_nbr, aox.prm1, aox.prm2,
-				  cr->cycle->regs[2] + 1);
+		ft_printf("P%*d | xor %d %d r%d\n", ((ft_hw_mn_orders(cr->car_nbr) < 5)
+		? 5 : ft_hw_mn_orders(cr->car_nbr) + 1), cr->car_nbr, aox.prm1, aox.
+		prm2, cr->cycle->regs[2] + 1);
 	if (cr->vm->debug)
 		ft_printf("xor ");
 }

@@ -30,7 +30,8 @@ void		ld(t_carry *cr)
 	else
 		cr->carry = 0;
 	if (cr->vm->verbose.v && cr->vm->verbose.v_4)
-		ft_printf("P%5d | ld %d r%d\n", cr->car_nbr, cr->reg[cr->cycle->
+		ft_printf("P%*d | ld %d r%d\n", ((ft_hw_mn_orders(cr->car_nbr) < 5) ? 5
+		: ft_hw_mn_orders(cr->car_nbr) + 1), cr->car_nbr, cr->reg[cr->cycle->
 		regs[1]], cr->cycle->regs[1] + 1);
 	if (cr->vm->debug)
 		ft_printf("ld ");
@@ -60,10 +61,12 @@ void		ldi(t_carry *cr)
 	from_memory_to_var(cr, &cr->reg[cr->cycle->regs[2]], check_position(ldi.
 	position), REG_SIZE);
 	if (cr->vm->verbose.v && cr->vm->verbose.v_4)
-		ft_printf("P%5d | ldi %d %d r%d\n       | -> load from %d + %d = %d "
-			"(with pc and mod %d)\n", cr->car_nbr, ldi.prm1 + ldi.dir1, ldi.dir2
-			+ ldi.reg2, cr->cycle->regs[2] + 1, ldi.prm1 + ldi.dir1, ldi.dir2 +
-			ldi.reg2, ldi.prm1 + ldi.dir1 + ldi.dir2 + ldi.reg2, ldi.position);
+		ft_printf("P%*d | ldi %d %d r%d\n       | -> load from %d + %d = %d "
+			"(with pc and mod %d)\n", ((ft_hw_mn_orders(cr->car_nbr) < 5) ? 5 :
+			ft_hw_mn_orders(cr->car_nbr) + 1), cr->car_nbr, ldi.prm1 + ldi.dir1,
+			ldi.dir2 + ldi.reg2, cr->cycle->regs[2] + 1, ldi.prm1 + ldi.dir1,
+			ldi.dir2 + ldi.reg2, ldi.prm1 + ldi.dir1 + ldi.dir2 + ldi.reg2,
+			ldi.position);
 	if (cr->vm->debug)
 		ft_printf("ldi ");
 }
@@ -91,7 +94,8 @@ void		lld(t_carry *cr)
 	else
 		cr->carry = 0;
 	if (cr->vm->verbose.v && cr->vm->verbose.v_4)
-		ft_printf("P%5d | lld %d r%d\n", cr->car_nbr, cr->reg[cr->cycle->
+		ft_printf("P%*d | lld %d r%d\n", ((ft_hw_mn_orders(cr->car_nbr) < 5) ? 5
+		: ft_hw_mn_orders(cr->car_nbr) + 1), cr->car_nbr, cr->reg[cr->cycle->
 		regs[1]], cr->cycle->regs[1] + 1);
 	if (cr->vm->debug)
 		ft_printf("lld ");
@@ -121,9 +125,10 @@ void		lldi(t_carry *cr)
 	from_memory_to_var(cr, &cr->reg[cr->cycle->regs[2]], ldi.position,
 			REG_SIZE);
 	if (cr->vm->verbose.v && cr->vm->verbose.v_4)
-		ft_printf("P%5d | lldi %d %d r%d\n       | -> load from %d + %d = %d"
-			" (with pc %d)\n", cr->car_nbr, ldi.prm1 + ldi.dir1, ldi.
-			dir2 + ldi.reg2, cr->cycle->regs[2] + 1, ldi.prm1 + ldi.dir1,
+		ft_printf("P%*d | lldi %d %d r%d\n       | -> load from %d + %d = %d"
+			" (with pc %d)\n", ((ft_hw_mn_orders(cr->car_nbr) < 5) ? 5 :
+			ft_hw_mn_orders(cr->car_nbr) + 1), cr->car_nbr, ldi.prm1 + ldi.dir1,
+			ldi.dir2 + ldi.reg2, cr->cycle->regs[2] + 1, ldi.prm1 + ldi.dir1,
 			ldi.dir2 + ldi.reg2, ldi.prm1 + ldi.dir1 + ldi.dir2 + ldi.reg2, ldi.
 			position);
 	if (!cr->reg[cr->cycle->regs[2]])

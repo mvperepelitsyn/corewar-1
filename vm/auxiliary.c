@@ -38,7 +38,7 @@ int		display_usage(void)
   "\n\t\t    - 0 : Show only essentials", \
   "\n\t\t    - 1 : Show lives", \
   "\n\t\t    - 2 : Show cycles", \
-  "\n\t\t    - 4 : Show operations (Params are NOT letteral ...)", \
+  "\n\t\t    - 4 : Show operations (Params are NOT litteral ...)", \
   "\n\t\t    - 8 : Show deaths", \
   "\n\t\t    - 16 : Show PC movements (Except for jumps)", \
   "\n\t-n N\t  : Sets the number of the next player\n");
