@@ -6,7 +6,7 @@
 #    By: thansen <thansen@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/10/30 16:12:16 by thansen           #+#    #+#              #
-#    Updated: 2019/10/30 16:12:17 by thansen          ###   ########.fr        #
+#    Updated: 2019/10/30 16:18:56 by thansen          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -42,7 +42,7 @@ ASM_HEADERS = $(addprefix $(HEADERS_DIRECTORY), $(ASM_HEADERS_LIST))
 
 # Sources
 
-ASM_SOURCES_DIRECTORY = ./assembler/
+ASM_SOURCES_DIRECTORY = ./sourses/
 ASM_SOURCES_LIST = \
 	asm.c\
 	filename.c\
@@ -70,7 +70,7 @@ ASM_SOURCES = $(addprefix $(ASM_SOURCES_DIRECTORY), $(ASM_SOURCES_LIST))
 
 # Objects
 
-OBJECTS_DIRECTORY = ./assembler/objects/
+OBJECTS_DIRECTORY = ./sourses/objects/
 
 # asm
 
