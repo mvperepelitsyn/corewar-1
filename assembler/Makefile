@@ -6,14 +6,14 @@
 #    By: thansen <thansen@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/10/30 16:12:16 by thansen           #+#    #+#              #
-#    Updated: 2019/10/30 16:36:38 by thansen          ###   ########.fr        #
+#    Updated: 2019/10/30 19:11:23 by thansen          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 ASM_NAME = ../asm
 
-CC = gcc
-FLAGS = -Wall -Werror -Wextra
+CC = gcc -ggdb
+FLAGS = -Wall -Werror -Wextra -g
 
 # Libraries and Includes
 
