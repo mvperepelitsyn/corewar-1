@@ -6,7 +6,7 @@
 /*   By: dfrost-a <dfrost-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/21 18:25:43 by dfrost-a          #+#    #+#             */
-/*   Updated: 2019/10/29 19:00:40 by uhand            ###   ########.fr       */
+/*   Updated: 2019/10/30 13:58:34 by uhand            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,17 +20,18 @@ void		live(t_carry *cr)
 	cr->last_live = 0;
 	cr->vm->live_counter++;
 	dir = get_param(cr, 0);
-	champ_nbr = (int*)&dir;
+	champ_nbr = (int *) &dir;
+	cr->last_alive_cycle = cr->vm->cycles_from_start + 1;
 	if (cr->vm->verbose.v_4)
 		ft_printf("P%*d | live %d\n", ((ft_hw_mn_orders(cr->car_nbr) < 5) ? 5 :
 		ft_hw_mn_orders(cr->car_nbr) + 1), cr->car_nbr, dir);
-	if ((champ_nbr[0] * -1) > 0
-	&& (champ_nbr[0] * -1) <= (int)cr->vm->champs_count)
+	if ((champ_nbr[0] * -1) > 0 \
+		&& (champ_nbr[0] * -1) <= (int) cr->vm->champs_count)
 	{
 		// cr->vm->live_counter++;//
 		cr->vm->last_alive = dir;
 		cr->last_champ = dir;
-		cr->last_alive_cycle = cr->vm->cycles_from_start + 1;
+		// cr->last_alive_cycle = cr->vm->cycles_from_start + 1;
 		cr->vm->last_alive_cycle = cr->vm->cycles_from_start + 1;
 		if (cr->vm->verbose.v_1)
 			ft_printf("Player %d (%s) is said to be alive\n", cr->vm->last_alive

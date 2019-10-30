@@ -6,7 +6,7 @@
 /*   By: dfrost-a <dfrost-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/21 20:24:16 by dfrost-a          #+#    #+#             */
-/*   Updated: 2019/10/28 20:21:02 by uhand            ###   ########.fr       */
+/*   Updated: 2019/10/30 14:29:03 by uhand            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,8 +21,7 @@ static void	carriage_remover(t_vm *vm, t_carry *prev, t_carry *cur)
 		vm->carriages = cur->next;
 		if (vm->verbose.v && vm->verbose.v_8)
 			ft_printf("Process %d hasn't lived for %d cycles (CTD %d)\n",
-					cur->car_nbr, (cur->last_live == 1536) ? cur->last_live :
-					cur->last_live - 1, vm->cycles_to_die);
+					cur->car_nbr, cur->last_live, vm->cycles_to_die);
 		free(cur);
 		if (vm->debug)
 			ft_printf("remove!\n");
@@ -31,7 +30,7 @@ static void	carriage_remover(t_vm *vm, t_carry *prev, t_carry *cur)
 	ptr = cur->next;
 	if (vm->verbose.v && vm->verbose.v_8)
 		ft_printf("Process %d hasn't lived for %d cycles (CTD %d)\n",
-cur->car_nbr, cur->last_live - 1, vm->cycles_to_die);
+				cur->car_nbr, cur->last_live, vm->cycles_to_die);
 	free(cur);
 	prev->next = ptr;
 	if (vm->debug)
@@ -40,6 +39,7 @@ cur->car_nbr, cur->last_live - 1, vm->cycles_to_die);
 
 static void	help_check_game(t_vm *vm)
 {
+	vm->check_counter++;
 	if (vm->live_counter >= NBR_LIVE || vm->check_counter >= MAX_CHECKS)
 	{
 		vm->cycles_to_die -= CYCLE_DELTA;
@@ -47,7 +47,7 @@ static void	help_check_game(t_vm *vm)
 		if (vm->verbose.v && vm->verbose.v_2)
 			ft_printf("Cycle to die is now %d\n", vm->cycles_to_die);
 	}
-	vm->check_counter++;
+	// vm->check_counter++;
 }
 
 static void	check_game(t_vm *vm)
