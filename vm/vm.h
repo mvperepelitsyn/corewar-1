@@ -6,7 +6,7 @@
 /*   By: uhand <uhand@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/22 14:00:40 by uhand             #+#    #+#             */
-/*   Updated: 2019/10/30 18:38:52 by uhand            ###   ########.fr       */
+/*   Updated: 2019/10/30 19:29:34 by uhand            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,13 +17,8 @@
 # include "./libft/libft.h"
 # include "op.h"
 
-<<<<<<< HEAD
-# define STUPID 0
-# define SLEEP 20000
-=======
 # define STUPID 1
 # define SLEEP 0
->>>>>>> 32c00a5719735eb343971b31a24f8897f78921d3
 # define OCTET 64
 
 typedef struct s_vm		t_vm;

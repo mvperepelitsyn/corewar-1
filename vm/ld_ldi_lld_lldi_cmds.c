@@ -6,13 +6,13 @@
 /*   By: dfrost-a <dfrost-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/22 13:06:54 by dfrost-a          #+#    #+#             */
-/*   Updated: 2019/10/29 20:09:32 by uhand            ###   ########.fr       */
+/*   Updated: 2019/10/30 19:30:39 by uhand            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "vm.h"
 
-void static print_ldetc(t_carry *cr, t_ldi *ldi, short sw)
+static void print_ldetc(t_carry *cr, t_ldi *ldi, short sw)
 {
 	unsigned int print;
 
