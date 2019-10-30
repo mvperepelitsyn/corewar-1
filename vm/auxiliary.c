@@ -12,6 +12,19 @@
 
 #include "vm.h"
 
+int		ft_hw_mn_orders(long long int num)
+{
+	int i;
+
+	i = 0;
+	while (num)
+	{
+		num = num / 10;
+		i++;
+	}
+	return (i);
+}
+
 int		display_usage(void)
 {
 	ft_printf("usage:\t./corewar [-a -dump N -vis -v N]%s%s%s%s%s%s%s%s%s%s%s%s"
@@ -21,14 +34,14 @@ int		display_usage(void)
 		"\n\t-dump N\t  : Dumps memory after N cycles then exits", \
 		"\n\t-vis\t  : Console visualization mode", \
 		"\n\t-v N\t  : Verbosity levels, can be added together to enable severa"
-  "l", \
-  "\n\t\t    - 0 : Show only essentials", \
-  "\n\t\t    - 1 : Show lives", \
-  "\n\t\t    - 2 : Show cycles", \
-  "\n\t\t    - 4 : Show operations (Params are NOT letteral ...)", \
-  "\n\t\t    - 8 : Show deaths", \
-  "\n\t\t    - 16 : Show PC movements (Except for jumps)", \
-  "\n\t-n N\t  : Sets the number of the next player\n");
+"l", \
+"\n\t\t    - 0 : Show only essentials", \
+"\n\t\t    - 1 : Show lives", \
+"\n\t\t    - 2 : Show cycles", \
+"\n\t\t    - 4 : Show operations (Params are NOT litteral ...)", \
+"\n\t\t    - 8 : Show deaths", \
+"\n\t\t    - 16 : Show PC movements (Except for jumps)", \
+"\n\t-n N\t  : Sets the number of the next player\n");
 	return (0);
 }
 

@@ -30,7 +30,7 @@ static void	carriage_remover(t_vm *vm, t_carry *prev, t_carry *cur)
 	ptr = cur->next;
 	if (vm->verbose.v && vm->verbose.v_8)
 		ft_printf("Process %d hasn't lived for %d cycles (CTD %d)\n",
-				  cur->car_nbr, cur->last_live, vm->cycles_to_die);
+				cur->car_nbr, cur->last_live, vm->cycles_to_die);
 	free(cur);
 	prev->next = ptr;
 	if (vm->debug)

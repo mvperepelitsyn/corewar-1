@@ -271,5 +271,6 @@ void			check_magic_header(int fd, char *file_name);
 void			check_num(t_process *champs, int num, char *champ_name);
 void			check_file_and_fill(char *file_name, t_process *chmp, int num);
 void			how_many_champs(t_vm *vm);
+int				ft_hw_mn_orders(long long int num);
 
 #endif

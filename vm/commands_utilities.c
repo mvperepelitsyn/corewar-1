@@ -78,7 +78,7 @@ void				get_param_plus(t_carry *cr, void *param, int prm_nbr)
 	shift = get_shift(cr, prm_nbr);
 	if (cr->cycle->descript[prm_nbr] == 2)
 		from_memory_to_var(cr, param, check_position(cr->position + shift), \
-            g_cmd_prms[cr->cmd_code - 1].dir_size);
+g_cmd_prms[cr->cmd_code - 1].dir_size);
 	else
 		from_memory_to_var(cr, param, check_position(cr->position + shift), 2);
 }
@@ -94,7 +94,7 @@ unsigned int		get_param(t_carry *cr, int prm_nbr)
 	shift = get_shift(cr, prm_nbr);
 	if (cr->cycle->descript[prm_nbr] == 2)
 		from_memory_to_var(cr, &prm, check_position(cr->position + shift), \
-            g_cmd_prms[cr->cmd_code - 1].dir_size);
+g_cmd_prms[cr->cmd_code - 1].dir_size);
 	else
 	{
 		from_memory_to_var(cr, &indir, check_position(cr->position + shift), 2);
