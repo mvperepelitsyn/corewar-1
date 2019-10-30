@@ -30,14 +30,6 @@ void		and(t_carry *cr)
 
 	ft_bzero(&aox, sizeof(aox));
 	aox_help_frst_prm(cr, &aox);
- //	if (cr->cycle->descript[0] == 3)
-//	{
-//		aox.indir = get_param(cr, 0);
-//		from_memory_to_var(cr, &aox.prm1, check_position(cr->position +
-//		aox.indir % IDX_MOD), REG_SIZE);
-//	}
-//	else
-//		aox.prm1 = get_param(cr, 0);
 	if (cr->cycle->descript[1] == 3)
 	{
 		aox.indir = get_param(cr, 1);
@@ -65,14 +57,6 @@ void		or(t_carry *cr)
 
 	ft_bzero(&aox, sizeof(aox));
 	aox_help_frst_prm(cr, &aox);
-//	if (cr->cycle->descript[0] == 3)
-//	{
-//		aox.indir = get_param(cr, 0);
-//		from_memory_to_var(cr, &aox.prm1, check_position(cr->position +
-//		aox.indir % IDX_MOD), REG_SIZE);
-//	}
-//	else
-//		aox.prm1 = get_param(cr, 0);
 	if (cr->cycle->descript[1] == 3)
 	{
 		aox.indir = get_param(cr, 1);
@@ -100,14 +84,6 @@ void		xor(t_carry *cr)
 
 	ft_bzero(&aox, sizeof(aox));
 	aox_help_frst_prm(cr, &aox);
-//	if (cr->cycle->descript[0] == 3)
-//	{
-//		aox.indir = get_param(cr, 0);
-//		from_memory_to_var(cr, &aox.prm1, check_position(cr->position +
-//		aox.indir % IDX_MOD), REG_SIZE);
-//	}
-//	else
-//		aox.prm1 = get_param(cr, 0);
 	if (cr->cycle->descript[1] == 3)
 	{
 		aox.indir = get_param(cr, 1);

@@ -14,18 +14,18 @@
 
 void		live(t_carry *cr)
 {
-	unsigned int dir;
-	int *champ_nbr;
+	unsigned int	dir;
+	int				*champ_nbr;
 
 	cr->last_live = 0;
 	cr->vm->live_counter++;
 	dir = get_param(cr, 0);
-	champ_nbr = (int *) &dir;
+	champ_nbr = (int*)&dir;
 	if (cr->vm->verbose.v_4)
 		ft_printf("P%*d | live %d\n", ((ft_hw_mn_orders(cr->car_nbr) < 5) ? 5 :
 		ft_hw_mn_orders(cr->car_nbr) + 1), cr->car_nbr, dir);
-	if ((champ_nbr[0] * -1) > 0 \
- && (champ_nbr[0] * -1) <= (int) cr->vm->champs_count)
+	if ((champ_nbr[0] * -1) > 0
+	&& (champ_nbr[0] * -1) <= (int)cr->vm->champs_count)
 	{
 		// cr->vm->live_counter++;//
 		cr->vm->last_alive = dir;
@@ -70,8 +70,8 @@ static void	copy_carriage(t_carry *cr_src, short dir)
 
 void		frk(t_carry *cr)
 {
-	short			dir;
-	short 			dir_hlp;
+	short	dir;
+	short	dir_hlp;
 
 	get_param_plus(cr, &dir_hlp, 0);
 	dir = dir_hlp % IDX_MOD;

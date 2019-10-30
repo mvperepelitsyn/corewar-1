@@ -11,12 +11,11 @@
 /* ************************************************************************** */
 
 #include "vm.h"
-//TODO: SOMETHING IS GOING COMPLETELY WRONG WITH THIS SHIT
-//		in case if we got a register
+
 void		st(t_carry *cr)
 {
-	short			indir;
-	short 			indir_hlp;
+	short	indir;
+	short	indir_hlp;
 
 	indir_hlp = 0;
 	if (cr->cycle->descript[1] == 1)
@@ -82,7 +81,7 @@ g_cmd_prms[cr->cmd_code - 1].dir_size);
 			ft_printf("P%*d | zjmp %d %s\n", ((ft_hw_mn_orders(cr->car_nbr) < 5)
 			? 5 : ft_hw_mn_orders(cr->car_nbr) + 1), cr->car_nbr, dir,
 					"FAILED");
-		return;
+		return ;
 	}
 	from_memory_to_var(cr, &dir_hlp, check_position(cr->position + 1), \
 g_cmd_prms[cr->cmd_code - 1].dir_size);
@@ -94,40 +93,4 @@ g_cmd_prms[cr->cmd_code - 1].dir_size);
 		: ft_hw_mn_orders(cr->car_nbr) + 1), cr->car_nbr, dir_hlp, "OK");
 	if (cr->vm->debug)
 		ft_printf("zjmp ");
-}
-
-void		sti(t_carry *cr)
-{
-	t_sti		sti;
-
-	ft_bzero(&sti, sizeof(sti));
-	get_param_plus(cr, &sti.reg1, 0);
-	if (cr->cycle->descript[1] == 1)
-		get_param_plus(cr, &sti.prm2, 1);
-	else if (cr->cycle->descript[1] == 2)
-		get_param_plus(cr, &sti.dir2, 1);
-	else
-	{
-		get_param_plus(cr, &sti.indir, 1);
-		from_memory_to_var(cr, &sti.prm2, check_position(cr->position +
-		sti.indir % IDX_MOD), REG_SIZE);
-	}
-	if (cr->cycle->descript[2] == 1)
-		get_param_plus(cr, &sti.reg3, 2);
-	else
-		get_param_plus(cr, &sti.dir3, 2);
-	sti.position = cr->position + \
-		((sti.prm2 + sti.dir2 + sti.dir3 + sti.reg3) % IDX_MOD);
-//	sti.position = check_position(cr->position + \
-//		((sti.prm2 + sti.dir2 + sti.dir3 + sti.reg3) % IDX_MOD));
-	from_var_to_memory(cr, &sti.reg1, check_position(sti.position), REG_SIZE);
-	if (cr->vm->verbose.v && cr->vm->verbose.v_4)
-		ft_printf("P%*d | sti r%d %d %d\n       | -> store to %d + %d = %d ("
-			"with pc and mod %d)\n", ((ft_hw_mn_orders(cr->car_nbr) < 5) ? 5
-			: ft_hw_mn_orders(cr->car_nbr) + 1), cr->car_nbr, cr->cycle->regs[0]
-			+ 1, sti.dir2 + sti.prm2, sti.dir3 + sti.reg3, sti.dir2 + sti.prm2,
-			sti.dir3 + sti.reg3, sti.prm2 + sti.dir2 + sti.dir3 + sti.reg3, sti.
-			position);
-	if (cr->vm->debug)
-		ft_printf("sti ");
 }

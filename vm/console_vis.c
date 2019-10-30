@@ -83,9 +83,8 @@ static void	print_report(t_vm *vm)
 	cr = vm->carriages;
 	ft_printf("\nCycles from start: %u\t\tCycles to die: %d\tTotal lives: %u", \
 		vm->cycles_from_start, vm->cycles_to_die, vm->live_counter);
-	ft_printf("\t\tLast alive champion: \"%s\"(%d / %u)\n\n", \
-		vm->processes[(vm->last_alive * -1) - 1].cmp_name, \
-		vm->last_alive, vm->last_alive_cycle);
+	ft_printf("\t\tLast alive champion: \"%s\"(%d / %u)\n\n", vm->processes[(
+vm->last_alive * -1) - 1].cmp_name, vm->last_alive, vm->last_alive_cycle);
 	i = 0;
 	while (cr)
 	{
