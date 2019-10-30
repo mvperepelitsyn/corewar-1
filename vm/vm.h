@@ -6,7 +6,7 @@
 /*   By: uhand <uhand@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/22 14:00:40 by uhand             #+#    #+#             */
-/*   Updated: 2019/10/30 18:38:52 by uhand            ###   ########.fr       */
+/*   Updated: 2019/10/30 19:29:34 by uhand            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -117,7 +117,7 @@ typedef struct	s_andorxor
 
 typedef struct	s_verbose
 {
-	char 	v;
+	char	v;
 	short	v_num;
 	short	v_1;
 	short	v_2;
