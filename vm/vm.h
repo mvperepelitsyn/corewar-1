@@ -17,13 +17,8 @@
 # include "./libft/libft.h"
 # include "op.h"
 
-<<<<<<< HEAD
-# define STUPID 0
-# define SLEEP 20000
-=======
 # define STUPID 1
 # define SLEEP 0
->>>>>>> 32c00a5719735eb343971b31a24f8897f78921d3
 # define OCTET 64
 
 typedef struct s_vm		t_vm;
@@ -279,5 +274,7 @@ void			check_file_and_fill(char *file_name, t_process *chmp, int num);
 void			how_many_champs(t_vm *vm);
 int				ft_hw_mn_orders(long long int num);
 void			report_norm(t_vm *vm, t_carry *cr);
+void			parse_verbose_flag(char **argv, int argc, int *l, t_vm *vm);
+void			parse_flag_n(int argc, char **argv, t_vm *vm, int *l);
 
 #endif
