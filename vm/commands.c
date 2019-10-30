@@ -6,7 +6,7 @@
 /*   By: dfrost-a <dfrost-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/21 18:25:43 by dfrost-a          #+#    #+#             */
-/*   Updated: 2019/10/30 17:57:55 by uhand            ###   ########.fr       */
+/*   Updated: 2019/10/30 18:56:17 by uhand            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ void		live(t_carry *cr)
 	cr->vm->live_counter++;
 	cr->ctd_live_counter++;
 	dir = get_param(cr, 0);
-	champ_nbr = (int *)&dir;
+	champ_nbr = (int*)&dir;
 	cr->last_alive_cycle = cr->vm->cycles_from_start + 1;
 	if (cr->vm->verbose.v_4)
 		ft_printf("P%*d | live %d\n", ((ft_hw_mn_orders(cr->car_nbr) < 5) ? 5 :
@@ -38,11 +38,6 @@ void		live(t_carry *cr)
 	}
 	if (cr->vm->vis)
 		cr->vm->back[cr->position] |= 200;
-	if (cr->vm->debug)
-	{
-		ft_printf("%d ", champ_nbr[0]);
-		ft_printf("alive %d! ", cr->vm->last_alive);
-	}
 }
 
 static void	copy_carriage(t_carry *cr_src, short dir)
